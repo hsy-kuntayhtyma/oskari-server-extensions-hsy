@@ -1,0 +1,12 @@
+.DS_Store
+*/target/
+target/
+.settings/
+*/.classpath
+*/.project
+*.iml
+.classpath
+.idea
+.project
+*pom.xml.versionsBackup
+runnable-jar/dist/
