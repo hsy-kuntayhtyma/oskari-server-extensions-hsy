@@ -10,21 +10,11 @@
   <name>HSY server extension</name>
   
   <dependencies>
-        <dependency>
-            <groupId>fi.nls.oskari.service</groupId>
-            <artifactId>oskari-users</artifactId>
-            <version>${oskari.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>fi.nls.oskari.service</groupId>
-            <artifactId>oskari-control</artifactId>
-            <version>${oskari.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>fi.nls.oskari.service</groupId>
-            <artifactId>oskari-search-nls</artifactId>
-            <version>${oskari.version}</version>
-        </dependency>
+      <dependency>
+          <groupId>fi.nls.oskari.service</groupId>
+          <artifactId>oskari-control-base</artifactId>
+          <version>${oskari.version}</version>
+      </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -32,10 +22,5 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-      <dependency>
-          <groupId>org.flywaydb</groupId>
-          <artifactId>flyway-core</artifactId>
-          <version>3.2.1</version>
-      </dependency>
   </dependencies>
 </project>

@@ -1,0 +1,17 @@
+{
+    "setup": [
+        "create-empty-db",
+        "register-bundles",
+        "postgres-add-users",
+        "postgres-add-JAAS",
+        {
+            "sql" : [
+                "populate-Inspire-themes.sql",
+                "hsy-organisations.sql"
+            ]
+        }
+    ],
+    "views": [
+        "hsy-view.json"
+    ]
+}

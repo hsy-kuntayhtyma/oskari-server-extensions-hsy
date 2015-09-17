@@ -30,7 +30,7 @@
         </dependency>
 
         <!-- Replace icu4j version included by axiom-api with newer version
-        which does not brake .jar investigation performed by jetty-maven plugin  -->
+         which does not brake .jar investigation performed by jetty-maven plugin  -->
         <dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
@@ -44,23 +44,12 @@
             <version>${oskari.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>fi.nls.oskari.service</groupId>
-            <artifactId>oskari-control-admin</artifactId>
-            <version>${oskari.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>fi.nls.oskari.service</groupId>
+			<artifactId>oskari-control-admin</artifactId>
+			<version>${oskari.version}</version>
+		</dependency>
 
-        <dependency>
-            <groupId>fi.nls.oskari</groupId>
-            <artifactId>service-logging</artifactId>
-            <version>${oskari.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
         <dependency>
             <groupId>fi.nls.oskari</groupId>
             <artifactId>servlet-map</artifactId>
@@ -74,12 +63,16 @@
         </dependency>
 
         <dependency>
-            <groupId>fi.nls.oskari.service</groupId>
-            <artifactId>oskari-search-nls</artifactId>
+            <groupId>fi.nls.oskari</groupId>
+            <artifactId>service-logging</artifactId>
             <version>${oskari.version}</version>
         </dependency>
         <!-- /oskari -->
-
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
