@@ -5,9 +5,9 @@
   "public": true,
   "onlyUuid": false,
   "oskari": {
-    "application": "hsy",
+    "application": "full-map",
     "page": "index",
-    "development_prefix": "/applications"
+    "development_prefix": "/applications/hsy/"
   },
   "selectedLayers": [
     "hsy-layer.json"
