@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>MyApplication</title>
+  <title>HSY</title>
 
   <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js">
   </script>
