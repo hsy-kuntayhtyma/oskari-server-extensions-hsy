@@ -2,7 +2,7 @@
 	"srs_name": "EPSG:3879",
 	"type":"wmslayer",
     "url":"http://kartta.hel.fi/ws/geoserver/avoindata/wms",
-    "name":"Opaskartta_Helsinki",
+    "name":"Opaskartta_PKS",
     "organization": "HSY",
     "inspiretheme": "Others",
     "locale": {
