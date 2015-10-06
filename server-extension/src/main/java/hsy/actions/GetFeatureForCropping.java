@@ -17,19 +17,14 @@ import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionHandler;
 import fi.nls.oskari.control.ActionParameters;
-import fi.nls.oskari.domain.User;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.map.data.service.GetGeoPointDataService;
-import fi.nls.oskari.map.layer.OskariLayerService;
-import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
-import fi.nls.oskari.map.myplaces.service.GeoServerProxyService;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("GetFeatureForCropping")
 public class GetFeatureForCropping extends ActionHandler {
 
-	private Logger log = LogFactory.getLogger(GetFeatureForCropping.class);
+	private final Logger LOGGER = LogFactory.getLogger(GetFeatureForCropping.class);
 		
     private static final String PARAM_LAYERS = "layers";
     private static final String PARAM_X = "x";
@@ -70,11 +65,11 @@ public class GetFeatureForCropping extends ActionHandler {
 	        ResponseHelper.writeResponse(params, jsoni);
 	        
 		} catch (JSONException e) {
-		    throw new ActionException("Could not populate Response JSON: " + log.getAsString(data), e);
+		    throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
 		} catch (MalformedURLException e) {
-			throw new ActionException("Could not populate Response JSON: " + log.getAsString(data), e);
+			throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
 		} catch (IOException e) {
-			throw new ActionException("Could not populate Response JSON: " + log.getAsString(data), e);
+			throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
 		}
 	}
 }

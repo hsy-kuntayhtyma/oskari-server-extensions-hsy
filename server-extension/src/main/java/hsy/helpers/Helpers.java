@@ -35,4 +35,18 @@ public class Helpers {
 
 		return wmsUrl;
 	}
+
+	/**
+	 * Get layer name without namespace.
+	 * @param layerName layer name
+	 * @return layer name without namespace
+	 */
+	public static String getLayerNameWithoutNameSpace(String layerName) {
+		String[] temp = layerName.split(":");
+		String layerNameWithoutNameSpace = layerName;
+		if(temp.length==2){
+			layerNameWithoutNameSpace = temp[1];
+		}
+		return layerNameWithoutNameSpace;
+	}
 }
