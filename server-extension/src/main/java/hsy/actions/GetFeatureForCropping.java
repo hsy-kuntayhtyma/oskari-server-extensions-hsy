@@ -29,10 +29,6 @@ import fi.nls.oskari.util.ResponseHelper;
 @OskariActionRoute("GetFeatureForCropping")
 public class GetFeatureForCropping extends ActionHandler {
 
-	private final OskariLayerService mapLayerService = new OskariLayerServiceIbatisImpl();
-	private final GetGeoPointDataService geoPointService = new GetGeoPointDataService();
-    private final GeoServerProxyService myplacesService = new GeoServerProxyService();
-
 	private Logger log = LogFactory.getLogger(GetFeatureForCropping.class);
 		
     private static final String PARAM_LAYERS = "layers";
@@ -42,24 +38,14 @@ public class GetFeatureForCropping extends ActionHandler {
     private static final String PARAM_WIDTH = "width";
     private static final String PARAM_HEIGHT = "height";
     private static final String PARAM_SRS = "srs";
-    private static final String PARAM_URL = "http://10.20.0.4:9902/geoserver/taustakartat_ja_aluejaot/wms";
+    private static final String PARAM_URL = "url";
 
 	@Override
     public void handleAction(final ActionParameters params) throws ActionException {
-	     
-		final String layerIds = params.getHttpParam(PARAM_LAYERS);
-		System.out.println("TULEE JES: ON VAIN VOITTO!!! - "+layerIds);
-		final String[] layerIdsArr = layerIds.split(",");
 		
-        final User user = params.getUser();
-//        final double lat = ConversionHelper.getDouble(params.getHttpParam(PARAM_LAT), -1);
-//        final double lon = ConversionHelper.getDouble(params.getHttpParam(PARAM_LON), -1);
-//        final int zoom = ConversionHelper.getInt(params.getHttpParam(PARAM_ZOOM), 0);
-        
         final JSONArray data = new JSONArray();
-//		JSONObject geojs = new JSONObject();
        
-	    String wmsUrl = Helpers.getGetFeatureInfoUrlForProxy(PARAM_URL, params.getHttpParam(PARAM_SRS).toString(),
+	    String wmsUrl = Helpers.getGetFeatureInfoUrlForProxy(params.getHttpParam(PARAM_URL).toString(), params.getHttpParam(PARAM_SRS).toString(),
 	    		params.getHttpParam(PARAM_BBOX).toString(), params.getHttpParam(PARAM_WIDTH).toString(), params.getHttpParam(PARAM_HEIGHT).toString(),
 	    		params.getHttpParam(PARAM_X).toString(), params.getHttpParam(PARAM_Y).toString(), params.getHttpParam(PARAM_LAYERS).toString());
 		
