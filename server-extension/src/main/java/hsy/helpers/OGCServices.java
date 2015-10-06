@@ -45,7 +45,10 @@ public class OGCServices {
         }
 
         final String croppingMode = download.getString(PARAM_CROPPING_MODE);
-        final String croppingLayer = download.getString(PARAM_CROPPING_LAYER);
+        String croppingLayer = "";
+        if(download.has(PARAM_CROPPING_LAYER)){
+        	croppingLayer = download.getString(PARAM_CROPPING_LAYER);
+        }
 
         if(normalDownloads.isNormalWayDownload(croppingMode, croppingLayer)) {
             s.append(getFilterByBBOX(writeParam, download));
@@ -113,7 +116,7 @@ public class OGCServices {
      * @return filter writer
      */
     public static String getPluginFilter(JSONObject download, boolean addNameSpaces, boolean writeParam) throws JSONException {
-        JSONArray identifiers = download.getJSONArray(PARAM_IDENTIFIERS);
+        JSONArray identifiers = new JSONArray(download.getString(PARAM_IDENTIFIERS));
         StringWriter s = new StringWriter();
         StringWriter filter = new StringWriter();
         String defaultGeometryColumn = PropertyUtil.get("hsy.wfs.geometry.specific.column");

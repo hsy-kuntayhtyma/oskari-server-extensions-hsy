@@ -85,7 +85,10 @@ public class SendDownloadDetailsToEmailThread extends Thread{
 			for(int i=0;i<downLoadDetails.length();i++){
 				JSONObject download = downLoadDetails.getJSONObject(i);
                 final String croppingMode = download.getString(PARAM_CROPPING_MODE);
-                final String croppingLayer = download.getString(PARAM_CROPPING_LAYER);
+                String croppingLayer = "";
+                if(download.has(PARAM_CROPPING_LAYER)){
+                	croppingLayer = download.getString(PARAM_CROPPING_LAYER);
+                }
 
                 LoadZipDetails ldz = new LoadZipDetails();
                 ldz.setTemporaryDirectory(strTempDir);
