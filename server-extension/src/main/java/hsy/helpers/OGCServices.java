@@ -119,9 +119,7 @@ public class OGCServices {
         JSONArray identifiers = new JSONArray(download.getString(PARAM_IDENTIFIERS));
         StringWriter s = new StringWriter();
         StringWriter filter = new StringWriter();
-        String defaultGeometryColumn = PropertyUtil.get("hsy.wfs.geometry.specific.column");
         String croppingNameSpace = PropertyUtil.get("hsy.wfs.cropping.namespace");
-        String croppingGeometryColumn = PropertyUtil.get("hsy.geometry.specific.column");
 
         try {
             if(identifiers.length()>1) {
@@ -146,10 +144,10 @@ public class OGCServices {
                 String layerName = Helpers.getLayerNameWithoutNameSpace(identifier.getString("layerName"));
                 String uniqueColumn = identifier.getString("uniqueColumn");
                 String uniqueValue = identifier.getString("uniqueValue");
-                String cropGeomColumn = PropertyUtil.get("hsy.wfs.unified.column.geometry." +layerName, croppingGeometryColumn);
-                String filterColumnType = PropertyUtil.get("hsy.wfs.unified.column.type." +layerName, "STRING");
+                String cropGeomColumn = identifier.getString("geometryName");
+                String filterColumnType = identifier.getString("geometryColumn");
                 filter.append(intersectStart);
-                filter.append("<ogc:PropertyName>"+defaultGeometryColumn+"</ogc:PropertyName>");
+                filter.append("<ogc:PropertyName>"+cropGeomColumn+"</ogc:PropertyName>");
                 filter.append("<ogc:Function name=\"querySingle\">");
                 filter.append("<ogc:Literal>"+croppingNameSpace+":"+layerName+"</ogc:Literal>");
 
