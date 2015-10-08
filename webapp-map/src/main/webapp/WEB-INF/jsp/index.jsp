@@ -98,8 +98,7 @@
 <body>
 
 <nav id="maptools">
-  <div id="logobar">
-  </div>
+  <a href="https://www.hsy.fi" target="_blank"><div id="logobar"></div></a>
   <div id="loginbar">
   </div>
   <div id="menubar">
