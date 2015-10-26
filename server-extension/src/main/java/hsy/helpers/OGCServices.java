@@ -198,9 +198,9 @@ public class OGCServices {
         s.append(wfsUrl);
 
         if(addNameSpace){
-            s.append("?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:3067&outputFormat=SHAPE-ZIP&typeNames=" + download.getString(PARAM_LAYER));
+            s.append("?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:3879&outputFormat=SHAPE-ZIP&typeNames=" + download.getString(PARAM_LAYER));
         } else {
-            s.append("?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:3067&outputFormat=SHAPE-ZIP&typeNames=" + Helpers.getLayerNameWithoutNameSpace(download.getString(PARAM_LAYER)));
+            s.append("?SERVICE=wfs&version=1.0.0&request=GetFeature&srsName=EPSG:3879&outputFormat=SHAPE-ZIP&typeNames=" + Helpers.getLayerNameWithoutNameSpace(download.getString(PARAM_LAYER)));
         }
         getFeatureUrl = s.toString();
         return getFeatureUrl;
