@@ -10,23 +10,23 @@
   <script type="text/javascript" src="//code.jquery.com/jquery-1.7.2.min.js">
   </script>
   <!-- ############# css ################# -->
-  <link
-          rel="stylesheet"
-          type="text/css"
-          href="/Oskari${path}/css/icons.css"/>
-  <link
-          rel="stylesheet"
-          type="text/css"
-          href="/Oskari${path}/css/forms.css"/>
-  <link
-          rel="stylesheet"
-          type="text/css"
-          href="/Oskari${path}/css/portal.css"/>
+<link
+        rel="stylesheet"
+        type="text/css"
+        href="/Oskari/resources/css/forms.css"/>
+<link
+        rel="stylesheet"
+        type="text/css"
+        href="/Oskari/resources/css/portal.css"/>
+<link
+        rel="stylesheet"
+        type="text/css"
+        href="/Oskari${path}/icons.css"/>
+<link
+        rel="stylesheet"
+        type="text/css"
+        href="/Oskari${path}/css/overwritten.css"/>
 
-  <link
-          rel="stylesheet"
-          type="text/css"
-          href="/Oskari${path}/css/overwritten.css"/>
   <style type="text/css">
     @media screen {
       body {
@@ -155,20 +155,12 @@
 <!--  OSKARI -->
 
 <script type="text/javascript">
-  var ajaxUrl = '${ajaxUrl}';
-  var viewId = '${viewId}';
-  var language = '${language}';
-  var preloaded = ${preloaded};
-  var controlParams = ${controlParams};
+    var ajaxUrl = '${ajaxUrl}';
+    var controlParams = ${controlParams};
 </script>
 
 <script type="text/javascript"
         src="/Oskari/bundles/bundle.js">
-</script>
-
-<!--  OPENLAYERS -->
-<script type="text/javascript"
-        src="/Oskari/packages/openlayers/startup.js">
 </script>
 
 <c:if test="${preloaded}">
