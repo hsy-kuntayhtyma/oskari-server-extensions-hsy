@@ -22,8 +22,11 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.xml.bind.JAXBException;
 
+import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
+import fi.nls.oskari.map.layer.OskariLayerService;
+import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
 import fi.nls.oskari.util.PropertyUtil;
 import hsy.data.LoadZipDetails;
 import hsy.data.NormalWayDownloads;
@@ -97,11 +100,19 @@ public class SendDownloadDetailsToEmailThread extends Thread{
                 ldz.setDownloadNormalWay(normalDownloads.isNormalWayDownload(croppingMode, croppingLayer));
 
                 if(ldz.isDownloadNormalWay()) {
-                    String wfsUrl = download.getString(PARAM_WMS_URL);
+
+                	OskariLayerService mapLayerService = new OskariLayerServiceIbatisImpl();
+            		OskariLayer oskariLayer = mapLayerService.find(download.getString(PARAM_WMS_URL));
+            		String wfsUrl = "";
+            		
+            		if(oskariLayer != null){
+            			wfsUrl = oskariLayer.getUrl();
+            		}
 
                     ldz.setGetFeatureInfoRequest(OGCServices.getFilter(download, true));
                     ldz.setWFSUrl(OGCServices.doGetFeatureUrl(wfsUrl, download, false));
                 } else {
+
                     ldz.setGetFeatureInfoRequest(OGCServices.getPluginFilter(download, true, true));
                     ldz.setWFSUrl(OGCServices.doGetFeatureUrl(PropertyUtil.get("hsy.wfs.service.url"), download, true));
                 }

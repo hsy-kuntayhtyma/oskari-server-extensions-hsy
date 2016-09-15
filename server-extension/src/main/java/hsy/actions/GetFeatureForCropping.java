@@ -17,8 +17,11 @@ import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionHandler;
 import fi.nls.oskari.control.ActionParameters;
+import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
+import fi.nls.oskari.map.layer.OskariLayerService;
+import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("GetFeatureForCropping")
@@ -34,13 +37,21 @@ public class GetFeatureForCropping extends ActionHandler {
     private static final String PARAM_HEIGHT = "height";
     private static final String PARAM_SRS = "srs";
     private static final String PARAM_URL = "url";
+    private static String FINAL_WMS_URL = "";
 
 	@Override
     public void handleAction(final ActionParameters params) throws ActionException {
 		
         final JSONArray data = new JSONArray();
+        
+		OskariLayerService mapLayerService = new OskariLayerServiceIbatisImpl();
+		OskariLayer oskariLayer = mapLayerService.find(params.getHttpParam(PARAM_URL));
+
+		if(oskariLayer != null){
+			FINAL_WMS_URL = oskariLayer.getUrl();
+		}
        
-	    String wmsUrl = Helpers.getGetFeatureInfoUrlForProxy(params.getHttpParam(PARAM_URL).toString(), params.getHttpParam(PARAM_SRS).toString(),
+	    String wmsUrl = Helpers.getGetFeatureInfoUrlForProxy(FINAL_WMS_URL, params.getHttpParam(PARAM_SRS).toString(),
 	    		params.getHttpParam(PARAM_BBOX).toString(), params.getHttpParam(PARAM_WIDTH).toString(), params.getHttpParam(PARAM_HEIGHT).toString(),
 	    		params.getHttpParam(PARAM_X).toString(), params.getHttpParam(PARAM_Y).toString(), params.getHttpParam(PARAM_LAYERS).toString());
 		
