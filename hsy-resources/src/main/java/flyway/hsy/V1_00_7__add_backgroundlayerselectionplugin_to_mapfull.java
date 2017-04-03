@@ -25,7 +25,7 @@ public class V1_00_7__add_backgroundlayerselectionplugin_to_mapfull implements J
     private static final String PLUGIN_NAME = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
     private static final String MAPFULL = "mapfull";
     private static final String OPASKARTTA_NAME = "Opaskartta_PKS";
-    private static final String ORTOILMAKUVA2015_NAME = "hsy:ortoilmakuva2015";
+    private static final String ORTOILMAKUVA2015_NAME = "taustakartat_ja_aluejaot:ortoilmakuva2015";
     public void migrate(Connection connection)
             throws Exception {
     	List<View> views = VIEW_SERVICE.getViewsForUser(-1);
