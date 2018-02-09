@@ -16,6 +16,7 @@ public class V1_00_9__add_selected_featuredata_to_views implements JdbcMigration
 	public void migrate(Connection connection) throws Exception {
 		long viewId = VIEW_SERVICE.getDefaultViewId();
 		makeInsert(viewId,connection);
+		makeInsert(1,connection);
 	}
 	
 	private void makeInsert(long viewId, Connection connection)
