@@ -51,6 +51,13 @@
 		</dependency>
 
         <dependency>
+            <groupId>org.oskari</groupId>
+            <artifactId>control-userlayer</artifactId>
+            <version>${oskari.version}</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>fi.nls.oskari</groupId>
             <artifactId>servlet-map</artifactId>
             <version>${oskari.version}</version>
@@ -73,6 +80,13 @@
             <artifactId>service-logging</artifactId>
             <version>${oskari.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>fi.nls.oskari</groupId>
+            <artifactId>download-basket</artifactId>
+            <version>${oskari.version}</version>
+        </dependency>
+
         <!-- /oskari -->
         <dependency>
             <groupId>org.slf4j</groupId>
