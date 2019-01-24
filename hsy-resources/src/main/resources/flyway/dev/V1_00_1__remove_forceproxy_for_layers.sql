@@ -1,0 +1,1 @@
+UPDATE oskari_maplayer SET attributes =  attributes::jsonb-'forceProxy'
