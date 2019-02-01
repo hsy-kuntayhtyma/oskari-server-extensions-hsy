@@ -1,9 +1,7 @@
 package flyway.seutumaisa;
 
-import fi.nls.oskari.db.DBHandler;
 import fi.nls.oskari.db.ViewHelper;
 import fi.nls.oskari.domain.Role;
-import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
@@ -12,15 +10,8 @@ import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
 import fi.nls.oskari.user.MybatisRoleService;
 import fi.nls.oskari.util.PropertyUtil;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
-import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class V1_03_0__add_seutumaisa_view implements JdbcMigration {
     private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
