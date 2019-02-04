@@ -85,6 +85,10 @@
     "config": {
       "viewtools": {
         "print": false
+      },
+    "colours": {
+      "hover": "#009FE3",
+      "background": "#ffffff"
       }
     }
   }, {
