@@ -7,17 +7,8 @@
 <head>
   <title>HSY</title>
 
-  <script type="text/javascript" src="/Oskari/libraries/jquery/jquery-1.10.2.js">
-  </script>
   <!-- ############# css ################# -->
-<link
-        rel="stylesheet"
-        type="text/css"
-        href="/Oskari/resources/css/forms.css"/>
-<link
-        rel="stylesheet"
-        type="text/css"
-        href="/Oskari/resources/css/portal.css"/>
+
 <link
         rel="stylesheet"
         type="text/css"
@@ -159,11 +150,6 @@
     var controlParams = ${controlParams};
 </script>
 
-<script type="text/javascript"
-        src="/Oskari/bundles/bundle.js">
-</script>
-
-<c:if test="${preloaded}">
   <!-- Pre-compiled application JS, empty unless created by build job -->
   <script type="text/javascript"
           src="/Oskari${path}/oskari.min.js">
@@ -178,7 +164,7 @@
   <script type="text/javascript"
           src="/Oskari${path}/oskari_lang_${language}.js">
   </script>
-</c:if>
+
 
 <script type="text/javascript"
         src="/Oskari${path}/index.js">
