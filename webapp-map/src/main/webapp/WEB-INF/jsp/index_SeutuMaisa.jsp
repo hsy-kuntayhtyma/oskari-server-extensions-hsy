@@ -145,6 +145,13 @@
     <c:choose>
       <%-- If logout url is present - so logout link --%>
       <c:when test="${!empty _logout_uri}">
+        <form action="${pageContext.request.contextPath}${_logout_uri}" method="POST" id="logoutform">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <a href="${pageContext.request.contextPath}${_logout_uri}" onClick="jQuery('#logoutform').submit();return false;"><spring:message code="logout" text="Logout" /></a>
+        </form>
+      </c:when>
+      <%-- Otherwise show appropriate logins --%>
+      <c:when test="${!empty _logout_uri}">
         <a href="${pageContext.request.contextPath}${_logout_uri}"><spring:message code="logout" text="Logout" /></a>
       </c:when>
       <%-- Otherwise show appropriate logins --%>
@@ -153,11 +160,12 @@
           <a href="${pageContext.request.contextPath}${_login_uri_saml}"><spring:message code="login.sso" text="SSO login" /></a><hr />
         </c:if>
         <c:if test="${!empty _login_uri && !empty _login_field_user}">
-          <p style="color: #2C2A29 ; padding-bottom: 5px;">Ylläpidon kirjautuminen</p>
+          <p style="color: #FFFFFF;padding-bottom: 5px;">Ylläpidon kirjautuminen</p>
           <form action='${pageContext.request.contextPath}${_login_uri}' method="post" accept-charset="UTF-8">
             <input size="16" id="username" name="${_login_field_user}" type="text" placeholder="<spring:message code="username" text="Username" />" autofocus
                    required>
             <input size="16" id="password" name="${_login_field_pass}" type="password" placeholder="<spring:message code="password" text="Password" />" required>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input type="submit" id="submit" value="<spring:message code="login" text="Log in" />">
           </form>
         </c:if>
