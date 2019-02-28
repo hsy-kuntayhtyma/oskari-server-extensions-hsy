@@ -9,6 +9,7 @@ import fi.nls.oskari.map.layer.OskariLayerService;
 import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,12 +26,11 @@ public class V1_03_1__add_backgroundlayersselectionplugin_to_seutumaisa_mapfull 
     private static final String MAPFULL = "mapfull";
     private static final String OPASKARTTA_NAME = "Opaskartta_PKS";
     private static final String ORTOILMAKUVA2015_NAME = "taustakartat_ja_aluejaot:ortoilmakuva2015";
-    private static final String ROLE_SEUTUMAISA = "SeutuMaisa";
 
     public void migrate(Connection connection)
             throws Exception {
 
-        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(ROLE_SEUTUMAISA);
+        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(LayerHelper.ROLE_SEUTUMAISA);
         View view = VIEW_SERVICE.getViewWithConf(viewId);
 
         final Bundle mapfull = view.getBundleByName(MAPFULL);

@@ -9,6 +9,7 @@ import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
 import fi.nls.oskari.util.FlywayHelper;
+import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,7 +22,6 @@ public class V1_00_3__set_selected_layers_ammassuo_view implements JdbcMigration
     private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
     private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceIbatisImpl();
     private static final  String SELECTED_FEATUREDATA = "selected-featuredata";
-    private static final String ROLE_AMMASSUO = "Ammassuo";
     private static final String MAPFULL = "mapfull";
     private static final String KEY_ID = "id";
     private static final String KEY_OPACITY = "opacity";
@@ -29,7 +29,7 @@ public class V1_00_3__set_selected_layers_ammassuo_view implements JdbcMigration
     private static final String OPASKARTTA_NAME = "Opaskartta_PKS";
 
     public void migrate(Connection connection) throws Exception {
-        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(ROLE_AMMASSUO);
+        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(LayerHelper.ROLE_AMMASSUO);
         Bundle mapfull = FlywayHelper.getBundleFromView(connection, MAPFULL, viewId);
         JSONObject state = mapfull.getStateJSON();
         if(!state.has(KEY_SELECTED_LAYERS)) {
