@@ -1,4 +1,4 @@
-package flyway.seutumaisa;
+package flyway.ammassuo;
 
 import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.domain.map.view.Bundle;
@@ -9,7 +9,6 @@ import fi.nls.oskari.map.layer.OskariLayerService;
 import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
-import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,19 +17,20 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.util.List;
 
-public class V1_03_1__add_backgroundlayersselectionplugin_to_seutumaisa_mapfull implements JdbcMigration {
-    private static final Logger LOG = LogFactory.getLogger(V1_03_1__add_backgroundlayersselectionplugin_to_seutumaisa_mapfull.class);
+public class V1_00_1__add_backgroundlayersselectionplugin_to_ammassuo_mapfull implements JdbcMigration {
+    private static final Logger LOG = LogFactory.getLogger(V1_00_1__add_backgroundlayersselectionplugin_to_ammassuo_mapfull.class);
     private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
     private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceIbatisImpl();
     private static final String PLUGIN_NAME = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
     private static final String MAPFULL = "mapfull";
     private static final String OPASKARTTA_NAME = "Opaskartta_PKS";
     private static final String ORTOILMAKUVA2015_NAME = "taustakartat_ja_aluejaot:ortoilmakuva2015";
+    private static final String ROLE_AMMASSUO = "Ammassuo";
 
     public void migrate(Connection connection)
             throws Exception {
 
-        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(LayerHelper.ROLE_SEUTUMAISA);
+        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(ROLE_AMMASSUO);
         View view = VIEW_SERVICE.getViewWithConf(viewId);
 
         final Bundle mapfull = view.getBundleByName(MAPFULL);

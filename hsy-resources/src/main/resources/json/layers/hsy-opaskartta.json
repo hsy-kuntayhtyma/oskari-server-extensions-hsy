@@ -1,0 +1,25 @@
+{
+  "srs_name": "EPSG:3879",
+  "type":"wmslayer",
+  "url":"http://kartta.hel.fi/ws/geoserver/avoindata/wms",
+  "name":"Opaskartta_PKS",
+  "organization": "HSY",
+  "inspiretheme": "Taustakartat",
+  "locale": {
+    "fi": {
+      "name": "Opaskartta_PKS"
+    },
+    "sv": {
+      "name": "Opaskartta_PKS"
+    },
+    "en": {
+      "name": "Opaskartta_PKS"
+    }
+  },
+  "role_permissions": {
+    "Guest" : ["VIEW_LAYER", "VIEW_PUBLISHED"],
+    "User" : ["VIEW_LAYER", "VIEW_PUBLISHED", "PUBLISH"],
+    "Ammassuo": ["VIEW_LAYER", "VIEW_PUBLISHED", "PUBLISH"]
+  },
+  "version": "1.1.1"
+}
