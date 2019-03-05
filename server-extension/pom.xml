@@ -13,32 +13,12 @@
       <dependency>
           <groupId>fi.nls.oskari.service</groupId>
           <artifactId>oskari-control-base</artifactId>
-          <version>${oskari.version}</version>
       </dependency>
-
-      <dependency>
-          <groupId>javax.mail</groupId>
-          <artifactId>mail</artifactId>
-          <version>${javax.mail.version}</version>
-      </dependency>
-
-      <dependency>
-          <groupId>org.apache.commons</groupId>
-          <artifactId>commons-email</artifactId>
-          <version>${commons-email.version}</version>
-      </dependency>
-
-	  <dependency>
-			<groupId>fi.nls.oskari.extras</groupId>
-			<artifactId>oskari-search-nls</artifactId>
-			<version>2.1</version>
-	    </dependency>
 
 
       <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
-          <version>${junit.version}</version>
           <scope>test</scope>
         </dependency>
   </dependencies>

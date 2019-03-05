@@ -22,17 +22,14 @@
         <dependency>
             <groupId>fi.nls.oskari</groupId>
             <artifactId>transport-servlet</artifactId>
-            <version>${oskari.version}</version>
         </dependency>
         <dependency>
             <groupId>fi.nls.oskari</groupId>
             <artifactId>service-logging</artifactId>
-            <version>${oskari.version}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>com.netflix.hystrix</groupId>
