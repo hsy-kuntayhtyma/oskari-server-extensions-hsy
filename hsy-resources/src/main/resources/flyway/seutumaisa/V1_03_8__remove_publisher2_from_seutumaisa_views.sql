@@ -1,0 +1,1 @@
+DELETE FROM portti_view_bundle_seq WHERE view_id IN (SELECT id FROM portti_view WHERE name='SeutuMaisa') AND bundle_id IN(SELECT id FROM portti_bundle WHERE name='publisher2');
