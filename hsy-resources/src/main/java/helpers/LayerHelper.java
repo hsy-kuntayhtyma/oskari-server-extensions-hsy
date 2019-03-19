@@ -50,7 +50,6 @@ public class LayerHelper {
 
     private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
     private static final OskariMapLayerGroupService MAP_LAYER_GROUP_SERVICE = new OskariMapLayerGroupServiceIbatisImpl();
-    private static final OskariLayerService MAPLAYER_SERVICE = ServiceFactory.getMapLayerService();
     private static final PermissionsService PERMISSIONS_SERVICE = new PermissionsServiceIbatisImpl();
     private static final MybatisRoleService ROLE_SERVICE = new MybatisRoleService();
     private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceIbatisImpl();
@@ -108,12 +107,12 @@ public class LayerHelper {
      */
     public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups) {
         List<Integer> addedLayers = new ArrayList<>();
+        OskariLayerService service = new OskariLayerServiceIbatisImpl();
         try {
             for (int i = 0; i < layerArray.length(); i++) {
                 JSONObject layerJSON = layerArray.getJSONObject(i);
 
                 OskariLayer layer = parseLayer(layerJSON);
-                OskariLayerService service = new OskariLayerServiceIbatisImpl();
                 List<OskariLayer> dbLayers = service.findByUrlAndName(layer.getUrl(), layer.getName());
                 if (!dbLayers.isEmpty()) {
                     if (dbLayers.size() > 1) {
