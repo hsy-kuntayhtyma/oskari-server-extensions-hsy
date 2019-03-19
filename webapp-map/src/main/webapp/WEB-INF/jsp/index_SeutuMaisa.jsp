@@ -206,7 +206,7 @@
                 var oldLocation = location.href;
                 setTimeout(function () {
                     window.location.href = oldLocation;
-                }, 200);
+                }, 400);
 
             });
 
@@ -215,7 +215,7 @@
                 var oldLocation = location.href;
                 setTimeout(function () {
                     window.location.href = oldLocation;
-                }, 200);
+                }, 400);
             });
         });
     });
