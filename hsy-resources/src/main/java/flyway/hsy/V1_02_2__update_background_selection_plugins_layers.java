@@ -15,7 +15,7 @@ public class V1_02_2__update_background_selection_plugins_layers implements Jdbc
         String[] layers = PropertyUtil.getCommaSeparatedList("flyway.hsy.V1_02_2.layers");
         boolean skip = PropertyUtil.getOptional("flyway.hsy.V1_02_2.skip", false);
         if (!skip) {
-            LayerHelper.SetBackgroundSelectionPluginLayers(connection, layers);
+            LayerHelper.setBackgroundSelectionPluginLayers(connection, layers);
         }
     }
 }

@@ -46,6 +46,11 @@ public class LayerHelper {
     public static final String ROLE_SEUTUMAISA = "SeutuMaisa";
     public static final String ROLE_AMMASSUO = "Ammassuo";
 
+    public static final String VERSION_WFS110 = "1.1.0";
+    public static final String VERSION_WFS200 = "2.0.0";
+    public static final String VERSION_WMS111 = "1.1.1";
+    public static final String VERSION_WMS130 = "1.3.0";
+
     private static final Logger LOG = LogFactory.getLogger(LayerHelper.class);
 
     private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
@@ -103,9 +108,10 @@ public class LayerHelper {
      * Adds layers
      * @param layerArray layers array
      * @param maplayerGroups layer groups
+     * @param notCheckExitings not cehcks exiting layers
      * @return added layers length
      */
-    public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups) {
+    public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups, final boolean notCheckExitings) {
         List<Integer> addedLayers = new ArrayList<>();
         OskariLayerService service = new OskariLayerServiceIbatisImpl();
         try {
@@ -114,7 +120,7 @@ public class LayerHelper {
 
                 OskariLayer layer = parseLayer(layerJSON);
                 List<OskariLayer> dbLayers = service.findByUrlAndName(layer.getUrl(), layer.getName());
-                if (!dbLayers.isEmpty()) {
+                if (!dbLayers.isEmpty() && !notCheckExitings) {
                     if (dbLayers.size() > 1) {
                         LOG.warn(new Object[]{"Found multiple layers with same url and name. Using first one. Url:", layer.getUrl(), "- name:", layer.getName()});
                     }
@@ -149,12 +155,120 @@ public class LayerHelper {
 
     }
 
-    private static OskariLayer parseLayer(JSONObject json) throws JSONException {
+    /**
+     * Generate layer JSON
+     * @param type use OskariLayer.TYPE_
+     * @param url
+     * @param name
+     * @param dataprovider
+     * @param locale
+     * @param baseMap
+     * @param opacity optional
+     * @param style optional
+     * @param minscale optional
+     * @param maxscale optional
+     * @param legendImage optional
+     * @param metadataId optional
+     * @param gfiType optional
+     * @param gfiXslt optional
+     * @param gfiContent optional
+     * @param geometry optional
+     * @param realtime
+     * @param refreshRate optional
+     * @param srsName optional
+     * @param version optional, use VERSION_
+     * @param username optional
+     * @param password optional
+     * @param params optional
+     * @param options optional
+     * @return layer json
+     * @throws JSONException
+     */
+    public static JSONObject generateLayerJSON(final String type, final String url, final String name, final String dataprovider,
+                                        final JSONObject locale, final Boolean baseMap, final Integer opacity, final String style,
+                                        final Double minscale, final Double maxscale, final String legendImage, final String metadataId,
+                                        final String gfiType, final String gfiXslt, final String gfiContent, final String geometry,
+                                        final Boolean realtime, final Integer refreshRate, final String srsName, final String version,
+                                        final String username, final String password, final JSONObject params, final JSONObject options,
+                                        final JSONObject rolePermissions, final JSONObject attributes) throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("type", type);
+        json.put("url", url);
+
+        json.put("name", name);
+        json.put("dataprovider", dataprovider);
+        json.put("locale", locale);
+        json.put("base_map", baseMap);
+        if(opacity != null && opacity != -1) {
+            json.put("opacity", opacity);
+        }
+        if(style != null && !style.isEmpty()) {
+            json.put("style", style);
+        }
+        if(minscale != null && !minscale.equals(-1.0)) {
+            json.put("minscale", minscale);
+        }
+        if(maxscale != null && !maxscale.equals(-1.0)) {
+            json.put("maxscale", maxscale);
+        }
+
+        if(legendImage != null && !legendImage.isEmpty()) {
+            json.put("legend_image", legendImage);
+        }
+        if(metadataId != null && !metadataId.isEmpty()) {
+            json.put("metadataid", metadataId);
+        }
+        if(gfiType != null && !gfiType.isEmpty()) {
+            json.put("gfi_type", gfiType);
+        }
+        if(gfiXslt != null && !gfiXslt.isEmpty()) {
+            json.put("gfi_xslt", gfiXslt);
+        }
+        if(gfiContent != null && !gfiContent.isEmpty()) {
+            json.put("gfi_content", gfiContent);
+        }
+        if(geometry != null && !geometry.isEmpty()) {
+            json.put("geometry", geometry);
+        }
+
+        json.put("realtime", realtime);
+        if(refreshRate != null && refreshRate != -1) {
+            json.put("refresh_rate", refreshRate);
+        }
+        if(srsName != null && !srsName.isEmpty()) {
+            json.put("srs_name", srsName);
+        }
+        if(version != null && !version.isEmpty()) {
+            json.put("version", version);
+        }
+        if(username != null && !username.isEmpty()) {
+            json.put("username", username);
+        }
+        if(password != null && !password.isEmpty()) {
+            json.put("password", password);
+        }
+        if(params != null) {
+            json.put("params", params);
+        }
+        if(options != null) {
+            json.put("options", options);
+        }
+        if(rolePermissions != null) {
+            json.put("role_permissions", rolePermissions);
+        }
+        if(attributes != null) {
+            json.put("attributes", attributes);
+        }
+
+        return json;
+    }
+
+    private static OskariLayer parseLayer(final JSONObject json) throws JSONException {
         OskariLayer layer = new OskariLayer();
         layer.setType(json.getString("type"));
         layer.setUrl(json.getString("url"));
         layer.setName(json.getString("name"));
-        String orgName = json.getString("organization");
+        String dataproviderName = json.getString("dataprovider");
         layer.setLocale(json.getJSONObject("locale"));
         layer.setBaseMap(json.optBoolean("base_map", layer.isBaseMap()));
         layer.setOpacity(json.optInt("opacity", layer.getOpacity()));
@@ -183,9 +297,14 @@ public class LayerHelper {
             layer.setOptions(options);
         }
 
-        DataProvider dataProvider = DATA_PROVIDER_SERVICE.findByName(orgName);
+        JSONObject attributes = json.optJSONObject("attributes");
+        if (attributes != null) {
+            layer.setAttributes(attributes);
+        }
+
+        DataProvider dataProvider = DATA_PROVIDER_SERVICE.findByName(dataproviderName);
         if (dataProvider == null) {
-            LOG.warn(new Object[]{"Didn't find match for layergroup:", orgName});
+            LOG.warn(new Object[]{"Didn't find match for dataprovider:", dataproviderName});
         } else {
             layer.addDataprovider(dataProvider);
         }
@@ -193,7 +312,7 @@ public class LayerHelper {
         return layer;
     }
 
-    private static void setupLayerPermissions(JSONObject permissions, OskariLayer layer) {
+    private static void setupLayerPermissions(final JSONObject permissions, final OskariLayer layer) {
         if (permissions != null) {
             Resource res = new OskariLayerResource(layer);
             Iterator roleNames = permissions.keys();
