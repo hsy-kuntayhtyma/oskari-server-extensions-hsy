@@ -10,7 +10,6 @@ import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.layer.DataProviderService;
 import fi.nls.oskari.map.layer.DataProviderServiceIbatisImpl;
-import fi.nls.oskari.permission.domain.Permission;
 import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
@@ -28,8 +27,10 @@ public class V1_03_9__add_layers implements JdbcMigration {
     private static String SRS_3879 = "EPSG:3879";
 
     private static final String HKI_AVOINDATA_URL ="https://kartta.hel.fi/ws/geoserver/avoindata/wms";
+    private static final String HKI_RAJATTU_URL = "https://kartta.hel.fi/ws/geoserver/helsinki/wms";
     private static final String ESPOO_AVOIN_TEKLA_URL = "https://kartat.espoo.fi/teklaogcweb/wms.ashx";
     private static final String VANTAA_AVOIN_URL = "https://gis.vantaa.fi/geoserver/wms";
+    private static final String VANTAA_RAJATTU_URL = "http://gis.vantaa.fi/geo-web-services.mapdef";
 
     public void migrate(Connection connection) throws Exception {
         addDataproviders();
@@ -272,8 +273,38 @@ public class V1_03_9__add_layers implements JdbcMigration {
     }
 
     private boolean addMaaperakartatLayers(final int groupId) throws JSONException {
-        // FIXME Not implmented
-        return true;
+        JSONArray layers = new JSONArray();
+
+        // HKI maaperäkartta rasteri
+        layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WMS, HKI_RAJATTU_URL,
+                "Maaperakartta_rasteri", "Helsingin kaupunki",
+                getLocale("Helsingin maaperäkartta", "Helsingin maaperäkartta", "Helsingin maaperäkartta"), false,
+                -1,null, 12000.0,1.0, null, null, null, null, null,
+                null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, "HSY", "8ab34c2dec",
+                null, null, getRolePermissionsJSON(), getAttributesJSON()));
+
+        // Espoon ajantasa-asemakaava värillisenä
+        /*
+        // FIXME lisää Espoon molemmat karttatasot kun saadaan toimivat tunnukset
+        // FIXME erilliseen flywayhin
+        // FIXME erilliseen flywayhin myös maamassatasot
+        layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WMS, ESPOO_AVOIN_TEKLA_URL,
+                "Yleis_ja_osayleiskaavojen_yhdistelma", "Espoon kaupunki",
+                getLocale("Espoon yleis ja osayleiskaavojen yhdistelmä", "Espoon  yleis ja osayleiskaavojen yhdistelmä", "Espoon  yleis ja osayleiskaavojen yhdistelmä"), false,
+                -1,null, 12000.0,1.0, null, null, null, null, null,
+                null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, "WM4_SeutuMaisa", "56F_21e172fd44fbbb149713",
+                null, null, getRolePermissionsJSON(), getAttributesJSON()));
+        */
+        // Vantaan Maalajikartta
+        layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WMS, VANTAA_RAJATTU_URL,
+                "Maalajikartta", "Vantaan kaupunki",
+                getLocale("Vantaan maalajikartta", "Vantaan maalajikartta", "Vantaan maalajikartta"), false,
+                -1,null, 12000.0,1.0, null, null, null, null, null,
+                null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, null, null,
+                null, null, getRolePermissionsJSON(), getAttributesJSON()));
+
+        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true);
+        return layers.length() == addedCount;
     }
 
 }
