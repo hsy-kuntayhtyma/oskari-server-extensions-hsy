@@ -13,8 +13,6 @@
     "hsy-opaskartta.json"
   ],
   "bundles": [{
-    "id": "openlayers-default-theme"
-  }, {
     "id": "mapfull",
     "config": {
       "mapOptions": {
