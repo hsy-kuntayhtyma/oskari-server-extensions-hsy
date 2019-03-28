@@ -283,18 +283,14 @@ public class V1_03_9__add_layers implements JdbcMigration {
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, "HSY", "8ab34c2dec",
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
 
-        // Espoon ajantasa-asemakaava värillisenä
-        /*
-        // FIXME lisää Espoon molemmat karttatasot kun saadaan toimivat tunnukset
-        // FIXME erilliseen flywayhin
-        // FIXME erilliseen flywayhin myös maamassatasot
+        // Espoon maaperäkartta
         layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WMS, ESPOO_AVOIN_TEKLA_URL,
-                "Yleis_ja_osayleiskaavojen_yhdistelma", "Espoon kaupunki",
-                getLocale("Espoon yleis ja osayleiskaavojen yhdistelmä", "Espoon  yleis ja osayleiskaavojen yhdistelmä", "Espoon  yleis ja osayleiskaavojen yhdistelmä"), false,
+                "Espoon_maaperakartta_10000", "Espoon kaupunki",
+                getLocale("Espoon maaperakartta 1:10 000", "Espoon maaperakartta 1:10 000", "Espoon maaperakartta 1:10 000"), false,
                 -1,null, 12000.0,1.0, null, null, null, null, null,
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, "WM4_SeutuMaisa", "56F_21e172fd44fbbb149713",
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
-        */
+
         // Vantaan Maalajikartta
         layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WMS, VANTAA_RAJATTU_URL,
                 "Maalajikartta", "Vantaan kaupunki",
