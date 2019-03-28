@@ -24,7 +24,6 @@ public class V1_03_4__add_map_location_to_seutumaisa_view  implements JdbcMigrat
 
 
     public void migrate(Connection connection) throws Exception {
-        //long viewId = VIEW_SERVICE.getDefaultViewId();
         final List<Long> views =getViews(connection);
         for(Long viewId : views){
             if (FlywayHelper.viewContainsBundle(connection, BUNDLE_ID, viewId)) {

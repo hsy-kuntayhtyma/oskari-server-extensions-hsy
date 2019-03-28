@@ -13,8 +13,6 @@
     "hsy-opaskartta.json"
   ],
   "bundles": [{
-    "id": "openlayers-default-theme"
-  }, {
     "id": "mapfull",
     "config": {
       "mapOptions": {
@@ -115,8 +113,6 @@
     "id": "maplegend"
   }, {
     "id": "userguide"
-  }, {
-    "id": "myplaces2"
   }, {
     "id": "printout"
   }, {
