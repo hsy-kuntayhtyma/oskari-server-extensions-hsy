@@ -137,14 +137,22 @@
             </c:choose>
         </div>
     </div>
+
     <div id="logosDiv">
         <div id="logos">
-            <div class="vaakuna_logo helsinki" onclick="window.open('https://www.hel.fi');"
-                 style="cursor:pointer;"></div>
-            <div class="vaakuna_logo espoo" onclick="window.open('https://www.espoo.fi');"
-                 style="cursor:pointer;"></div>
-            <div class="vaakuna_logo vantaa" onclick="window.open('https://www.vantaa.fi');"
-                 style="cursor:pointer;"></div>
+            <table>
+                <tr>
+                    <td style="width:33%;vertical-align:middle;">
+                        <div class="vaakuna_logo helsinki" onclick="window.open('https://www.hel.fi');" style="cursor:pointer;margin:auto;"></div>
+                    </td>
+                    <td style="width:33%;vertical-align:middle;">
+                        <div class="vaakuna_logo espoo" onclick="window.open('https://www.espoo.fi');" style="cursor:pointer;margin:auto;"></div>
+                    </td>
+                    <td style="width:33%;vertical-align:middle;">
+                        <div class="vaakuna_logo vantaa" onclick="window.open('https://www.vantaa.fi');" style="cursor:pointer;margin:auto;"></div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </nav>
