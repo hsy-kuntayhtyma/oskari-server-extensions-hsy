@@ -9,7 +9,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
   <settings enhancementEnabled="true" useStatementNamespaces="true"/>
 
   <typeHandler javaType="org.json.JSONObject" jdbcType="VARCHAR" callback="fi.nls.oskari.domain.utils.JSONTypeHandler"/>
-  <typeHandler javaType="org.json.JSONArray" jdbcType="VARCHAR" callback="hsy.domain.utils.JSONArrayTypeHandler"/>
+  <typeHandler javaType="org.json.JSONArray" jdbcType="VARCHAR" callback="hsy.pipe.domain.utils.JSONArrayTypeHandler"/>
   <typeHandler javaType="java.lang.String" jdbcType="OTHER" callback="fi.nls.oskari.domain.utils.UuIdTypeHandler"/>
 
 
