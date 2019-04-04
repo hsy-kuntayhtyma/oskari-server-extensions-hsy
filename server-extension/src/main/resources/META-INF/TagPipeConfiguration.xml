@@ -6,7 +6,7 @@
 
 <sqlMap namespace="TagPipeConfiguration">
 
-    <typeAlias alias="TagPipeConfiguration" type="hsy.domain.TagPipeConfiguration" />
+    <typeAlias alias="TagPipeConfiguration" type="hsy.pipe.domain.TagPipeConfiguration" />
     
     <resultMap class="TagPipeConfiguration" id="TagPipeConfiguration">
         <result property="tagId" column="tag_id"/>
