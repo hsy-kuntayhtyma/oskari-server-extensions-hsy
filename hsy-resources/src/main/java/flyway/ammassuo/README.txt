@@ -1,1 +1,0 @@
-set ammassuo same than pipe environment

@@ -2,7 +2,6 @@ package helpers;
 
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupService;
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupServiceIbatisImpl;
-import fi.mml.portti.domain.permissions.Permissions;
 import fi.mml.portti.service.db.permissions.PermissionsService;
 import fi.mml.portti.service.db.permissions.PermissionsServiceIbatisImpl;
 import fi.nls.oskari.domain.Role;
@@ -24,18 +23,16 @@ import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkServiceMybatisImpl
 import fi.nls.oskari.map.view.ViewException;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
-import fi.nls.oskari.map.view.util.ViewHelper;
 import fi.nls.oskari.permission.domain.Permission;
 import fi.nls.oskari.permission.domain.Resource;
 import fi.nls.oskari.user.MybatisRoleService;
-import fi.nls.oskari.util.JSONHelper;
-import flyway.seutumaisa.V1_03_6__mappfull_add_selected_layers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.oskari.service.util.ServiceFactory;
-
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /***
@@ -45,6 +42,11 @@ import java.util.*;
 public class LayerHelper {
     public static final String ROLE_SEUTUMAISA = "SeutuMaisa";
     public static final String ROLE_AMMASSUO = "Ammassuo";
+    public static final String ROLE_AMMASSUO_KATSELIJAT = "Ammassuo_katselijat";
+    public static final String ROLE_AMMASSUO_PIIRTO_OIKEUS_BIOJATE  = "Ammassuo_piirto_oikeus_biojate";
+    public static final String ROLE_AMMASSUO_PIIRTO_OIKEUS_JATTEENJALOSTUS = "Ammassuo_piirto_oikeus_jatteenjalostus";
+    public static final String ROLE_AMMASSUO_PIIRTO_OIKEUS_PIMA = "Ammassuo_piirto_oikeus_pima";
+    public static final String ROLE_AMMASSUO_PAAKAYTTAJA = "Ammassuo_paakayttaja";
 
     public static final String VERSION_WFS110 = "1.1.0";
     public static final String VERSION_WFS200 = "2.0.0";
@@ -263,6 +265,12 @@ public class LayerHelper {
         return json;
     }
 
+    /**
+     * Parse JSON layer object to OskariMaplLayer class
+     * @param json layer json
+     * @return OskariLayer object
+     * @throws JSONException
+     */
     private static OskariLayer parseLayer(final JSONObject json) throws JSONException {
         OskariLayer layer = new OskariLayer();
         layer.setType(json.getString("type"));
@@ -312,7 +320,12 @@ public class LayerHelper {
         return layer;
     }
 
-    private static void setupLayerPermissions(final JSONObject permissions, final OskariLayer layer) {
+    /**
+     * Setup layer permissions. This overrides all permission s for selected layer.
+     * @param permissions permission
+     * @param layer layer
+     */
+    public static void setupLayerPermissions(final JSONObject permissions, final OskariLayer layer) {
         if (permissions != null) {
             Resource res = new OskariLayerResource(layer);
             Iterator roleNames = permissions.keys();
@@ -345,11 +358,160 @@ public class LayerHelper {
     }
 
     /**
+     * Insert layer permissions. This sets new permissions to available layers.
+     * @param permissions
+     * @param layers
+     */
+    public static void insertLayerPermissions(final JSONObject permissions, final List<OskariLayer> layers, final Connection conn) throws SQLException, JSONException{
+        Iterator roleNames = permissions.keys();
+
+        while (roleNames.hasNext()) {
+            String roleName = (String) roleNames.next();
+            Role role = ROLE_SERVICE.findRoleByName(roleName);
+
+            JSONArray p = permissions.getJSONArray(roleName);
+
+            for(int i=0; i < p.length(); i++) {
+                String permission = p.getString(i);
+                for (OskariLayer layer : layers) {
+                    long resourceId = getResourceId(conn, layer);
+                    if (resourceId == -1) {
+                        resourceId = addResource(conn, layer);
+                    }
+
+                    if (!hasPermission(conn, resourceId, role.getId(), permission)) {
+                        addPermission(conn, resourceId, role.getId(), permission);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Exists maplayer group, checks if maplayer groupt already exists.
      * @param name group name
      * @return maplayer group
      */
     public static MaplayerGroup getMapLayerGroup(final String name) {
         return MAP_LAYER_GROUP_SERVICE.findByName(name);
+    }
+
+    /**
+     * Get maplayers
+     * @param conn
+     * @param sql
+     * @return list of maplayers
+     * @throws SQLException
+     */
+    public static List<OskariLayer> getMapLayers(Connection conn, final String sql) throws SQLException {
+        List<OskariLayer> list = new ArrayList<>();
+
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    OskariLayer layer = new OskariLayer();
+                    layer.setType(rs.getString("type"));
+                    layer.setUrl(rs.getString("url"));
+                    layer.setName(rs.getString("name"));
+                    list.add(layer);
+                }
+            }
+        }
+        return list;
+    }
+
+
+    /**
+     * Gets resource id
+     * @param conn sql connection
+     * @param layer layer
+     * @return resource id, if resource not found -1
+     * @throws SQLException
+     */
+    private static long getResourceId(final Connection conn, final OskariLayer layer) throws SQLException {
+        long id = -1;
+        final String sql = "SELECT id FROM oskari_resource WHERE resource_type='maplayer' " +
+                " AND resource_mapping=?;";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1,layer.getType() + "+" + layer.getUrl() + "+" + layer.getName());
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    id = rs.getLong("id");
+                }
+            }
+        }
+        return id;
+    }
+
+    /**
+     * Adds resource
+     * @param conn sql connection
+     * @param layer layer
+     * @return resource id, if cannot add resource -1
+     * @throws SQLException
+     */
+    private static long addResource(final Connection conn, final OskariLayer layer) throws SQLException {
+        long id = -1;
+        final String sql = "INSERT INTO oskari_resource (resource_type, resource_mapping) VALUES (?,?)";
+        final String[] returnId = { "id" };
+        final PreparedStatement statement = conn.prepareStatement(sql, returnId);
+        statement.setString(1,"maplayer");
+        statement.setString(2,layer.getType() + "+" + layer.getUrl() + "+" + layer.getName());
+        ResultSet rs=statement.getGeneratedKeys();
+        if (rs.next()) {
+            id = rs.getInt(1);
+        }
+
+        return id;
+    }
+
+    /**
+     * Has permission already saved
+     * @param conn sql connection
+     * @param resourceId resource id
+     * @param roleId role id
+     * @param permission permission type
+     * @return exists or not
+     * @throws SQLException
+     */
+    private static boolean hasPermission(final Connection conn, final long resourceId, final long roleId, final String permission) throws SQLException{
+        boolean hasPermission = false;
+        final String sql = "SELECT * FROM oskari_permission WHERE external_type='ROLE' " +
+                " AND permission=? AND oskari_resource_id=? AND external_id=?;";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1,permission);
+            statement.setLong(2,resourceId);
+            statement.setString(3, "" + roleId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    hasPermission = true;
+                }
+            }
+        }
+        return hasPermission;
+    }
+
+    /**
+     * Adds permission
+     * @param conn sql connection
+     * @param resourceId resource id
+     * @param roleId role id
+     * @param permission permission type
+     * @throws SQLException
+     */
+    private static void addPermission(final Connection conn, final long resourceId, final long roleId, final String permission) throws SQLException {
+        final String sql = "INSERT INTO oskari_permission (external_type, permission, oskari_resource_id, external_id) VALUES (?,?,?,?)";
+
+        final PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1,"ROLE");
+        statement.setString(2,permission);
+        statement.setLong(3, resourceId);
+        statement.setLong(4, roleId);
+        ResultSet rs=statement.getGeneratedKeys();
+        try {
+            statement.execute();
+        } finally {
+            statement.close();
+        }
     }
 }
