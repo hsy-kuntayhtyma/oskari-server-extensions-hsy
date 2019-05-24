@@ -60,10 +60,7 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
                             "</wfs:Name><wfs:Value>" + jsonArray.getJSONObject(j).getString("value") +
                             "</wfs:Value></wfs:Property>");
                 }
-
-                if (jsonObject.has("geometries")) {
-                    insertGeometries(lc.getGMLGeometryProperty(), requestData, jsonObject.getJSONObject("geometries"), srsName);
-                }
+                
                 requestData.append("<ogc:Filter><ogc:FeatureId fid='" + jsonObject.getString("featureId") + "'/></ogc:Filter></wfs:Update></wfs:Transaction>");
 
                 String responseString = postPayload(layer, requestData.toString());
@@ -79,19 +76,6 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
                 throw new ActionException("JSON processing error", ex);
             }
         }
-    }
-
-    protected void insertGeometries(String geometryProperty, StringBuilder requestData, JSONObject geometries, String srsName) throws ActionParamsException, JSONException {
-        String geometryType = geometries.getString("type");
-        if(!isAllowedGeomType(geometryType)) {
-            throw new ActionParamsException("Invalid geometry type: " + geometryProperty);
-        }
-        JSONArray data = geometries.getJSONArray("data");
-        requestData.append("<wfs:Property><wfs:Name>");
-        requestData.append(geometryProperty);
-        requestData.append("</wfs:Name><wfs:Value>");
-        requestData.append(getGeometry(geometryType, data, srsName));
-        requestData.append("</wfs:Value></wfs:Property>");
     }
 }
 
