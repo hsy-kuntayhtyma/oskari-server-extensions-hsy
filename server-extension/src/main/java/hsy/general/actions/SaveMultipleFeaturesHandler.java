@@ -60,7 +60,7 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
                             "</wfs:Name><wfs:Value>" + jsonArray.getJSONObject(j).getString("value") +
                             "</wfs:Value></wfs:Property>");
                 }
-                
+
                 requestData.append("<ogc:Filter><ogc:FeatureId fid='" + jsonObject.getString("featureId") + "'/></ogc:Filter></wfs:Update></wfs:Transaction>");
 
                 String responseString = postPayload(layer, requestData.toString());
