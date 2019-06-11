@@ -1,4 +1,4 @@
-package flyway.ammassuo;
+package flyway.seutumaisa;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
 
-public class V1_00_6__add_timeseries_to_views implements JdbcMigration {
+public class V1_03_14__add_timeseries_to_views implements JdbcMigration {
 	
 	private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
 	private static final  String TIMESERIES = "timeseries";
