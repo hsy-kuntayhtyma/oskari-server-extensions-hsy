@@ -1,49 +1,23 @@
 package flyway.seutumaisa;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.util.FlywayHelper;
 
 public class V1_03_14__add_timeseries_to_views implements JdbcMigration {
 	
 	private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
-	private static final  String TIMESERIES = "timeseries";
-	
-	public void migrate(Connection connection) throws Exception {
-		long viewId = VIEW_SERVICE.getDefaultViewId();
-		makeInsert(viewId,connection);
-	}
-	
-	private void makeInsert(long viewId, Connection connection)
-            throws Exception {
+    private static final  String TIMESERIES = "timeseries";
+    private static final String ROLE_SEUTUMAISA = "seutumaisa";
 
-        final PreparedStatement statement =
-                connection.prepareStatement("INSERT INTO portti_view_bundle_seq" +
-                        "(view_id, bundle_id, seqno, config, state, startup, bundleinstance) " +
-                        "VALUES (" +
-                        "?, " +
-                        "(SELECT id FROM portti_bundle WHERE name=?), " +
-                        "(SELECT max(seqno)+1 FROM portti_view_bundle_seq WHERE view_id=?), " +
-                        "?, ?, " +
-                        "(SELECT startup FROM portti_bundle WHERE name=?), " +
-                        "?)");
-
-        statement.setLong(1, viewId);
-        statement.setString(2, TIMESERIES);
-        statement.setLong(3, viewId);
-        statement.setString(4, "{}");
-        statement.setString(5, "{}");
-        statement.setString(6, TIMESERIES);
-        statement.setString(7, TIMESERIES);
-
-        try {
-            statement.execute();
-        } finally {
-            statement.close();
+    public void migrate(Connection connection) throws Exception {
+        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(ROLE_SEUTUMAISA);
+        if(FlywayHelper.getBundleFromView(connection, TIMESERIES, viewId) == null) {
+            FlywayHelper.addBundleWithDefaults(connection, viewId, TIMESERIES);
         }
     }
 }
