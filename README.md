@@ -16,19 +16,22 @@ mvn clean install && cp webapp-map/target/oskari-map.war ../../../Apps/jetty-9.4
 ### First run all these
 * oskari-server-extensions-karttasovellus:
     * new version:  run ```mvn -N versions:set -DnewVersion=<version>```
-    * commit changes: ```git commit -m "Version upgrade"```
+    * commit changes: ```git add . && git commit -m "Version upgrade"```
     * add new git tag: ```git tag -a <version> -m "Version <version>"```
-    * push changes: ```git push``` and ```git push --tags```
+    * push changes: ```git push && git push --tags```
     * create wars : ```mvn clean install```
 * oskari-frontend-contrib:
     * add new git tag: ```git tag -a <version> -m "Version <version>"```
-    * push changes: ```git push``` and ```git push --tags```
+    * push changes: ```git push && git push --tags```
 * oskari-frontend-karttasovellus:
     * add new git tag: ```git tag -a <version> -m "Version <version>"```
-    * push changes: ```git push``` and ```git push --tags```
+    * push changes: ```git push && git push --tags```
+* servers:
+    * add new git tag: ```git tag -a <version> -m "Version <version>"```
+    * push changes: ```git push && git push --tags```
 * oskari-frontend-hsy:
     * add new git tag: ```git tag -a <version> -m "Version <version>"```
-    * push changes: ```git push``` and ```git push --tags```
+    * push changes: ```git push && git push --tags```
     * create minifyed package: ```npm run build -- --env.appdef=1.00:applications/hsy```
 
 ### Create installation zip package
