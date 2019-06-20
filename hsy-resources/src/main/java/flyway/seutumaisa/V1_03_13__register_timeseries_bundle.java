@@ -18,7 +18,6 @@ public class V1_03_13__register_timeseries_bundle implements JdbcMigration{
 		timeseries.setConfig("{}");
 		timeseries.setState("{}");
 		timeseries.setName(TIMESERIES);
-		timeseries.setStartup(BundleHelper.getDefaultBundleStartup(NAMESPACE, TIMESERIES, "Timeseries"));
 		BundleHelper.registerBundle(timeseries);
 	}
 }
