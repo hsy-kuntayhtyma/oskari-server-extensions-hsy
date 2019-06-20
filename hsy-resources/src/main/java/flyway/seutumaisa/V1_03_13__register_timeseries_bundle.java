@@ -9,7 +9,7 @@ import fi.nls.oskari.domain.map.view.Bundle;
 
 public class V1_03_13__register_timeseries_bundle implements JdbcMigration{
 
-	private static final String NAMESPACE = "seutumaisa";
+	private static final String NAMESPACE = "framework";
 	private static final String TIMESERIES = "timeseries";
 
 	public void migrate(Connection connection) {
