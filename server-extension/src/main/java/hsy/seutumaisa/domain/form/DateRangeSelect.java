@@ -1,18 +1,18 @@
-package hsy.seutumaisa;
+package hsy.seutumaisa.domain.form;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class RangeSlider {
+/**
+ * Creates DateRange select
+ */
+public class DateRangeSelect {
     private String type;
     private String title;
-    private int min;
-    private int max;
     private String id;
 
-    public RangeSlider() {
-        this.type = "range";
+    public DateRangeSelect() {
+        this.type = "daterange";
     }
 
     public String getType() {
@@ -31,22 +31,6 @@ public class RangeSlider {
         this.title = title;
     }
 
-    public int getMin() {
-        return min;
-    }
-
-    public void setMin(int min) {
-        this.min = min;
-    }
-
-    public int getMax() {
-        return max;
-    }
-
-    public void setMax(int max) {
-        this.max = max;
-    }
-
     public String getId() {
         return id;
     }
@@ -60,8 +44,6 @@ public class RangeSlider {
         json.put("id", this.id);
         json.put("title", this.title);
         json.put("type", this.type);
-        json.put("min", this.min);
-        json.put("max", this.max);
         return json;
     }
 }

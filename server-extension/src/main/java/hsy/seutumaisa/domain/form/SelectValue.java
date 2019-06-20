@@ -1,8 +1,11 @@
-package hsy.seutumaisa;
+package hsy.seutumaisa.domain.form;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Creates select values
+ */
 public class SelectValue {
     private String id;
     private String title;

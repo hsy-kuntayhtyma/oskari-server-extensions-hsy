@@ -1,4 +1,4 @@
-package hsy.seutumaisa;
+package hsy.seutumaisa.domain.form;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Creates select
+ */
 public class Select {
     private String type;
     private String placeHolderText;
