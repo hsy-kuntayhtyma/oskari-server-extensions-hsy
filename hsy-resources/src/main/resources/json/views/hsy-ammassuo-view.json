@@ -205,6 +205,15 @@
         "id": "Oskari.mapframework.bundle.mapanalysis.plugin.AnalysisLayerPlugin"
       }, {
         "id": "Oskari.mapframework.mapmodule.VectorLayerPlugin"
+      }, {
+        "id": "Oskari.mapframework.bundle.mapmodule.plugin.LogoPlugin",
+        "config": {
+          "termsUrl": {
+            "fi": "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx",
+            "en": "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx",
+            "sv": "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx"
+          }
+        }
       }],
       "layers": []
     },
@@ -232,9 +241,7 @@
   }, {
     "id": "metadatacatalogue"
   }, {
-    "id": "layerselector2"
-  }, {
-    "id": "layerselection2"
+    "id": "hierarchical-layerlist"
   }, {
     "id": "coordinatedisplay",
     "config": {
@@ -244,13 +251,13 @@
   }, {
     "id": "personaldata"
   }, {
-    "id": "publisher"
+    "id": "publisher2"
   }, {
     "id": "maplegend"
   }, {
     "id": "userguide"
   }, {
-    "id": "myplaces2"
+    "id": "myplaces3"
   }, {
     "id": "printout"
   }, {
