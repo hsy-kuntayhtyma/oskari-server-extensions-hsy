@@ -24,7 +24,7 @@ public class SeutumaisaSearchHelper {
     public static final String KEY_KELPOISUUSLUOKKA = "kelpoisuusluokka";
     public static final String KEY_MAAMASSARYHMA = "maamassaryhma";
     public static final String KEY_MAAMASSALAJI = "maamassalaji";
-    public static final String KEY_MAARA = "maara";
+    public static final String KEY_MAARA = "amount_remaining";
     public static final String KEY_START = "start";
     public static final String KEY_END = "end";
 
