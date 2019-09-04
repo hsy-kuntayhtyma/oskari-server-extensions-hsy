@@ -189,7 +189,8 @@ public class SeutumaisaDBHelper {
         try  {
             conn = getConnection();
 
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT min(maara), max(maara) FROM maamassatieto WHERE maara IS NOT NULL;");
+            PreparedStatement preparedStatement = conn.prepareStatement("SELECT min(" + SeutumaisaSearchHelper.KEY_MAARA +
+                    "), max(" + SeutumaisaSearchHelper.KEY_MAARA + ") FROM maamassatieto WHERE " + SeutumaisaSearchHelper.KEY_MAARA +" IS NOT NULL;");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 maara = resultSet.getInt("max");
@@ -318,7 +319,7 @@ public class SeutumaisaDBHelper {
             sb.append("SELECT mt.id , mt.maamassalaji, mt.maamassaryhma,");
             sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
-            sb.append("mt.maara, h.organisaatio,");
+            sb.append("mt.amount_remaining, h.organisaatio,");
             sb.append("k.namefin as kunta,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
@@ -418,7 +419,7 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getString("maamassatila"));
                 row.put(rs.getDate("planned_begin_date"));
                 row.put(rs.getDate("planned_end_date"));
-                row.put(rs.getLong("maara"));
+                row.put(rs.getLong("amount_remaining"));
                 row.put(rs.getString("organisaatio"));
                 row.put(rs.getString("kunta"));
                 row.put(rs.getString("geojson"));
