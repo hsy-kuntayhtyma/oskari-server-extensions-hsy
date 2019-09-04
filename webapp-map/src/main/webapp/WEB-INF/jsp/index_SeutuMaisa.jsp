@@ -242,7 +242,6 @@
 </c:if>
 
 <!-- ############# RIBBON ############# -->
-<jsp:useBean id="props" class="fi.nls.oskari.util.PropertyUtil"/>
 <c:set var="ribbon" scope="page" value="${props.getOptional('page.ribbon')}" />
 <c:if test="${!empty ribbon}">
     <style type="text/css">
