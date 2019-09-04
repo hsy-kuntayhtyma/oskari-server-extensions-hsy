@@ -85,9 +85,19 @@
 </head>
 <body>
 
+<script type="text/javascript">
+    var resetOskariState = function(){
+        var rb = Oskari.requestBuilder('StateHandler.SetStateRequest');
+        if (rb) {
+            Oskari.getSandbox().request('MainMapModule', rb());
+        }
+        jQuery('div.oskari-flyout.ui-draggable.oskari-attached div.oskari-flyouttoolbar').find('.icon-close').trigger('click');
+    };
+</script>
+
 <nav id="maptools">
     <div id="toolsDiv">
-        <div id="logobar"></div>
+        <div id="logobar" onclick="resetOskariState();return false;"></div>
         <div id="loginbar"></div>
         <div id="menubar"></div>
         <div id="divider"></div>
