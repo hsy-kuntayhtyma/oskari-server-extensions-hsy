@@ -217,8 +217,10 @@
         href="/Oskari${path}/css/SeutuMaisa_overwritten.css"/>
 
 <!-- ############# /Javascript ################# -->
-<script>
-    jQuery(function () {
+<jsp:useBean id="props" class="fi.nls.oskari.util.PropertyUtil"/>
+<c:set var="ajaxLogin" scope="page" value="${props.getOptional('hsy.use.spring.login.fix')}"/>
+<c:if test="${!empty ajaxLogin}">
+    <script>
         jQuery(function () {
             jQuery('input#submit[type=submit]').on('click', function (e) {
                 var oldLocation = location.href;
@@ -229,15 +231,30 @@
             });
 
             jQuery('#login a').on('click', function (e) {
-
                 var oldLocation = location.href;
                 setTimeout(function () {
                     window.location.href = oldLocation;
                 }, 400);
             });
         });
-    });
 
-</script>
+    </script>
+</c:if>
+
+<!-- ############# RIBBON ############# -->
+<c:set var="ribbon" scope="page" value="${props.getOptional('page.ribbon')}" />
+<c:if test="${!empty ribbon}">
+    <style type="text/css">
+        #ribbon
+        {
+
+        }
+        #ribbon:hover {
+            display:none;
+        }
+    </style>
+    <div id="ribbon">${ribbon}</div>
+</c:if>
+
 </body>
 </html>
