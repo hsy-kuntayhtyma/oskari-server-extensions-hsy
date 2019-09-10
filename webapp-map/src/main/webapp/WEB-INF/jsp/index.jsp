@@ -220,15 +220,6 @@
 <!-- ############# RIBBON ############# -->
 <c:set var="ribbon" scope="page" value="${props.getOptional('page.ribbon')}" />
 <c:if test="${!empty ribbon}">
-    <style type="text/css">
-        #ribbon
-        {
-
-        }
-        #ribbon:hover {
-            display:none;
-        }
-    </style>
     <div id="ribbon">${ribbon}</div>
 </c:if>
 
