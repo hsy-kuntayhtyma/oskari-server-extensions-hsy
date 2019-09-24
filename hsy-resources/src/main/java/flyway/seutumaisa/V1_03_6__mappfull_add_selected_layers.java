@@ -6,9 +6,9 @@ import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.layer.OskariLayerService;
-import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
+import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,8 +25,8 @@ import static fi.nls.oskari.view.modifier.ViewModifier.BUNDLE_MAPFULL;
 
 public class V1_03_6__mappfull_add_selected_layers implements JdbcMigration {
     private static final Logger LOG = LogFactory.getLogger(V1_03_6__mappfull_add_selected_layers.class);
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
-    private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
+    private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceMybatisImpl();
     private static final String PLUGIN_NAME = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
     private static final String MAPFULL = "mapfull";
     private static final String OPASKARTTA_NAME = "avoindata:Opaskartta_PKS";
@@ -38,7 +38,7 @@ public class V1_03_6__mappfull_add_selected_layers implements JdbcMigration {
 
     public void migrate(Connection connection)
             throws Exception {
-        service =  new ViewServiceIbatisImpl();
+        service =  new AppSetupServiceMybatisImpl();
         try {
             updateViews(connection);
         }

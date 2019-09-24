@@ -2,8 +2,9 @@ package helpers;
 
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupService;
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupServiceIbatisImpl;
-import fi.mml.portti.service.db.permissions.PermissionsService;
-import fi.mml.portti.service.db.permissions.PermissionsServiceIbatisImpl;
+import fi.nls.oskari.service.OskariComponentManager;
+import org.oskari.permissions.PermissionService;
+import org.oskari.permissions.model.*;
 import fi.nls.oskari.domain.Role;
 import fi.nls.oskari.domain.map.DataProvider;
 import fi.nls.oskari.domain.map.MaplayerGroup;
@@ -12,19 +13,19 @@ import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.map.data.domain.OskariLayerResource;
+import org.oskari.permissions.model.OskariLayerResource;
 import fi.nls.oskari.map.layer.DataProviderService;
-import fi.nls.oskari.map.layer.DataProviderServiceIbatisImpl;
+import fi.nls.oskari.map.layer.DataProviderServiceMybatisImpl;
 import fi.nls.oskari.map.layer.OskariLayerService;
-import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
+import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLink;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkService;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkServiceMybatisImpl;
 import fi.nls.oskari.map.view.ViewException;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
-import fi.nls.oskari.permission.domain.Permission;
-import fi.nls.oskari.permission.domain.Resource;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
+import org.oskari.permissions.model.Permission;
+import org.oskari.permissions.model.Resource;
 import fi.nls.oskari.user.MybatisRoleService;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,11 +56,11 @@ public class LayerHelper {
 
     private static final Logger LOG = LogFactory.getLogger(LayerHelper.class);
 
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final OskariMapLayerGroupService MAP_LAYER_GROUP_SERVICE = new OskariMapLayerGroupServiceIbatisImpl();
-    private static final PermissionsService PERMISSIONS_SERVICE = new PermissionsServiceIbatisImpl();
+    private static final PermissionService  PERMISSIONS_SERVICE = OskariComponentManager.getComponentOfType(PermissionService.class);
     private static final MybatisRoleService ROLE_SERVICE = new MybatisRoleService();
-    private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceIbatisImpl();
+    private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceMybatisImpl();
     private static final OskariLayerGroupLinkService LINK_SERVICE = new OskariLayerGroupLinkServiceMybatisImpl();
     private static final String BUNDLE_MAPFULL = "mapfull";
     private static final String BACKGROUND_LAYER_SELECTION_PLUGIN = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
@@ -115,7 +116,7 @@ public class LayerHelper {
      */
     public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups, final boolean notCheckExitings) {
         List<Integer> addedLayers = new ArrayList<>();
-        OskariLayerService service = new OskariLayerServiceIbatisImpl();
+        OskariLayerService service = new OskariLayerServiceMybatisImpl();
         try {
             for (int i = 0; i < layerArray.length(); i++) {
                 JSONObject layerJSON = layerArray.getJSONObject(i);
@@ -351,7 +352,7 @@ public class LayerHelper {
                     }
                 }
 
-                PERMISSIONS_SERVICE.saveResourcePermissions(res);
+                PERMISSIONS_SERVICE.saveResource(res);
                 return;
             }
         }

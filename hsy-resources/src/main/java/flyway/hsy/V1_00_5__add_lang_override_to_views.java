@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 
 public class V1_00_5__add_lang_override_to_views implements JdbcMigration{
-	private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+	private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
 	private static final  String LANG_OVERRIDES = "hsy-lang-overrides";
 	
 	public void migrate(Connection connection) throws Exception {

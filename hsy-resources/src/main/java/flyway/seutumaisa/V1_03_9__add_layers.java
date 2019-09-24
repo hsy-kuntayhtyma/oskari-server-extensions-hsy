@@ -2,14 +2,13 @@ package flyway.seutumaisa;
 
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupService;
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupServiceIbatisImpl;
-import fi.mml.portti.domain.permissions.Permissions;
 import fi.nls.oskari.domain.map.DataProvider;
 import fi.nls.oskari.domain.map.MaplayerGroup;
 import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.layer.DataProviderService;
-import fi.nls.oskari.map.layer.DataProviderServiceIbatisImpl;
+import fi.nls.oskari.map.layer.DataProviderServiceMybatisImpl;
 import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONArray;
@@ -23,7 +22,7 @@ import java.util.List;
 public class V1_03_9__add_layers implements JdbcMigration {
     private static final Logger LOG = LogFactory.getLogger(V1_03_9__add_layers.class);
     private static final OskariMapLayerGroupService MAP_LAYER_GROUP_SERVICE = new OskariMapLayerGroupServiceIbatisImpl();
-    private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceIbatisImpl();
+    private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceMybatisImpl();
     private static String SRS_3879 = "EPSG:3879";
 
     private static final String HKI_AVOINDATA_URL ="https://kartta.hel.fi/ws/geoserver/avoindata/wms";
@@ -160,20 +159,20 @@ public class V1_03_9__add_layers implements JdbcMigration {
         JSONObject json = new JSONObject();
 
         JSONArray adminRights = new JSONArray();
-        adminRights.put(Permissions.PERMISSION_TYPE_PUBLISH);
-        adminRights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-        adminRights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+        adminRights.put("PUBLISH");
+        adminRights.put("VIEW_LAYER");
+        adminRights.put("VIEW_PUBLISHED");
         json.put("Admin", adminRights);
 
         JSONArray userRights = new JSONArray();
-        userRights.put(Permissions.PERMISSION_TYPE_PUBLISH);
-        userRights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-        userRights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+        userRights.put("PUBLISH");
+        userRights.put("VIEW_LAYER");
+        userRights.put("VIEW_PUBLISHED");
         json.put("User", userRights);
 
         JSONArray guestRights = new JSONArray();
-        guestRights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-        guestRights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+        guestRights.put("VIEW_LAYER");
+        guestRights.put("VIEW_PUBLISHED");
         json.put("Guest", guestRights);
 
         return json;

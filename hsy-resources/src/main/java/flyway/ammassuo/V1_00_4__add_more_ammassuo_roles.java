@@ -1,9 +1,5 @@
 package flyway.ammassuo;
 
-import fi.mml.portti.domain.permissions.Permissions;
-import fi.mml.portti.domain.permissions.WFSLayerPermissionsStore;
-import fi.mml.portti.service.db.permissions.PermissionsService;
-import fi.mml.portti.service.db.permissions.PermissionsServiceIbatisImpl;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.domain.Role;
 import fi.nls.oskari.domain.User;
@@ -12,7 +8,7 @@ import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import fi.nls.oskari.service.ServiceException;
 import fi.nls.oskari.service.UserService;
 import fi.nls.oskari.user.DatabaseUserService;
@@ -20,19 +16,20 @@ import fi.nls.oskari.user.MybatisRoleService;
 import fi.nls.oskari.util.PropertyUtil;
 import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+import org.oskari.permissions.PermissionService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import org.oskari.permissions.PermissionService;
+import org.oskari.permissions.model.*;
+import fi.nls.oskari.service.OskariComponentManager;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class V1_00_4__add_more_ammassuo_roles implements JdbcMigration {
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final MybatisRoleService ROLE_SERVICE = new MybatisRoleService();
-    private static final PermissionsService PERMISSIONS_SERVICE = new PermissionsServiceIbatisImpl();
+    private static final PermissionService  PERMISSIONS_SERVICE = OskariComponentManager.getComponentOfType(PermissionService.class);
     private static final Logger LOG = LogFactory.getLogger(V1_00_4__add_more_ammassuo_roles.class);
 
     private enum Roles
@@ -103,8 +100,7 @@ public class V1_00_4__add_more_ammassuo_roles implements JdbcMigration {
             // add default users
             addDefaultUsers();
 
-            // flush permissions for WFS transport
-            WFSLayerPermissionsStore.destroyAll();
+
 
         } catch (Exception e) {
             LOG.warn(e, "Something went wrong while adding roles and rights!");
@@ -174,11 +170,11 @@ public class V1_00_4__add_more_ammassuo_roles implements JdbcMigration {
         {
             String roleName = role.getName();
             JSONArray rights = new JSONArray();
-            rights.put(Permissions.PERMISSION_TYPE_PUBLISH);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+            rights.put("PUBLISH");
+            rights.put("VIEW_LAYER");
+            rights.put("VIEW_PUBLISHED");
             if(roleName.equals(LayerHelper.ROLE_AMMASSUO_PAAKAYTTAJA) || roleName.equals(editRole)) {
-                rights.put(Permissions.PERMISSION_TYPE_EDIT_LAYER_CONTENT);
+                rights.put("EDIT_LAYER_CONTENT");
             }
             json.put(roleName, rights);
         }
@@ -198,11 +194,11 @@ public class V1_00_4__add_more_ammassuo_roles implements JdbcMigration {
         {
             String roleName = role.getName();
             JSONArray rights = new JSONArray();
-            rights.put(Permissions.PERMISSION_TYPE_PUBLISH);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+            rights.put("PUBLISH");
+            rights.put("VIEW_LAYER");
+            rights.put("VIEW_PUBLISHED");
             if(roleName.equals(LayerHelper.ROLE_AMMASSUO_PAAKAYTTAJA) || editRoles.contains(roleName)) {
-                rights.put(Permissions.PERMISSION_TYPE_EDIT_LAYER);
+                rights.put("EDIT_LAYER");
             }
             json.put(roleName, rights);
         }
@@ -221,11 +217,11 @@ public class V1_00_4__add_more_ammassuo_roles implements JdbcMigration {
         {
             String roleName = role.getName();
             JSONArray rights = new JSONArray();
-            rights.put(Permissions.PERMISSION_TYPE_PUBLISH);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_LAYER);
-            rights.put(Permissions.PERMISSION_TYPE_VIEW_PUBLISHED);
+            rights.put("PUBLISH");
+            rights.put("VIEW_LAYER");
+            rights.put("VIEW_PUBLISHED");
             if(roleName.equals(LayerHelper.ROLE_AMMASSUO_PAAKAYTTAJA)) {
-                rights.put(Permissions.PERMISSION_TYPE_EDIT_LAYER);
+                rights.put("EDIT_LAYER");
             }
             json.put(roleName, rights);
         }

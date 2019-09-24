@@ -3,7 +3,7 @@ package flyway.seutumaisa;
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class V1_03_16__reorder_seutumaisa_view_bundle_startsequences implements JdbcMigration {
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final String ROLE_SEUTUMAISA = "seutumaisa";
     private static final String BUNDLE_DIVMANAZER = "divmanazer";
     private static final String BUNDLE_SEUTUMAISA_SEARCH = "seutumaisa-search";
