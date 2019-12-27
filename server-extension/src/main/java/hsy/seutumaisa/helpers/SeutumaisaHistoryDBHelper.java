@@ -50,16 +50,16 @@ public class SeutumaisaHistoryDBHelper {
      * @return
      * @throws JSONException
      */
-    public static JSONArray getSearchFields() throws JSONException {
-        JSONArray searchFields = new JSONArray();
-        searchFields.put(getMaamassaSelect().toJSON());
-        searchFields.put(getMaamassaRyhmaSelect().toJSON());
-        searchFields.put(getKohdetyyppiSelect().toJSON());
-        searchFields.put(getToteutunutAikatauluRange().toJSON());
-        searchFields.put(getPilaantuneisuusSelect().toJSON());
-        searchFields.put(getKuntaSelect().toJSON());
+    public static JSONArray getHistorySearchFields() throws JSONException {
+        JSONArray historySearchFields = new JSONArray();
+        historySearchFields.put(getMaamassaSelect().toJSON());
+        historySearchFields.put(getMaamassaRyhmaSelect().toJSON());
+        historySearchFields.put(getKohdetyyppiSelect().toJSON());
+        historySearchFields.put(getToteutunutAikatauluRange().toJSON());
+        historySearchFields.put(getPilaantuneisuusSelect().toJSON());
+        historySearchFields.put(getKuntaSelect().toJSON());
 
-        return searchFields;
+        return historySearchFields;
     }
 
     /**
@@ -236,7 +236,6 @@ public class SeutumaisaHistoryDBHelper {
         DataTableResult result = new DataTableResult();
 
         // TODO: can we get geom index another way than hard coded ?
-        result.setColumnDefs(HistoryDataTableHelper.getColumnDefs(8));
         result.setColumns(HistoryDataTableHelper.getColumns());
 
         Connection conn = null;
@@ -251,26 +250,31 @@ public class SeutumaisaHistoryDBHelper {
 
             //new
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT DISTINCT maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, namefin as kunta, SUM(maara) as maara");
-            sb.append("FROM(SELECT maamassalaji, maamassaryhma, SUM(amount_remaining) as maara,");
-            sb.append("pilaantuneisuus, mk.kohdetyyppi as kohdetyyppi,k.namefin,luotu as luotu");
+            sb.append("SELECT DISTINCT maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, namefin as kunta, SUM(maara) as maara ");
+            sb.append("FROM (SELECT maamassalaji, maamassaryhma, SUM(amount_remaining) as maara, ");
+            sb.append("pilaantuneisuus, mk.kohdetyyppi as kohdetyyppi,k.namefin,realized_begin_date, realized_end_date ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto mt ON mk.id = mt.maamassakohde_id ");
             sb.append("LEFT JOIN kuntarajat k ON st_contains(k.geom, mk.geom) ");
-            sb.append("GROUP BY laji, ryhma, pilaantuneisuus, kohdetyyppi, namefin ,luotu");
-            sb.append("UNION ALL");
-            sb.append("SELECT maamassalaji, maamassaryhma, SUM(amount_remaining) as maara,");
-            sb.append("pilaantuneisuus, mk.kohdetyyppi as kohdetyyppi,k.namefin,luotu as luotu");
+            sb.append("GROUP BY maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, namefin ,realized_begin_date, realized_end_date ");
+            sb.append("UNION ALL ");
+            sb.append("SELECT maamassalaji, maamassaryhma, SUM(amount_remaining) as maara, ");
+            sb.append("pilaantuneisuus, mk.kohdetyyppi as kohdetyyppi,k.namefin,realized_begin_date, realized_end_date ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto_history mth ON mk.id = mth.maamassakohde_id ");
             sb.append("LEFT JOIN kuntarajat k ON st_contains(k.geom, mk.geom) ");
-            sb.append("GROUP BY maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, namefin ,luotu");
-            sb.append(") as tulokset");
-            sb.append("GROUP BY maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, kunta");
-            sb.append("ORDER BY maamassalaji");
-
+            sb.append("GROUP BY maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, namefin ,realized_begin_date, realized_end_date");
+            sb.append(") as tulokset ");
             List<SearchParams> searchParams = SeutumaisaHistorySearchHelper.parseHistorySearchParams(params);
-            sb.append(SeutumaisaHistorySearchHelper.getSearchWhere(searchParams));
+            if (searchParams.isEmpty()) {
+                sb.append("WHERE maara > 0 ");
+            } else {
+                sb.append(SeutumaisaHistorySearchHelper.getSearchWhere(searchParams));
+                sb.append(" AND maara > 0 ");
+            }
+            
+            sb.append("GROUP BY maamassalaji, maamassaryhma, pilaantuneisuus, kohdetyyppi, kunta ");
+            sb.append("ORDER BY maamassalaji");
 
             sql = sb.toString();
 

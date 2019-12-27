@@ -21,7 +21,7 @@ public class GetSeutumaisaHistorySearchFieldsHandler extends SeutumaisaRestActio
         requireSeutumaisaConfigured();
 
         try {
-            JSONArray fields = SeutumaisaHistoryDBHelper.getSearchFields();
+            JSONArray fields = SeutumaisaHistoryDBHelper.getHistorySearchFields();
             ResponseHelper.writeResponse(params, fields);
         } catch (JSONException e) {
             LOG.error("Error for getting seutumaisa history fields", e);
