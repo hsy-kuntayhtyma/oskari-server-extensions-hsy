@@ -41,7 +41,7 @@ public class SeutumaisaHistorySearchHelper {
 
         if (jsonParams.has(KEY_KUNTA)) {
             SearchParams pKunta = new SearchParams("namefin", null, jsonParams.getString(KEY_KUNTA));
-            pKunta.setColumnPrefix("k.");
+            pKunta.setColumnPrefix("");
             searchParams.add(pKunta);
         }
 
@@ -57,30 +57,34 @@ public class SeutumaisaHistorySearchHelper {
             }
 
             SearchParams pMaara = new SearchParams(KEY_MAARA, null, range);
+            pMaara.setColumnPrefix("");
             searchParams.add(pMaara);
         }
 
         if (jsonParams.has(KEY_KOHDETYYPPI)) {
             SearchParams pKohdetyyppi = new SearchParams(KEY_KOHDETYYPPI, null, jsonParams.getString(KEY_KOHDETYYPPI));
-            pKohdetyyppi.setColumnPrefix("mk.");
+            pKohdetyyppi.setColumnPrefix("");
             pKohdetyyppi.setNeedCastVarchar(true);
             searchParams.add(pKohdetyyppi);
         }
 
         if (jsonParams.has(KEY_MAAMASSARYHMA)) {
             SearchParams pMaamassaryhma = new SearchParams(KEY_MAAMASSARYHMA, null, jsonParams.getString(KEY_MAAMASSARYHMA));
+            pMaamassaryhma.setColumnPrefix("");
             pMaamassaryhma.setNeedCastVarchar(true);
             searchParams.add(pMaamassaryhma);
         }
 
         if (jsonParams.has(KEY_MAAMASSALAJI)) {
             SearchParams pMaamassalaji = new SearchParams(KEY_MAAMASSALAJI, null, jsonParams.getString(KEY_MAAMASSALAJI));
+            pMaamassalaji.setColumnPrefix("");
             pMaamassalaji.setNeedCastVarchar(true);
             searchParams.add(pMaamassalaji);
         }
 
         if (jsonParams.has(KEY_PILAANTUNEISUUS)) {
             SearchParams pPilaantuneisuus = new SearchParams(KEY_PILAANTUNEISUUS, null, jsonParams.getString(KEY_PILAANTUNEISUUS));
+            pPilaantuneisuus.setColumnPrefix("");
             pPilaantuneisuus.setNeedCastVarchar(true);
             searchParams.add(pPilaantuneisuus);
         }
@@ -99,6 +103,7 @@ public class SeutumaisaHistorySearchHelper {
             }
 
             SearchParams pToteutunutAikataulu = new SearchParams(KEY_TOTEUTUNUTAIKATAULU, null, rangeRealized);
+            pToteutunutAikataulu.setColumnPrefix("");
             pToteutunutAikataulu.setNeedCastVarchar(true);
             searchParams.add(pToteutunutAikataulu);
         }

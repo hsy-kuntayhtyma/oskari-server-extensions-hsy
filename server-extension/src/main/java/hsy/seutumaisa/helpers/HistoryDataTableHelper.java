@@ -21,12 +21,10 @@ public class HistoryDataTableHelper {
     static {
         columns.add(new SearchParams("Massan laji"));
         columns.add(new SearchParams("Massan ryhmä"));
-        columns.add(new SearchParams("Kohdetyyppi"));
-        columns.add(new SearchParams("Toteutunut aikataulu (alku)"));
-        columns.add(new SearchParams("Toteutunut aikataulu (loppu)"));
-        columns.add(new SearchParams("Massan määrä (m&sup3;)"));
         columns.add(new SearchParams("Pilaantuneisuus"));
+        columns.add(new SearchParams("Kohdetyyppi"));
         columns.add(new SearchParams("Kunta"));
+        columns.add(new SearchParams("Massan määrä (m&sup3;)"));
     }
 
     /**
@@ -59,6 +57,8 @@ public class HistoryDataTableHelper {
         defs.put("visible", false);
         defs.put("searchable", false);
         columnDefs.put(defs);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(columnDefs);
 
         return columnDefs;
     }

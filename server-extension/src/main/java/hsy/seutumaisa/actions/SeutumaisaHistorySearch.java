@@ -7,6 +7,7 @@ import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.util.ResponseHelper;
 import hsy.seutumaisa.helpers.SeutumaisaHistoryDBHelper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +20,9 @@ public class SeutumaisaHistorySearch extends SeutumaisaRestActionHandler {
         requireSeutumaisaConfigured();
 
         try {
+            System.out.println("=======================PARAMS=============================");
+            System.out.println(params);
+            System.out.println("====================================================");
             JSONObject result = SeutumaisaHistoryDBHelper.search(params);
             ResponseHelper.writeResponse(params, result);
         } catch (JSONException e) {
