@@ -11,7 +11,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import hsy.pipe.domain.TagPipeConfiguration;
-import fi.mml.map.mapwindow.util.OskariLayerWorker;
 import fi.nls.oskari.domain.User;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;

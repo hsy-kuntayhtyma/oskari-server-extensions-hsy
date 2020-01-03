@@ -1,11 +1,9 @@
 package hsy.pipe.actions;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import hsy.pipe.domain.TagPipeConfiguration;
 import hsy.pipe.helpers.TagPipeHelper;
-import fi.mml.map.mapwindow.util.OskariLayerWorker;
 import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionParameters;

@@ -20,8 +20,6 @@ import org.oskari.permissions.PermissionService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.oskari.permissions.PermissionService;
-import org.oskari.permissions.model.*;
 import fi.nls.oskari.service.OskariComponentManager;
 import java.sql.*;
 import java.util.List;

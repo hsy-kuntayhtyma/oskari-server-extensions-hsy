@@ -6,7 +6,6 @@ import fi.nls.oskari.util.FlywayHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 
 public class V1_00_2__add_selected_featuredata_to_ammassuo_view implements JdbcMigration {
 
