@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Helper for datatable creation.
  */
-public class DataTableHelper {
+public class HistoryDataTableHelper {
     private final static String KEY_TITLE = "title";
     private static List<SearchParams> columns = new ArrayList<>();
 
@@ -21,15 +21,10 @@ public class DataTableHelper {
     static {
         columns.add(new SearchParams("Massan laji"));
         columns.add(new SearchParams("Massan ryhmä"));
-        columns.add(new SearchParams("Kelpoisuusluokka"));
+        columns.add(new SearchParams("Pilaantuneisuus"));
         columns.add(new SearchParams("Kohdetyyppi"));
-        columns.add(new SearchParams("Maamassan tila"));
-        columns.add(new SearchParams("Suunnitteluaikataulu (alku)"));
-        columns.add(new SearchParams("Suunnitteluaikataulu (loppu)"));
-        columns.add(new SearchParams("Massan määrä (m&sup3;)"));
-        columns.add(new SearchParams("Omistaja (massan)"));
         columns.add(new SearchParams("Kunta"));
-        columns.add(new SearchParams("GeoJSON"));
+        columns.add(new SearchParams("Massan määrä (m&sup3;)"));
     }
 
     /**
@@ -62,6 +57,8 @@ public class DataTableHelper {
         defs.put("visible", false);
         defs.put("searchable", false);
         columnDefs.put(defs);
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        System.out.println(columnDefs);
 
         return columnDefs;
     }

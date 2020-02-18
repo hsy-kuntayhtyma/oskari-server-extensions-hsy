@@ -13,23 +13,18 @@ import java.util.List;
 /**
  * Search helper
  */
-public class SeutumaisaSearchHelper {
+public class SeutumaisaHistorySearchHelper {
     public static final String KEY_KUNTA = "kunta";
-    public static final String KEY_ORGANISAATIO = "organisaatio";
-    public static final String KEY_SUUNNITTELUAIKATAULU = "planned_date";
-    public static final String KEY_SUUNNITTELUAIKATAULU_ALKU = "planned_begin_date";
-    public static final String KEY_SUUNNITTELUAIKATAULU_LOPPU = "planned_end_date";
-    public static final String KEY_MAAMASSATILA = "maamassatila";
     public static final String KEY_KOHDETYYPPI = "kohdetyyppi";
-    public static final String KEY_KELPOISUUSLUOKKA = "kelpoisuusluokka";
     public static final String KEY_MAAMASSARYHMA = "maamassaryhma";
     public static final String KEY_MAAMASSALAJI = "maamassalaji";
     public static final String KEY_MAARA = "amount_remaining";
     public static final String KEY_START = "start";
     public static final String KEY_END = "end";
     //History search
-    public static final String KEY_TOTEUTUNUT_ALKU = "realized_begin_date";
-    public static final String KEY_TOTEUTUNUT_LOPPU = "realized_end_date";
+    public static final String KEY_TOTEUTUNUTAIKATAULU = "realized_date";
+    public static final String KEY_TOTEUTUNUTAIKATAULU_ALKU = "realized_begin_date";
+    public static final String KEY_TOTEUTUNUTAIKATAULU_LOPPU = "realized_end_date";
     public static final String KEY_PILAANTUNEISUUS = "pilaantuneisuus";
 
     /**
@@ -39,22 +34,15 @@ public class SeutumaisaSearchHelper {
      * @throws JSONException
      * @throws ActionParamsException
      */
-    public static List<SearchParams> parseSearchParams(ActionParameters params) throws JSONException, ActionParamsException {
+    public static List<SearchParams> parseHistorySearchParams(ActionParameters params) throws JSONException, ActionParamsException {
         JSONObject jsonParams =  params.getHttpParamAsJSON("params");
 
         List<SearchParams> searchParams = new ArrayList<>();
 
         if (jsonParams.has(KEY_KUNTA)) {
             SearchParams pKunta = new SearchParams("namefin", null, jsonParams.getString(KEY_KUNTA));
-            pKunta.setColumnPrefix("k.");
+            pKunta.setColumnPrefix("");
             searchParams.add(pKunta);
-        }
-
-
-        if (jsonParams.has(KEY_ORGANISAATIO)) {
-            SearchParams pOrganisaatio = new SearchParams("omistaja_id", null, jsonParams.getInt(KEY_ORGANISAATIO));
-            pOrganisaatio.setColumnPrefix("mk.");
-            searchParams.add(pOrganisaatio);
         }
 
         if (jsonParams.has(KEY_MAARA)) {
@@ -69,62 +57,55 @@ public class SeutumaisaSearchHelper {
             }
 
             SearchParams pMaara = new SearchParams(KEY_MAARA, null, range);
-            pMaara.setColumnPrefix("mt.");
+            pMaara.setColumnPrefix("");
             searchParams.add(pMaara);
-        }
-
-        if (jsonParams.has(KEY_SUUNNITTELUAIKATAULU)) {
-            Range rangePlanned = new Range();
-            JSONObject jsonPlannedRange = jsonParams.getJSONObject(KEY_SUUNNITTELUAIKATAULU);
-            if(jsonPlannedRange.has(KEY_END)) {
-                rangePlanned.setMax(jsonPlannedRange.getString(KEY_END));
-                rangePlanned.setMaxColumn(KEY_SUUNNITTELUAIKATAULU_LOPPU);
-            }
-
-            if(jsonPlannedRange.has(KEY_START)) {
-                rangePlanned.setMin(jsonPlannedRange.getString(KEY_START));
-                rangePlanned.setMinColumn(KEY_SUUNNITTELUAIKATAULU_ALKU);
-            }
-
-            SearchParams pSuunnitteluAikataulu = new SearchParams(KEY_SUUNNITTELUAIKATAULU, null, rangePlanned);
-            pSuunnitteluAikataulu.setColumnPrefix("mt.");
-            pSuunnitteluAikataulu.setNeedCastVarchar(true);
-            searchParams.add(pSuunnitteluAikataulu);
-        }
-
-        if (jsonParams.has(KEY_MAAMASSATILA)) {
-            SearchParams pMaamassatila = new SearchParams(KEY_MAAMASSATILA, null, jsonParams.getString(KEY_MAAMASSATILA));
-            pMaamassatila.setColumnPrefix("mt.");
-            pMaamassatila.setNeedCastVarchar(true);
-            searchParams.add(pMaamassatila);
         }
 
         if (jsonParams.has(KEY_KOHDETYYPPI)) {
             SearchParams pKohdetyyppi = new SearchParams(KEY_KOHDETYYPPI, null, jsonParams.getString(KEY_KOHDETYYPPI));
-            pKohdetyyppi.setColumnPrefix("mk.");
+            pKohdetyyppi.setColumnPrefix("");
             pKohdetyyppi.setNeedCastVarchar(true);
             searchParams.add(pKohdetyyppi);
         }
 
-        if (jsonParams.has(KEY_KELPOISUUSLUOKKA)) {
-            SearchParams pKelpoisuusluokka = new SearchParams(KEY_KELPOISUUSLUOKKA, null, jsonParams.getString(KEY_KELPOISUUSLUOKKA));
-            pKelpoisuusluokka.setColumnPrefix("mt.");
-            pKelpoisuusluokka.setNeedCastVarchar(true);
-            searchParams.add(pKelpoisuusluokka);
-        }
-
         if (jsonParams.has(KEY_MAAMASSARYHMA)) {
             SearchParams pMaamassaryhma = new SearchParams(KEY_MAAMASSARYHMA, null, jsonParams.getString(KEY_MAAMASSARYHMA));
-            pMaamassaryhma.setColumnPrefix("mt.");
+            pMaamassaryhma.setColumnPrefix("");
             pMaamassaryhma.setNeedCastVarchar(true);
             searchParams.add(pMaamassaryhma);
         }
 
         if (jsonParams.has(KEY_MAAMASSALAJI)) {
             SearchParams pMaamassalaji = new SearchParams(KEY_MAAMASSALAJI, null, jsonParams.getString(KEY_MAAMASSALAJI));
-            pMaamassalaji.setColumnPrefix("mt.");
+            pMaamassalaji.setColumnPrefix("");
             pMaamassalaji.setNeedCastVarchar(true);
             searchParams.add(pMaamassalaji);
+        }
+
+        if (jsonParams.has(KEY_PILAANTUNEISUUS)) {
+            SearchParams pPilaantuneisuus = new SearchParams(KEY_PILAANTUNEISUUS, null, jsonParams.getString(KEY_PILAANTUNEISUUS));
+            pPilaantuneisuus.setColumnPrefix("");
+            pPilaantuneisuus.setNeedCastVarchar(true);
+            searchParams.add(pPilaantuneisuus);
+        }
+
+        if (jsonParams.has(KEY_TOTEUTUNUTAIKATAULU)) {
+            Range rangeRealized = new Range();
+            JSONObject jsonRealizedRange = jsonParams.getJSONObject(KEY_TOTEUTUNUTAIKATAULU);
+            if(jsonRealizedRange.has(KEY_END)) {
+                rangeRealized.setMax(jsonRealizedRange.getString(KEY_END));
+                rangeRealized.setMaxColumn(KEY_TOTEUTUNUTAIKATAULU_LOPPU);
+            }
+
+            if(jsonRealizedRange.has(KEY_START)) {
+                rangeRealized.setMin(jsonRealizedRange.getString(KEY_START));
+                rangeRealized.setMinColumn(KEY_TOTEUTUNUTAIKATAULU_ALKU);
+            }
+
+            SearchParams pToteutunutAikataulu = new SearchParams(KEY_TOTEUTUNUTAIKATAULU, null, rangeRealized);
+            pToteutunutAikataulu.setColumnPrefix("");
+            pToteutunutAikataulu.setNeedCastVarchar(true);
+            searchParams.add(pToteutunutAikataulu);
         }
 
         return searchParams;
