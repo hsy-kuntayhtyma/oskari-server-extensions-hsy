@@ -218,28 +218,6 @@
 
 <!-- ############# /Javascript ################# -->
 <jsp:useBean id="props" class="fi.nls.oskari.util.PropertyUtil"/>
-<c:set var="ajaxLogin" scope="page" value="${props.getOptional('hsy.use.spring.login.fix')}"/>
-<c:if test="${!empty ajaxLogin}">
-    <script>
-        jQuery(function () {
-            jQuery('input#submit[type=submit]').on('click', function (e) {
-                var oldLocation = location.href;
-                setTimeout(function () {
-                    window.location.href = oldLocation;
-                }, 400);
-
-            });
-
-            jQuery('#login a').on('click', function (e) {
-                var oldLocation = location.href;
-                setTimeout(function () {
-                    window.location.href = oldLocation;
-                }, 400);
-            });
-        });
-
-    </script>
-</c:if>
 
 <!-- ############# RIBBON ############# -->
 <c:set var="ribbon" scope="page" value="${props.getOptional('page.ribbon.seutumaisa')}" />
