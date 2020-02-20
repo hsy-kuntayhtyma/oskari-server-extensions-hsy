@@ -6,7 +6,7 @@
     <parent>
 		<groupId>fi.hsy.oskari</groupId>
 		<artifactId>hsy-parent</artifactId>
-        <version>1.3.9</version>
+        <version>1.4.0</version>
     </parent>
     <artifactId>hsy-resources</artifactId>
     <packaging>jar</packaging>
