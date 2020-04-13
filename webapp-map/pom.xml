@@ -53,7 +53,6 @@
             <artifactId>control-userlayer</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>fi.nls.oskari</groupId>
             <artifactId>servlet-map</artifactId>
@@ -95,7 +94,6 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
-
     </dependencies>
 
     <build>
