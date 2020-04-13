@@ -4,7 +4,6 @@ import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionParameters;
 import fi.nls.oskari.control.feature.AbstractFeatureHandler;
 import fi.nls.oskari.domain.map.OskariLayer;
-import fi.nls.oskari.domain.map.wfs.WFSLayerConfiguration;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.util.JSONHelper;
@@ -43,7 +42,6 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
 
 
                 String srsName = JSONHelper.getStringFromJSON(jsonObject, "srsName", "http://www.opengis.net/gml/srs/epsg.xml#3067");
-                WFSLayerConfiguration lc = getWFSConfiguration(layer.getId());
 
                 // TODO: rewrite to use wfs-t related code under myplaces OR atleast using an xml lib
                 StringBuilder requestData = new StringBuilder(
@@ -59,8 +57,8 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
                 }
 
                 requestData.append("<ogc:Filter><ogc:FeatureId fid='" + jsonObject.getString("featureId") + "'/></ogc:Filter></wfs:Update></wfs:Transaction>");
-
-                String responseString = postPayload(layer, requestData.toString());
+                
+                String responseString = postPayload(layer.getUsername(), layer.getPassword(), requestData.toString(), getURLForNamespace(layer.getName(),layer.getUrl()));
                 flushLayerTilesCache(layer.getId());
 
                 if (responseString.indexOf("Exception") > -1) {
