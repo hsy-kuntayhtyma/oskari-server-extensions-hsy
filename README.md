@@ -37,7 +37,6 @@ mvn clean install && cp webapp-map/target/oskari-map.war ../../../Apps/jetty-9.4
 ### Create installation zip package
 * create new folder: `oskari-<version>`
 * copy oskari-server-extensions-karttasovellus/webapp-map/target/oskari-map.war to created folder
-* copy oskari-server-extensions-karttasovellus/webapp-transport/target/transport.war to created folder
 * zip oskari-frontend-hsy/dist -folder and copy dist.zip to created folder
 * zip `oskari-<version>` files (not folder) to `oskari-<version>.zip`
 
