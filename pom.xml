@@ -67,6 +67,5 @@
         <module>server-extension</module>
         <module>hsy-resources</module>
         <module>webapp-map</module>
-        <module>webapp-transport</module>
     </modules>
 </project>
