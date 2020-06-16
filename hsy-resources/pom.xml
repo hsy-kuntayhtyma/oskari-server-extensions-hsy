@@ -17,5 +17,14 @@
             <artifactId>content-resources</artifactId>
             <version>${oskari.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.oskari</groupId>
+            <artifactId>service-capabilities-update</artifactId>
+            <version>1.55.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.oskari</groupId>
+            <artifactId>service-capabilities-update</artifactId>
+        </dependency>
     </dependencies>
 </project>

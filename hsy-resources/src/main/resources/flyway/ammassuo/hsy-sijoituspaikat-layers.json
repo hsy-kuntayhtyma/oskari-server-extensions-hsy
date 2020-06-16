@@ -1,0 +1,802 @@
+[
+    {
+        "name": "Sijoituspaikat:AM_SIJ_bioreaktori",
+        "locale": "Bioreaktori",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Bioreaktori": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Bioreaktori",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#ff66ff"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_bioreaktori_kaatopaikkarakenteet",
+        "locale": "Bioreaktori kaatopiakkarakenteet",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Bioreaktori_kaato": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Bioreaktori kaatop.",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#ffffff"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_kaatopaikkarakenteet",
+        "locale": "Kaatopaikkarakenteet",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Kaatopaikkarakenteet": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Kaatopaikkarakenteet",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#ffffff"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_koekentta",
+        "locale": "Koekenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Koekenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Koekenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_kompostikentta",
+        "locale": "Kompostikenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Kompostikenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Kompostikenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#663300"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_kompostointilaitos",
+        "locale": "Kompostointilaitos",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Kompostointilaitos": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Kompostointilaitos",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#663300"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_kuonakentta",
+        "locale": "Kuonakenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Kuonakenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Kuonakenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_lajittelukentta",
+        "locale": "Lajittelukenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Lajittelukenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Lajittelukenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_lajittelukentta_sortti",
+        "locale": "Lajittelukenttä sortti",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Lajittelukenttä Sortti": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Lajittelukenttä Sortti",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#00b0f0"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_lasikentta",
+        "locale": "Lasikenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Lasikenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Lasikenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_maakentta",
+        "locale": "Maakenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Maakenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Maakenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_moreenikentta",
+        "locale": "Moreenikenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Moreenikenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Moreenikenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_multakentta",
+        "locale": "Multakenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Multakenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Multakenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#663300"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_muu",
+        "locale": "Muu",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Muu": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Muu",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_paalivarasto",
+        "locale": "Paalivarasto",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Paalivarasto": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Paalivarasto",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_pimakentta",
+        "locale": "Pimakenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Pimakenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Pimakenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#ffff00"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_puukentta",
+        "locale": "Puukenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Puukenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Puukenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_sortti",
+        "locale": "Sortti",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Sortti": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Sortti",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#00b0f0"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_tuhkalokero",
+        "locale": "Tuhkalokero",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Tuhkalokero": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Tuhkalokero",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#ff66ff"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_tuotevarasto",
+        "locale": "Tuotevarasto",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Tuotevarasto": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Tuotevarasto",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_valivarasto",
+        "locale": "Välivarasto",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Välivarasto": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Välivarasto",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_valivarasto_sortti",
+        "locale": "Välivarasto sortti",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Välivarasto Sortti": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Välivarasto Sortti",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#00b0f0"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_vesiallas",
+        "locale": "Vesiallas",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Vesiallas": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Vesiallas",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_vuokrakentta",
+        "locale": "Vuokrakenttä",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Vuokrakenttä": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Vuokrakenttä",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#6f30a0"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Sijoituspaikat:AM_SIJ_ymparistorakenteet",
+        "locale": "Ympäristörakenteet",
+        "style": {
+            "renderMode":"vector",
+            "styles":{
+                "Ympäristörakenteet": {
+                    "featureStyle": {
+                        "text": {
+                        "textAlign": "middle",
+                        "labelText": "Ympäristörakenteet",
+                        "fill": {
+                            "color": "#ffffff"
+                        },
+                        "stroke": {
+                            "color": "#000000",
+                            "width": 3
+                        },
+                        "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                        "color": "#92d050"
+                        },
+                        "stroke": {
+                        "color": "#6e6e6e",
+                        "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    }
+]

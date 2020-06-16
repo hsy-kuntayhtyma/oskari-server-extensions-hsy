@@ -13,7 +13,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Connection;
-import java.util.List;
 
 public class V1_03_10__add_logoplugin_to_mapfull implements JdbcMigration {
     private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();

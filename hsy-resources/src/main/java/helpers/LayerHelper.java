@@ -1,8 +1,13 @@
 package helpers;
 
 import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupService;
-import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupServiceIbatisImpl;
-import fi.nls.oskari.service.OskariComponentManager;
+import fi.nls.oskari.control.ActionException;
+import fi.nls.oskari.control.ActionParamsException;
+import fi.nls.oskari.map.view.util.ViewHelper;
+import fi.nls.oskari.service.ServiceException;
+import fi.nls.oskari.service.capabilities.CapabilitiesCacheService;
+import org.oskari.capabilities.CapabilitiesUpdateResult;
+import org.oskari.capabilities.CapabilitiesUpdateService;
 import org.oskari.permissions.PermissionService;
 import fi.nls.oskari.domain.Role;
 import fi.nls.oskari.domain.map.DataProvider;
@@ -14,21 +19,20 @@ import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import org.oskari.permissions.model.OskariLayerResource;
 import fi.nls.oskari.map.layer.DataProviderService;
-import fi.nls.oskari.map.layer.DataProviderServiceMybatisImpl;
 import fi.nls.oskari.map.layer.OskariLayerService;
 import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLink;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkService;
-import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkServiceMybatisImpl;
 import fi.nls.oskari.map.view.ViewException;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import org.oskari.permissions.model.Permission;
 import org.oskari.permissions.model.Resource;
 import fi.nls.oskari.user.MybatisRoleService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.oskari.service.util.ServiceFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -40,6 +44,9 @@ import java.util.*;
  * This class helps for anything of layers
  */
 public class LayerHelper {
+    public static final String ROLE_ADMIN = "Admin";
+    public static final String ROLE_USER = "User";
+    public static final String ROLE_GUEST = "Guest";
     public static final String ROLE_SEUTUMAISA = "SeutuMaisa";
     public static final String ROLE_AMMASSUO = "Ammassuo";
     public static final String ROLE_AMMASSUO_KATSELIJAT = "Ammassuo_katselijat";
@@ -53,16 +60,24 @@ public class LayerHelper {
     public static final String VERSION_WMS111 = "1.1.1";
     public static final String VERSION_WMS130 = "1.3.0";
 
+    public static final String VERSION_WMTS100 = "1.0.0";
+
     private static final Logger LOG = LogFactory.getLogger(LayerHelper.class);
 
-    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
-    private static final OskariMapLayerGroupService MAP_LAYER_GROUP_SERVICE = new OskariMapLayerGroupServiceIbatisImpl();
-    private static final PermissionService  PERMISSIONS_SERVICE = OskariComponentManager.getComponentOfType(PermissionService.class);
-    private static final MybatisRoleService ROLE_SERVICE = new MybatisRoleService();
-    private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceMybatisImpl();
-    private static final OskariLayerGroupLinkService LINK_SERVICE = new OskariLayerGroupLinkServiceMybatisImpl();
+    private static final ViewService VIEW_SERVICE = ServiceFactory.getViewService();
+    private static final OskariMapLayerGroupService MAP_LAYER_GROUP_SERVICE = ServiceFactory.getOskariMapLayerGroupService();
+    private static final PermissionService  PERMISSIONS_SERVICE = ServiceFactory.getPermissionsService();
+    private static final MybatisRoleService ROLE_SERVICE =  new MybatisRoleService();
+    private static final DataProviderService DATA_PROVIDER_SERVICE = ServiceFactory.getDataProviderService();
+    private static final OskariLayerGroupLinkService LINK_SERVICE = ServiceFactory.getOskariLayerGroupLinkService();
     private static final String BUNDLE_MAPFULL = "mapfull";
     private static final String BACKGROUND_LAYER_SELECTION_PLUGIN = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
+
+    private static OskariLayerService LAYER_SERVICE = ServiceFactory.getMapLayerService();
+    private static CapabilitiesCacheService CAPABILITIES_CACHE_SERVICE = ServiceFactory.getCapabilitiesCacheService();
+    private static CapabilitiesUpdateService CAPABILITIES_SERVICE = new CapabilitiesUpdateService(
+            LAYER_SERVICE, CAPABILITIES_CACHE_SERVICE);
+
 
     /**
      * Sets background layer selection plugin layers
@@ -113,7 +128,7 @@ public class LayerHelper {
      * @param notCheckExitings not cehcks exiting layers
      * @return added layers length
      */
-    public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups, final boolean notCheckExitings) {
+    public static int addLayers(final JSONArray layerArray, final List<MaplayerGroup> maplayerGroups, final boolean notCheckExitings, final Connection conn) {
         List<Integer> addedLayers = new ArrayList<>();
         OskariLayerService service = new OskariLayerServiceMybatisImpl();
         try {
@@ -146,6 +161,15 @@ public class LayerHelper {
                     }
 
                     addedLayers.add(id);
+
+                    // Update layer capabilities and style
+                    try {
+                        updateCapabilities(Integer.toString(id));
+                        updateLayerStyle(conn, id);
+                    } catch (Exception ex) {
+                        LOG.error(ex, "Cannot update layer (id=" + layer.getId() + ") capabilities.");
+                    }
+
                 }
 
             }
@@ -156,6 +180,8 @@ public class LayerHelper {
         return addedLayers.size();
 
     }
+
+
 
     /**
      * Generate layer JSON
@@ -514,4 +540,107 @@ public class LayerHelper {
             statement.close();
         }
     }
+
+    /**
+     * Update layer capabilities
+     * @param layerId layer id, if not defined then updating all
+     * @return success update result
+     * @throws ActionParamsException
+     * @throws ActionException
+     */
+    public static boolean updateCapabilities(String layerId) throws ActionParamsException, ActionException {
+        List<OskariLayer> layers = getLayersToUpdate(layerId);
+
+        Set<String> systemCRSs = getSystemCRSs();
+
+        List<CapabilitiesUpdateResult> result =
+                CAPABILITIES_SERVICE.updateCapabilities(layers, systemCRSs);
+        return layers.size() == result.size();
+    }
+
+    private static void updateLayerStyle(final Connection conn, final int layerId) {
+        String style = null;
+        try {
+            style = getLayerStyleFromCapabilities(conn, layerId);
+            if(style != null) {
+                final PreparedStatement statement = conn.prepareStatement("UPDATE oskari_maplayer SET style = ? "
+                        + "WHERE id = ?;");
+
+                statement.setString(1, style);
+                statement.setLong(2, layerId);
+
+                try {
+                    statement.execute();
+                } finally {
+                    statement.close();
+                }
+            }
+        } catch (Exception ex) {
+            LOG.error(ex, "Cannot update layer (id=" + layerId + ") style.");
+        }
+    }
+
+    private static String getLayerStyleFromCapabilities(final Connection conn, final int layerId) throws SQLException, JSONException {
+        final String sql = "SELECT capabilities FROM oskari_maplayer WHERE id=?;";
+        String capabilities = "";
+        try (PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setLong(1, layerId);
+            try (ResultSet rs = statement.executeQuery()) {
+                while (rs.next()) {
+                    capabilities = rs.getString("capabilities");
+                }
+            }
+        }
+
+        if(!capabilities.isEmpty() && capabilities != null) {
+            JSONObject jsonCapabilities = new JSONObject(capabilities);
+            if(jsonCapabilities.has("styles")) {
+                JSONArray styles = jsonCapabilities.getJSONArray("styles");
+                if(styles.length()>0) {
+                    JSONObject styleJSON = styles.getJSONObject(0);
+                    if(styleJSON.has("name")) {
+                        return styleJSON.getString("name");
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static List<OskariLayer> getLayersToUpdate(String layerId)
+            throws ActionParamsException {
+        if (layerId == null) {
+            return LAYER_SERVICE.findAll();
+        }
+        int id = getId(layerId);
+        OskariLayer layer = LAYER_SERVICE.find(id);
+        if (layer == null) {
+            throw new ActionParamsException("Unknown layer id:" + id);
+        }
+        return Collections.singletonList(layer);
+    }
+
+    private static int getId(String layerId) throws ActionParamsException {
+        try {
+            return Integer.parseInt(layerId);
+        } catch (NumberFormatException e) {
+            throw new ActionParamsException("Layer id is not a number:" + layerId);
+        }
+    }
+    private static Set<String> getSystemCRSs() throws ActionException {
+        try {
+            return ViewHelper.getSystemCRSs(VIEW_SERVICE);
+        } catch (ServiceException e) {
+            throw new ActionException("Failed to get systemCRSs", e);
+        }
+    }
+    public static List<MaplayerGroup> getLayerGroups(final int groupId) {
+        List<MaplayerGroup> groups = new ArrayList<>();
+        MaplayerGroup group = MAP_LAYER_GROUP_SERVICE.find(groupId);
+        if (group != null) {
+            groups.add(group);
+        }
+        return groups;
+    }
+
 }

@@ -35,22 +35,22 @@ public class V1_03_9__add_layers implements JdbcMigration {
         addDataproviders();
 
         int parentId = addMainGroup();
-        boolean kantakartat = addKantakartta(parentId);
+        boolean kantakartat = addKantakartta(parentId, connection);
         if(!kantakartat) {
             LOG.warn("Cannot add all kantakartat layers");
         }
 
-        boolean ajantasaAsemakaavat = addAjantasaAsemakaava(parentId);
+        boolean ajantasaAsemakaavat = addAjantasaAsemakaava(parentId, connection);
         if(!ajantasaAsemakaavat) {
             LOG.warn("Cannot add all ajantasa-asemakaavat layers");
         }
 
-        boolean yleiskaavat = addYleiskaavat(parentId);
+        boolean yleiskaavat = addYleiskaavat(parentId, connection);
         if(!yleiskaavat) {
             LOG.warn("Cannot add all yleiskaavat layers");
         }
 
-        boolean maaperakartat = addMaaperaKartat(parentId);
+        boolean maaperakartat = addMaaperaKartat(parentId, connection);
         if(!maaperakartat) {
             LOG.warn("Cannot add all maaperakartat layers");
         }
@@ -81,29 +81,29 @@ public class V1_03_9__add_layers implements JdbcMigration {
 
     }
 
-    private boolean addKantakartta(final int parentId) throws Exception {
+    private boolean addKantakartta(final int parentId, Connection conn) throws Exception {
         int groupId = addSubGroup(parentId, getLocale("Kantakartta", "Kantakartta", "Kantakartta"), 1);
 
-        return addKantakarttaLayers(groupId);
+        return addKantakarttaLayers(groupId, conn);
     }
 
-    private boolean addAjantasaAsemakaava(final int parentId) throws Exception {
+    private boolean addAjantasaAsemakaava(final int parentId, Connection conn) throws Exception {
         int groupId = addSubGroup(parentId, getLocale("Ajantasa-asemakaava","Ajantasa-asemakaava","Ajantasa-asemakaava"), 2);
 
-        return addAjantasaAsemakaavaLayers(groupId);
+        return addAjantasaAsemakaavaLayers(groupId, conn);
     }
 
-    private boolean addYleiskaavat(final int parentId) throws Exception {
+    private boolean addYleiskaavat(final int parentId, Connection conn) throws Exception {
         int groupId = addSubGroup(parentId, getLocale("Yleiskaavat","Yleiskaavat","Yleiskaavat"), 3);
 
-        return addYleiskaavatLayers(groupId);
+        return addYleiskaavatLayers(groupId, conn);
 
     }
 
-    private boolean addMaaperaKartat(final int parentId) throws Exception {
+    private boolean addMaaperaKartat(final int parentId, Connection conn) throws Exception {
         int groupId = addSubGroup(parentId, getLocale("Maaperäkartat","Maaperäkartat","Maaperäkartat"), 4);
 
-        return addMaaperakartatLayers(groupId);
+        return addMaaperakartatLayers(groupId, conn);
     }
 
     private int addMainGroup() throws JSONException {
@@ -178,7 +178,7 @@ public class V1_03_9__add_layers implements JdbcMigration {
         return json;
     }
 
-    private boolean addKantakarttaLayers(final int groupId) throws JSONException {
+    private boolean addKantakarttaLayers(final int groupId, Connection conn) throws JSONException {
         JSONArray layers = new JSONArray();
 
         // HKI kantakartta värillinen
@@ -205,11 +205,11 @@ public class V1_03_9__add_layers implements JdbcMigration {
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, null, null,
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
 
-        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true);
+        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true, conn);
         return layers.length() == addedCount;
     }
 
-    private boolean addAjantasaAsemakaavaLayers(final int groupId) throws JSONException {
+    private boolean addAjantasaAsemakaavaLayers(final int groupId, Connection conn) throws JSONException {
         JSONArray layers = new JSONArray();
 
         // HKI ajantasa-asemakaava värillisenä
@@ -236,11 +236,11 @@ public class V1_03_9__add_layers implements JdbcMigration {
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, null, null,
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
 
-        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true);
+        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true, conn);
         return layers.length() == addedCount;
     }
 
-    private boolean addYleiskaavatLayers(final int groupId) throws JSONException {
+    private boolean addYleiskaavatLayers(final int groupId, Connection conn) throws JSONException {
         JSONArray layers = new JSONArray();
 
         // HKI ajantasa-asemakaava värillisenä
@@ -267,11 +267,11 @@ public class V1_03_9__add_layers implements JdbcMigration {
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, null, null,
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
 
-        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true);
+        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true, conn);
         return layers.length() == addedCount;
     }
 
-    private boolean addMaaperakartatLayers(final int groupId) throws JSONException {
+    private boolean addMaaperakartatLayers(final int groupId, Connection conn) throws JSONException {
         JSONArray layers = new JSONArray();
 
         // HKI maaperäkartta rasteri
@@ -298,7 +298,7 @@ public class V1_03_9__add_layers implements JdbcMigration {
                 null, false, 0, SRS_3879, LayerHelper.VERSION_WMS111, null, null,
                 null, null, getRolePermissionsJSON(), getAttributesJSON()));
 
-        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true);
+        int addedCount = LayerHelper.addLayers(layers, getLayerGroups(groupId), true, conn);
         return layers.length() == addedCount;
     }
 
