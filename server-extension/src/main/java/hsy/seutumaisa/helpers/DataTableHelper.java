@@ -24,8 +24,8 @@ public class DataTableHelper {
         columns.add(new SearchParams("Kelpoisuusluokka"));
         columns.add(new SearchParams("Kohdetyyppi"));
         columns.add(new SearchParams("Maamassan tila"));
-        columns.add(new SearchParams("Suunnitteluaikataulu (alku)"));
-        columns.add(new SearchParams("Suunnitteluaikataulu (loppu)"));
+        columns.add(new SearchParams("Suunniteltu aikataulu (alku)"));
+        columns.add(new SearchParams("Suunniteltu aikataulu (loppu)"));
         columns.add(new SearchParams("Massan määrä"));
         columns.add(new SearchParams("Omistaja (massan)"));
         columns.add(new SearchParams("Kunta"));
