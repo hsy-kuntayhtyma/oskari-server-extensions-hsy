@@ -33,7 +33,7 @@
     },
     {
         "name": "Sijoituspaikat:AM_SIJ_bioreaktori_kaatopaikkarakenteet",
-        "locale": "Bioreaktori kaatopiakkarakenteet",
+        "locale": "Bioreaktori kaatopaikkarakenteet",
         "style": {
             "renderMode":"vector",
             "styles":{
