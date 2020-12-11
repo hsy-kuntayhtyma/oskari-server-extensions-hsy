@@ -8,6 +8,7 @@
                 "Bioreaktori": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Bioreaktori",
                         "fill": {
@@ -40,6 +41,7 @@
                 "Bioreaktori_kaato": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Bioreaktori kaatop.",
                         "fill": {
@@ -72,6 +74,7 @@
                 "Kaatopaikkarakenteet": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Kaatopaikkarakenteet",
                         "fill": {
@@ -104,6 +107,7 @@
                 "Koekenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Koekenttä",
                         "fill": {
@@ -136,6 +140,7 @@
                 "Kompostikenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Kompostikenttä",
                         "fill": {
@@ -168,6 +173,7 @@
                 "Kompostointilaitos": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Kompostointilaitos",
                         "fill": {
@@ -200,6 +206,7 @@
                 "Kuonakenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Kuonakenttä",
                         "fill": {
@@ -232,6 +239,7 @@
                 "Lajittelukenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Lajittelukenttä",
                         "fill": {
@@ -264,6 +272,7 @@
                 "Lajittelukenttä Sortti": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Lajittelukenttä Sortti",
                         "fill": {
@@ -296,6 +305,7 @@
                 "Lasikenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Lasikenttä",
                         "fill": {
@@ -328,6 +338,7 @@
                 "Maakenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Maakenttä",
                         "fill": {
@@ -360,6 +371,7 @@
                 "Moreenikenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Moreenikenttä",
                         "fill": {
@@ -392,6 +404,7 @@
                 "Multakenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Multakenttä",
                         "fill": {
@@ -424,6 +437,7 @@
                 "Muu": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Muu",
                         "fill": {
@@ -456,6 +470,7 @@
                 "Paalivarasto": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Paalivarasto",
                         "fill": {
@@ -488,6 +503,7 @@
                 "Pimakenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Pimakenttä",
                         "fill": {
@@ -520,6 +536,7 @@
                 "Puukenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Puukenttä",
                         "fill": {
@@ -552,6 +569,7 @@
                 "Sortti": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Sortti",
                         "fill": {
@@ -584,6 +602,7 @@
                 "Tuhkalokero": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Tuhkalokero",
                         "fill": {
@@ -616,6 +635,7 @@
                 "Tuotevarasto": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Tuotevarasto",
                         "fill": {
@@ -648,6 +668,7 @@
                 "Välivarasto": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Välivarasto",
                         "fill": {
@@ -680,6 +701,7 @@
                 "Välivarasto Sortti": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Välivarasto Sortti",
                         "fill": {
@@ -712,6 +734,7 @@
                 "Vesiallas": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Vesiallas",
                         "fill": {
@@ -744,6 +767,7 @@
                 "Vuokrakenttä": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Vuokrakenttä",
                         "fill": {
@@ -776,6 +800,7 @@
                 "Ympäristörakenteet": {
                     "featureStyle": {
                         "text": {
+                        "overflow": "true",
                         "textAlign": "middle",
                         "labelText": "Ympäristörakenteet",
                         "fill": {
