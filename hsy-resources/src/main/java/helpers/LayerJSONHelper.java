@@ -65,7 +65,7 @@ public class LayerJSONHelper {
         adminRights.put("VIEW_PUBLISHED");
         adminRights.put("DOWNLOAD");
         adminRights.put("EDIT_LAYER_CONTENT");
-        json.put(adminRoleName, adminRights);
+        json.put(adminRoleName, specialAdminRights);
 
         JSONArray adminRights = new JSONArray();
         adminRights.put("PUBLISH");
