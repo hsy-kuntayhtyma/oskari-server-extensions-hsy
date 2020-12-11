@@ -60,11 +60,11 @@ public class LayerJSONHelper {
         JSONObject json = new JSONObject();
 
         JSONArray specialAdminRights = new JSONArray();
-        adminRights.put("PUBLISH");
-        adminRights.put("VIEW_LAYER");
-        adminRights.put("VIEW_PUBLISHED");
-        adminRights.put("DOWNLOAD");
-        adminRights.put("EDIT_LAYER_CONTENT");
+        specialAdminRights.put("PUBLISH");
+        specialAdminRights.put("VIEW_LAYER");
+        specialAdminRights.put("VIEW_PUBLISHED");
+        specialAdminRights.put("DOWNLOAD");
+        specialAdminRights.put("EDIT_LAYER_CONTENT");
         json.put(adminRoleName, specialAdminRights);
 
         JSONArray adminRights = new JSONArray();
