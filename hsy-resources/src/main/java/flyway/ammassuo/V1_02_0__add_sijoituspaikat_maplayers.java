@@ -108,7 +108,7 @@ public class V1_02_0__add_sijoituspaikat_maplayers implements JdbcMigration {
             layers.put(LayerHelper.generateLayerJSON(OskariLayer.TYPE_WFS, SIJOITUSPAIKAT_DATA_URL, name, "Espoon kaupunki",
                 LayerJSONHelper.getLocale(locale,locale,locale), false, -1,
                 locale, 1500000.0, 1.0, null, null, null, null, null, null, false, 0, SRS_3879, LayerHelper.VERSION_WFS110,
-                null, null, null, style, LayerJSONHelper.getRolePermissionsJSON(),null));
+                null, null, null, style, LayerJSONHelper.getRolePermissionsAmmassuoJSON("Ammassuo_paakayttaja"),null));
 
         }
 

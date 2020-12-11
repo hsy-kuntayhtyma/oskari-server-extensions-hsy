@@ -56,6 +56,37 @@ public class LayerJSONHelper {
         return json;
     }
 
+    public static JSONObject getRolePermissionsAmmassuoJSON(String adminRoleName) throws JSONException {
+        JSONObject json = new JSONObject();
+
+        JSONArray specialAdminRights = new JSONArray();
+        adminRights.put("PUBLISH");
+        adminRights.put("VIEW_LAYER");
+        adminRights.put("VIEW_PUBLISHED");
+        adminRights.put("DOWNLOAD");
+        adminRights.put("EDIT_LAYER_CONTENT");
+        json.put(adminRoleName, adminRights);
+
+        JSONArray adminRights = new JSONArray();
+        adminRights.put("PUBLISH");
+        adminRights.put("VIEW_LAYER");
+        adminRights.put("VIEW_PUBLISHED");
+        json.put("Admin", adminRights);
+
+        JSONArray userRights = new JSONArray();
+        userRights.put("PUBLISH");
+        userRights.put("VIEW_LAYER");
+        userRights.put("VIEW_PUBLISHED");
+        json.put("User", userRights);
+
+        JSONArray guestRights = new JSONArray();
+        guestRights.put("VIEW_LAYER");
+        guestRights.put("VIEW_PUBLISHED");
+        json.put("Guest", guestRights);
+
+        return json;
+    }
+
     public static JSONObject getCroppingLayersAttributesJSON(final String uniqueColumn) throws JSONException {
         JSONObject json = new JSONObject();
         json.put("forceProxy", true);
