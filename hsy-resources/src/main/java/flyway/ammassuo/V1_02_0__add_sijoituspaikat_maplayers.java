@@ -9,6 +9,7 @@ import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.layer.DataProviderService;
 import fi.nls.oskari.map.layer.DataProviderServiceMybatisImpl;
+import fi.nls.oskari.util.PropertyUtil;
 import helpers.LayerHelper;
 import helpers.LayerJSONHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
@@ -26,7 +27,7 @@ public class V1_02_0__add_sijoituspaikat_maplayers implements JdbcMigration {
     private static final DataProviderService DATA_PROVIDER_SERVICE = new DataProviderServiceMybatisImpl();
     private static final String SRS_3879 = "EPSG:3879";
 
-    private static final String SIJOITUSPAIKAT_DATA_URL = "http://10.21.0.7:9902/geoserver/wfs";
+    private static String SIJOITUSPAIKAT_DATA_URL  = PropertyUtil.get("geoserver.url", "http://localhost:8080/geoserver") + "/wfs";
 
     public void migrate(Connection connection) throws Exception {
         addMainGroup();
