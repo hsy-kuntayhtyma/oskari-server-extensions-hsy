@@ -332,7 +332,6 @@ public class SeutumaisaDBHelper {
 
             sql = sb.toString();
 
-
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
