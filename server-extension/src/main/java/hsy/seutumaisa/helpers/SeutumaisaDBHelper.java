@@ -102,7 +102,7 @@ public class SeutumaisaDBHelper {
     private static DateRangeSelect getSuunnitteluAikatauluRange() {
         DateRangeSelect range = new DateRangeSelect();
         range.setId(SeutumaisaSearchHelper.KEY_SUUNNITTELUAIKATAULU);
-        range.setTitle("Suunnitteluaikataulu");
+        range.setTitle("Suunniteltu aikataulu");
         return range;
     }
 

@@ -216,7 +216,6 @@
     </script>
 </c:if>
 
-
 <!-- ############# RIBBON ############# -->
 <c:set var="ribbon" scope="page" value="${props.getOptional('page.ribbon')}" />
 <c:if test="${!empty ribbon}">

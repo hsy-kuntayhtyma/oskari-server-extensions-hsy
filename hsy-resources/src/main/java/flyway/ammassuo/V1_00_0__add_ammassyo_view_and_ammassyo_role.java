@@ -6,7 +6,7 @@ import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import fi.nls.oskari.user.MybatisRoleService;
 import fi.nls.oskari.util.PropertyUtil;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 
 public class V1_00_0__add_ammassyo_view_and_ammassyo_role implements JdbcMigration {
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final Logger LOG = LogFactory.getLogger(V1_00_0__add_ammassyo_view_and_ammassyo_role.class);
     private static final String ROLE_AMMASSUO = "Ammassuo";
 

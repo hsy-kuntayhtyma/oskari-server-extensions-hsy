@@ -2,12 +2,10 @@ package flyway.ammassuo;
 
 import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.domain.map.view.Bundle;
-import fi.nls.oskari.log.LogFactory;
-import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.layer.OskariLayerService;
-import fi.nls.oskari.map.layer.OskariLayerServiceIbatisImpl;
+import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import fi.nls.oskari.util.FlywayHelper;
 import helpers.LayerHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
@@ -19,8 +17,8 @@ import java.util.List;
 
 public class V1_00_3__set_selected_layers_ammassuo_view implements JdbcMigration
 {
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
-    private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
+    private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceMybatisImpl();
     private static final  String SELECTED_FEATUREDATA = "selected-featuredata";
     private static final String MAPFULL = "mapfull";
     private static final String KEY_ID = "id";

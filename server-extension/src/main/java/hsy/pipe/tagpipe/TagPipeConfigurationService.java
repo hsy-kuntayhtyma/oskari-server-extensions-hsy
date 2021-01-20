@@ -1,10 +1,8 @@
 package hsy.pipe.tagpipe;
 
 import java.util.List;
-import java.util.Map;
 
 import hsy.pipe.domain.TagPipeConfiguration;
-import fi.nls.oskari.service.ServiceException;
 import fi.nls.oskari.service.db.BaseService;
 
 public interface TagPipeConfigurationService  extends BaseService<TagPipeConfiguration>{

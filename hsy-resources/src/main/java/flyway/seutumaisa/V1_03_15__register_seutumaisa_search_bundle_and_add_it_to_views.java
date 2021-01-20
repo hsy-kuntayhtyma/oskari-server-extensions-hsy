@@ -3,7 +3,7 @@ package flyway.seutumaisa;
 import fi.nls.oskari.db.BundleHelper;
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import fi.nls.oskari.util.FlywayHelper;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class V1_03_15__register_seutumaisa_search_bundle_and_add_it_to_views implements JdbcMigration {
     private static final String NAMESPACE = "seutumaisa";
     private static final String BUNDLE = "seutumaisa-search";
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final String ROLE_SEUTUMAISA = "seutumaisa";
 
     public void migrate(Connection connection) throws SQLException {

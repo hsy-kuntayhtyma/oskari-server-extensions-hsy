@@ -6,7 +6,7 @@ import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import java.sql.Connection;
@@ -25,7 +25,7 @@ public class V1_02_1__remove_layerselection_bundle_from_default_views implements
     private ViewService service = null;
 
     public void migrate(Connection connection) throws Exception {
-        service =  new ViewServiceIbatisImpl();
+        service =  new AppSetupServiceMybatisImpl();
         try {
             updateViews(connection);
         }

@@ -6,11 +6,11 @@ import java.sql.PreparedStatement;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 
 public class V1_00_1__add_download_basket_to_views implements JdbcMigration {
 	
-	private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+	private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
 	private static final  String DOWNLOAD_BASKET = "download-basket";
 	
 	public void migrate(Connection connection) throws Exception {

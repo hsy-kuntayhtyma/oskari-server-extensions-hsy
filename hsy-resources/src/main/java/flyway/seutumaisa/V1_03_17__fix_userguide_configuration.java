@@ -2,7 +2,7 @@ package flyway.seutumaisa;
 
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.ViewServiceIbatisImpl;
+import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
 import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class V1_03_17__fix_userguide_configuration implements JdbcMigration {
-    private static final ViewService VIEW_SERVICE = new ViewServiceIbatisImpl();
+    private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final String ROLE_SEUTUMAISA = "seutumaisa";
     private static final String BUNDLE_USERGUIDE = "userguide";
 
