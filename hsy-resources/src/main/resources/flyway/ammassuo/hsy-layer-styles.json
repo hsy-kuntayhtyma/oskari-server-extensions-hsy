@@ -1,0 +1,1506 @@
+[
+    {
+        "name": "Ammassuo2:AM_JAE_asfaltti",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_asfaltti": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_betoni",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_betoni": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_biokomposti",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_biokomposti": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_ekomo",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_ekomo": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_hiekka",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_hiekka": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_jatevoimalan_lentotuhka",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_jatevoimalan_lentotuhka": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kannot",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kannot": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kantohake",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kantohake": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kasittelyalue",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kasittelyalue": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_katujenpuhdistusjate",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_katujenpuhdistusjate": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kompostiylite",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kompostiylite": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kuona",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kuona": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_kuona_mineraali",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_kuona_mineraali": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_lasi",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_lasi": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_lehtirisu",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_lehtirisu": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_lehtirisumurske",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_lehtirisumurske": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_lietekomposti",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_lietekomposti": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_louhe",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_louhe": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_maa_ja_jate",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_maa_ja_jate": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_maa_ja_kiviaines",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_maa_ja_kiviaines": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_maapitoiset_risut",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_maapitoiset_risut": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_metalli",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_metalli": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_multa",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_multa": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_paalit",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_paalit": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_painekyllastetty_puu",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_painekyllastetty_puu": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_palopostit",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_palopostit": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_pesuliete",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_pesuliete": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_pilaantuneet_maat",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_pilaantuneet_maat": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_pima_ja_jate",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_pima_ja_jate": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_puu_pinnoitettu",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_puu_pinnoitettu": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_puu_puhdas",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_puu_puhdas": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_puuhake_pinnoitettu",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_puuhake_pinnoitettu": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_puuhake_puhdas",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_puuhake_puhdas": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_puutarhajate",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_puutarhajate": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_rejekti",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_rejekti": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_risuhake",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_risuhake": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_risut",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_risut": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_sekajate",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_sekajate": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_siirtokuormaus",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_siirtokuormaus": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_sortin_jatteet",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_sortin_jatteet": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_tupakointialue",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_tupakointialue": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_turve",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_turve": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_turvehiekka",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_turvehiekka": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_vaaralliset_maat",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_vaaralliset_maat": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_vastaanottopaikat",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_vastaanottopaikat": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_viherkomposti",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_viherkomposti": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    },
+    {
+        "name": "Ammassuo2:AM_JAE_voimakkaasti_pilaantuneet_maat",
+        "style": {
+            "renderMode": "vector",
+            "styles": {
+                "Ammassuo2:AM_JAE_voimakkaasti_pilaantuneet_maat": {
+                    "featureStyle": {
+                        "text": {
+                            "overflow": "true",
+                            "textAlign": "middle",
+                            "labelProperty": "tunnus",
+                            "fill": {
+                                "color": "#ffffff"
+                            },
+                            "stroke": {
+                                "color": "#000000",
+                                "width": 3
+                            },
+                            "font": "bold 12px Arial"
+                        },
+                        "fill": {
+                            "color": "#ff66ff"
+                        },
+                        "stroke": {
+                            "color": "#6e6e6e",
+                            "width": 3
+                        }
+                    }
+                }
+            }
+        }
+    }
+]
