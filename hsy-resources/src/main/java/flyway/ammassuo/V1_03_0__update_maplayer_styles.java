@@ -13,11 +13,11 @@ import org.json.JSONObject;
 import fi.nls.oskari.util.IOHelper;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 public class V1_03_0__update_maplayer_styles implements JdbcMigration {
     private static final Logger LOG = LogFactory.getLogger(V1_03_0__update_maplayer_styles.class);
     private OskariLayerService layerService;
-    private static final String SRS_3879 = "EPSG:3879";
 
     private static String LAYER_DATA_URL  = PropertyUtil.get("geoserver.url", "http://localhost:8080/geoserver") + "/wfs";
 
@@ -29,14 +29,20 @@ public class V1_03_0__update_maplayer_styles implements JdbcMigration {
 
         final String json = IOHelper.readString(getClass().getResourceAsStream("hsy-layer-styles.json"));
         JSONArray array = new JSONArray(json);
-        JSONArray layers = new JSONArray();
+        JSONArray jsonLayers = new JSONArray();
 
         for(int i = 0; i < array.length(); i++) {
             JSONObject obj = (JSONObject)array.get(i);
             String name = obj.get("name").toString();
             JSONObject style = (JSONObject)obj.get("style");
-            OskariLayer layer = layerService.findByUrlAndName(LAYER_DATA_URL, name).get(0);
-            layer.setStyle(String.valueOf(style));
+            List<OskariLayer> layers = layerService.findByUrlAndName(LAYER_DATA_URL, name);
+            if (layers.isEmpty()) {
+                LOG.warn(String.format("No matching layer found (url: %s name: %s), could not set style.", LAYER_DATA_URL, name));
+            } else if (layers.size() > 1) {
+                LOG.warn(String.format("Multiple layers found (url: %s name: %s), could not set style.", LAYER_DATA_URL, name));
+            } else {
+                layers.get(0).setStyle(String.valueOf(style));
+            }
         }
     }
 

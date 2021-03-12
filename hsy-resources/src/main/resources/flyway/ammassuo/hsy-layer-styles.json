@@ -20,10 +20,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#000000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#FFFFFF",
                             "width": 3
                         }
                     }
@@ -52,10 +52,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#808080"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -84,10 +84,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#000000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#FFFFFF",
                             "width": 3
                         }
                     }
@@ -116,10 +116,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#7030A0"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -148,10 +148,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#CC9900"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -180,10 +180,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FF0000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -212,10 +212,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#A87C00"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -244,10 +244,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#A87C00"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -276,10 +276,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFC000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -308,10 +308,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#433023"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -340,10 +340,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFFFFF"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -372,10 +372,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#0070C0"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -404,10 +404,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#0070C0"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -436,10 +436,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#ffffff"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -468,10 +468,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FCE4D6"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -500,10 +500,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FCE4D6"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -532,10 +532,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#806000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -564,10 +564,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#D9D9D9"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -596,10 +596,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#806000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -628,10 +628,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#C6E0B4"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -660,10 +660,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#996633"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -692,10 +692,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#ffffff"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -724,10 +724,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#262626"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -756,10 +756,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#33CCCC"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -788,10 +788,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FF5050"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -820,10 +820,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#B70000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -852,10 +852,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#000000"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -884,10 +884,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#548235"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -916,10 +916,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#DDEBF7"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -948,10 +948,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFFF00"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -980,10 +980,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#92D050"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1012,10 +1012,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFFF00"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1044,10 +1044,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#92D050"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1076,10 +1076,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#E2EFDA"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1108,10 +1108,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFFFFF"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1140,10 +1140,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFF2CC"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1172,10 +1172,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFF2CC"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1204,10 +1204,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#ffffff"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1236,10 +1236,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#CDACE6"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1268,10 +1268,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#009999"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1300,10 +1300,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FFFF00"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1332,10 +1332,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#3A3838"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1364,10 +1364,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#757171"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1396,10 +1396,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FF5050"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1428,10 +1428,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FF00FF"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1460,10 +1460,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#548235"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
@@ -1492,10 +1492,10 @@
                             "font": "bold 12px Arial"
                         },
                         "fill": {
-                            "color": "#ff66ff"
+                            "color": "#FF9999"
                         },
                         "stroke": {
-                            "color": "#6e6e6e",
+                            "color": "#000000",
                             "width": 3
                         }
                     }
