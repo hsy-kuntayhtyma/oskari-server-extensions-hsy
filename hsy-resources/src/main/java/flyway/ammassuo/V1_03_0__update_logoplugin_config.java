@@ -14,7 +14,7 @@ import org.json.JSONObject;
 import java.sql.Connection;
 import java.util.List;
 
-public class V1_02_1__update_logoplugin_config implements JdbcMigration {
+public class V1_03_0__update_logoplugin_config implements JdbcMigration {
     private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
     private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceMybatisImpl();
     private static final String PLUGIN_NAME = "Oskari.mapframework.bundle.mapmodule.plugin.LogoPlugin";
