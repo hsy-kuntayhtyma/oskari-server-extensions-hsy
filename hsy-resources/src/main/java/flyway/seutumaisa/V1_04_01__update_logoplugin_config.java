@@ -13,6 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Connection;
+import java.util.List;
 
 public class V1_04_01__update_logoplugin_config implements JdbcMigration {
     private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
@@ -22,40 +23,46 @@ public class V1_04_01__update_logoplugin_config implements JdbcMigration {
 
     public void migrate(Connection connection)
             throws Exception {
-        long viewId = VIEW_SERVICE.getDefaultViewIdForRole(LayerHelper.ROLE_SEUTUMAISA);
-        View v = VIEW_SERVICE.getViewWithConf(viewId);
-
-        final Bundle mapfull = v.getBundleByName(MAPFULL);
-        boolean addedPlugin = addPlugin(mapfull);
-        if(addedPlugin) {
-            VIEW_SERVICE.updateBundleSettingsForView(v.getId(), mapfull);
+        List<View> views = VIEW_SERVICE.getViewsForUser(-1);
+        for(View v : views) {
+            if(v.isDefault()) {
+                final Bundle mapfull = v.getBundleByName(MAPFULL);
+                boolean updatedPlugin = updatePlugin(mapfull);
+                if(updatedPlugin) {
+                    VIEW_SERVICE.updateBundleSettingsForView(v.getId(), mapfull);
+                }
+            }
         }
     }
 
-    private boolean addPlugin(final Bundle mapfull) throws JSONException {
+    private boolean updatePlugin(final Bundle mapfull) throws JSONException {
         final JSONObject config = mapfull.getConfigJSON();
         final JSONArray plugins = config.optJSONArray("plugins");
         if(plugins == null) {
             throw new RuntimeException("No plugins" + config.toString(2));
         }
+
         boolean found = false;
+
         for(int i = 0; i < plugins.length(); ++i) {
             JSONObject plugin = plugins.getJSONObject(i);
             if(PLUGIN_NAME.equals(plugin.optString("id"))) {
                 found = true;
+                plugins.remove(i);
                 break;
             }
         }
-        // add plugin if not there yet
-        if(!found) {
+
+        // Update plugin config if found
+        if(found) {
             JSONObject plugin = new JSONObject();
             plugin.put("id", PLUGIN_NAME);
             JSONObject pluginConfig = new JSONObject();
 
             JSONObject terms = new JSONObject();
-            terms.put("fi", "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx");
-            terms.put("en", "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx");
-            terms.put("sv", "https://www.hsy.fi/fi/asiantuntijalle/avoindata/karttapalvelu/Sivut/Karttapalvelun-käyttöehdot.aspx");
+            terms.put("fi", "https://www.hsy.fi/ilmanlaatu-ja-ilmasto/paikkatiedot/avoin-karttapalvelu/");
+            terms.put("en", "https://www.hsy.fi/en/air-quality-and-climate/geographic-information/open-map-service/");
+            terms.put("sv", "https://www.hsy.fi/sv/luftkvalitet-och-klimat/geodata/oppen-karttjanst/");
 
             pluginConfig.put("termsUrl", terms);
 
