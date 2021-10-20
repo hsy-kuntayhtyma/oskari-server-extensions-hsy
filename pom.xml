@@ -27,6 +27,13 @@
             <name>Oskari.org snapshot repository</name>
             <url>https://oskari.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>osgeo</id>
+            <name>OSGeo Release Repository</name>
+            <url>https://repo.osgeo.org/repository/release/</url>
+            <snapshots><enabled>false</enabled></snapshots>
+            <releases><enabled>true</enabled></releases>
+        </repository>
     </repositories>
 
     <dependencyManagement>
