@@ -16,26 +16,6 @@ public class TagPipeActionHandler extends RestActionHandler {
 
     private static final Logger log = LogFactory.getLogger(TagPipeActionHandler.class);
 
-    protected final static String PARAM_TAG_ID = "tag_id";
-    protected final static String PARAM_TAG_TYPE = "tag_type";
-    protected final static String PARAM_TAG_ADDRESS = "tag_address";
-    protected final static String PARAM_TAG_PIPE_SIZE = "tag_pipe_size";
-    protected final static String PARAM_TAG_LOW_PRESSURE_LEVEL = "tag_low_pressure_level";
-    protected final static String PARAM_TAG_MAX_PRESSURE_LEVEL = "tag_max_pressure_level";
-    protected final static String PARAM_TAG_MAX_WATER_TAKE = "tag_max_water_take";
-    protected final static String PARAM_TAG_MIN_PRESSURE_LEVEL = "tag_min_pressure_level";
-    protected final static String PARAM_TAG_BOTTOM_HEIGHT = "tag_bottom_height";
-    protected final static String PARAM_TAG_LOW_TAG_HEIGHT = "tag_low_tag_height";
-    protected final static String PARAM_TAG_BARRAGE_HEIGHT = "tag_barrage_height";
-    protected final static String PARAM_TAG_GROUND_HEIGHT = "tag_ground_height";
-    protected final static String PARAM_TAG_OTHER_ISSUE = "tag_other_issue";
-    protected final static String PARAM_TAG_GEOJSON = "tag_geojson";
-    //Separate Finnish kiinteistötunnus (real estate ID) into 4 different fields
-    protected final static String PARAM_TAG_MUNICIPALITY = "tag_municipality";
-    protected final static String PARAM_TAG_NEIGHBORHOOD = "tag_neighborhood";
-    protected final static String PARAM_TAG_BLOCK = "tag_block";
-    protected final static String PARAM_TAG_PLOT = "tag_plot";
-
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
         try {
@@ -51,7 +31,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         // Only admin user
         params.requireAdminUser();
 
-        int tagPipeId = params.getRequiredParamInt(PARAM_TAG_ID);
+        int tagPipeId = params.getRequiredParamInt(TagPipeConfiguration.PARAM_TAG_ID);
 
         try {
             if(tagPipeId>0) {
@@ -73,7 +53,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         try {
             TagPipeConfiguration conf = new TagPipeConfiguration(params);
             // tag_type required on POST / INSERT -- can't be changed with PUT / UPDATE
-            conf.setTagType(params.getRequiredParam(PARAM_TAG_TYPE));
+            conf.setTagType(params.getRequiredParam(TagPipeConfiguration.PARAM_TAG_TYPE));
             JSONObject response = TagPipeHelper.insert(conf);
             ResponseHelper.writeResponse(params, response);
         } catch (Exception ex){
@@ -90,7 +70,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         try {
             TagPipeConfiguration conf = new TagPipeConfiguration(params);
             // tag_id (server created) is required on PUT / UPDATE -- can't be set on POST / INSERT
-            conf.setTagId(params.getRequiredParamInt(PARAM_TAG_ID));
+            conf.setTagId(params.getRequiredParamInt(TagPipeConfiguration.PARAM_TAG_ID));
             JSONObject response = TagPipeHelper.update(conf);
             ResponseHelper.writeResponse(params, response);
         } catch (Exception ex){
