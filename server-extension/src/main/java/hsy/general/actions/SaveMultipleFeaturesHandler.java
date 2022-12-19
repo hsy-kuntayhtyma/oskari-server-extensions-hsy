@@ -59,7 +59,6 @@ public class SaveMultipleFeaturesHandler extends AbstractFeatureHandler {
                 requestData.append("<ogc:Filter><ogc:FeatureId fid='" + jsonObject.getString("featureId") + "'/></ogc:Filter></wfs:Update></wfs:Transaction>");
                 
                 String responseString = postPayload(layer.getUsername(), layer.getPassword(), requestData.toString(), getURLForNamespace(layer.getName(),layer.getUrl()));
-                flushLayerTilesCache(layer.getId());
 
                 if (responseString.indexOf("Exception") > -1) {
                     ResponseHelper.writeResponse(params, "Exception");
