@@ -22,8 +22,10 @@ import fi.nls.oskari.util.ResponseHelper;
 @OskariActionRoute("GetPipesWithParams")
 public class GetPipesWithParams extends ActionHandler {
 
-	private final Logger LOGGER = LogFactory.getLogger(GetPipesWithParams.class);
-		
+	private static final Logger LOGGER = LogFactory.getLogger(GetPipesWithParams.class);
+
+    private static final int MAX_FEATURE_COUNT = 50;
+
     private static final String PARAM_LAYERS = "layers";
     private static final String PARAM_X = "x";
     private static final String PARAM_Y = "y";
@@ -38,7 +40,7 @@ public class GetPipesWithParams extends ActionHandler {
 		
         final JSONArray data = new JSONArray();
        
-	    String wmsUrl = Helpers.getGetFeatureInfoUrlForProxy(params.getHttpParam(PARAM_URL).toString(), params.getHttpParam(PARAM_SRS).toString(),
+	    String wmsUrl = getGetFeatureInfoUrlForProxy(params.getHttpParam(PARAM_URL).toString(), params.getHttpParam(PARAM_SRS).toString(),
 	    		params.getHttpParam(PARAM_BBOX).toString(), params.getHttpParam(PARAM_WIDTH).toString(), params.getHttpParam(PARAM_HEIGHT).toString(),
 	    		params.getHttpParam(PARAM_X).toString(), params.getHttpParam(PARAM_Y).toString(), params.getHttpParam(PARAM_LAYERS).toString());
 	    
@@ -69,4 +71,21 @@ public class GetPipesWithParams extends ActionHandler {
 			throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
 		}
 	}
+
+   private static String getGetFeatureInfoUrlForProxy(String url, String projection, String bbox, String width, String height, String x, String y, String layerName) {
+        String wmsUrl = url+"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&SRS="+projection
+            +"&BBOX="+bbox
+            +"&WIDTH="+width
+            +"&HEIGHT="+height
+            +"&QUERY_LAYERS="+layerName
+            +"&X="+Math.round(Float.parseFloat(x))
+            +"&Y="+Math.round(Float.parseFloat(y))
+            +"&LAYERS="+layerName
+            +"&FEATURE_COUNT="+MAX_FEATURE_COUNT
+            +"&INFO_FORMAT=application/json"
+            +"&EXCEPTIONS=application/vnd.ogc.se_xml"
+            +"&BUFFER=10";
+        return wmsUrl;
+    }
+
 }
