@@ -1,24 +1,23 @@
 package flyway.pipe;
 
-import java.sql.Connection;
+import java.sql.SQLException;
 
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+import org.oskari.helpers.BundleHelper;
 
-import fi.nls.oskari.db.BundleHelper;
 import fi.nls.oskari.domain.map.view.Bundle;
 
-public class V1_00_0__register_water_pipe_tool_bundle implements JdbcMigration{
+public class V1_00_0__register_water_pipe_tool_bundle extends BaseJavaMigration {
 
-	private static final String NAMESPACE = "hsy";
 	private static final String WATER_PIPE_TOOL = "water-pipe-tool";
 
-	public void migrate(Connection connection) {
+	public void migrate(Context context) throws SQLException {
 	// BundleHelper checks if these bundles are already registered
 		Bundle waterPipeTool = new Bundle();
 		waterPipeTool.setConfig("{}");
 		waterPipeTool.setState("{}");
 		waterPipeTool.setName(WATER_PIPE_TOOL);
-		waterPipeTool.setStartup(BundleHelper.getDefaultBundleStartup(NAMESPACE, WATER_PIPE_TOOL, "Waterpipe tool"));
-		BundleHelper.registerBundle(waterPipeTool);
+		BundleHelper.registerBundle(context.getConnection(), waterPipeTool);
 	}
 }

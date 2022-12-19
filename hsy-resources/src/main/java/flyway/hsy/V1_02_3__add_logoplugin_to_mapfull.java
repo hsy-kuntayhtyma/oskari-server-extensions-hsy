@@ -1,26 +1,23 @@
 package flyway.hsy;
 
-import fi.nls.oskari.domain.map.OskariLayer;
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
-import fi.nls.oskari.map.layer.OskariLayerService;
-import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
 import fi.nls.oskari.map.view.ViewService;
 import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Connection;
 import java.util.List;
 
-public class V1_02_3__add_logoplugin_to_mapfull implements JdbcMigration {
+public class V1_02_3__add_logoplugin_to_mapfull extends BaseJavaMigration {
     private static final ViewService VIEW_SERVICE = new AppSetupServiceMybatisImpl();
-    private static final OskariLayerService LAYER_SERVICE = new OskariLayerServiceMybatisImpl();
     private static final String PLUGIN_NAME = "Oskari.mapframework.bundle.mapmodule.plugin.LogoPlugin";
     private static final String MAPFULL = "mapfull";
-    public void migrate(Connection connection)
+    public void migrate(Context context)
             throws Exception {
         List<View> views = VIEW_SERVICE.getViewsForUser(-1);
         for(View v : views) {

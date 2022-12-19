@@ -1,13 +1,13 @@
 package flyway.hsy;
 
-import fi.nls.oskari.db.BundleHelper;
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+import org.oskari.helpers.BundleHelper;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,22 +16,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class V1_02_1__remove_layerselection_bundle_from_default_views implements JdbcMigration {
+public class V1_02_1__remove_layerselection_bundle_from_default_views extends BaseJavaMigration {
     private static final Logger LOG = LogFactory.getLogger(V1_02_1__remove_layerselection_bundle_from_default_views.class);
 
     private static final String BUNDLE_LAYERSELECTION2 = "layerselection2";
 
     private int updatedViewCount = 0;
-    private ViewService service = null;
 
-    public void migrate(Connection connection) throws Exception {
-        service =  new AppSetupServiceMybatisImpl();
+    public void migrate(Context context) throws Exception {
         try {
-            updateViews(connection);
+            updateViews(context.getConnection());
         }
         finally {
             LOG.info("Updated views:", updatedViewCount);
-            service = null;
         }
     }
 
@@ -48,11 +45,11 @@ public class V1_02_1__remove_layerselection_bundle_from_default_views implements
     private List<View> getOutdatedViews(Connection conn) throws SQLException {
 
         List<View> list = new ArrayList<>();
-        final String sql = "SELECT id FROM portti_view " +
+        final String sql = "SELECT id FROM oskari_appsetup " +
                 "WHERE (type = 'USER' OR type = 'DEFAULT') AND " +
                 "id IN (" +
-                "SELECT distinct view_id FROM portti_view_bundle_seq WHERE bundle_id IN (" +
-                "SELECT id FROM portti_bundle WHERE name='layerselection2'" +
+                "SELECT distinct appsetup_id FROM oskari_appsetup_bundles WHERE bundle_id IN (" +
+                "SELECT id FROM oskari_bundle WHERE name='layerselection2'" +
                 "));";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             try (ResultSet rs = statement.executeQuery()) {
@@ -68,15 +65,15 @@ public class V1_02_1__remove_layerselection_bundle_from_default_views implements
 
 
     public void removeLayerselectionBundle(Connection conn, final long viewId) throws SQLException {
-        Bundle layerselectionBundle = BundleHelper.getRegisteredBundle(BUNDLE_LAYERSELECTION2, conn);
+        Bundle layerselectionBundle = BundleHelper.getRegisteredBundle(conn, BUNDLE_LAYERSELECTION2);
         if(layerselectionBundle == null) {
             // not even registered so migration not needed
             return;
         }
 
         // remove layerselection2 bundle
-        final String sql = "DELETE FROM portti_view_bundle_seq " +
-                "WHERE bundle_id = ? AND view_id=?;";
+        final String sql = "DELETE FROM oskari_appsetup_bundles " +
+                "WHERE bundle_id = ? AND appsetup_id=?;";
 
         try (PreparedStatement statement =
                      conn.prepareStatement(sql)){

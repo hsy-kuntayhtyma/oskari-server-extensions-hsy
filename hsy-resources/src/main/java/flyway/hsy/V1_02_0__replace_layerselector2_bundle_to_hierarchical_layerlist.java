@@ -7,35 +7,29 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import fi.nls.oskari.db.BundleHelper;
 import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.util.FlywayHelper;
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
 
-import fi.nls.oskari.map.view.ViewService;
-import fi.nls.oskari.map.view.AppSetupServiceMybatisImpl;
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+import org.oskari.helpers.BundleHelper;
 
-
-public class V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist implements JdbcMigration {
+public class V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist extends BaseJavaMigration {
     private static final Logger LOG = LogFactory.getLogger(V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist.class);
 
     private static final String BUNDLE_LAYERSELECTOR2 = "layerselector2";
     private static final String BUNDLE_HIERARCHICAL_LAYERLIST = "hierarchical-layerlist";
 
     private int updatedViewCount = 0;
-    private ViewService service = null;
 
-    public void migrate(Connection connection) throws Exception {
-        service =  new AppSetupServiceMybatisImpl();
+    public void migrate(Context context) throws Exception {
         try {
-            updateViews(connection);
+            updateViews(context.getConnection());
         }
         finally {
             LOG.info("Updated views:", updatedViewCount);
-            service = null;
         }
     }
 
@@ -52,11 +46,11 @@ public class V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist im
     private List<View> getOutdatedViews(Connection conn) throws SQLException {
 
         List<View> list = new ArrayList<>();
-        final String sql = "SELECT id FROM portti_view " +
+        final String sql = "SELECT id FROM oskari_appsetup " +
                 "WHERE (type = 'USER' OR type = 'DEFAULT') AND " +
                 "id IN (" +
-                "SELECT distinct view_id FROM portti_view_bundle_seq WHERE bundle_id IN (" +
-                "SELECT id FROM portti_bundle WHERE name='layerselection2' OR name='layerselector2'" +
+                "SELECT distinct appsetup_id FROM oskari_appsetup_bundles WHERE bundle_id IN (" +
+                "SELECT id FROM oskari_bundle WHERE name='layerselection2' OR name='layerselector2'" +
                 "));";
         try (PreparedStatement statement = conn.prepareStatement(sql)) {
             try (ResultSet rs = statement.executeQuery()) {
@@ -72,12 +66,12 @@ public class V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist im
 
 
     public void addHierarchicalLayerListBundle(Connection conn, final long viewId) throws SQLException {
-        Bundle layerselectorBundle = BundleHelper.getRegisteredBundle(BUNDLE_LAYERSELECTOR2, conn);
+        Bundle layerselectorBundle = BundleHelper.getRegisteredBundle(conn, BUNDLE_LAYERSELECTOR2);
         if( layerselectorBundle == null) {
             // not even registered so migration not needed
             return;
         }
-        Bundle newBundle = BundleHelper.getRegisteredBundle(BUNDLE_HIERARCHICAL_LAYERLIST, conn);
+        Bundle newBundle = BundleHelper.getRegisteredBundle(conn, BUNDLE_HIERARCHICAL_LAYERLIST);
         if(newBundle == null) {
             throw new RuntimeException("Bundle not registered: " + BUNDLE_HIERARCHICAL_LAYERLIST);
         }
@@ -88,12 +82,12 @@ public class V1_02_0__replace_layerselector2_bundle_to_hierarchical_layerlist im
     }
 
     public void replaceLayerselectorBundleToHierarchicalLayerlist(Connection conn, final long viewId, final Bundle oldBundle, final Bundle newBundle) throws SQLException {
-        final String sql = "UPDATE portti_view_bundle_seq " +
+        final String sql = "UPDATE oskari_appsetup_bundles " +
                 "SET " +
                 "    bundle_id=?, " +
                 "    startup=?, " +
                 "    bundleinstance=?" +
-                "WHERE bundle_id = ? and view_id=?";
+                "WHERE bundle_id = ? and appsetup_id=?";
 
         try (PreparedStatement statement =
                      conn.prepareStatement(sql)){
