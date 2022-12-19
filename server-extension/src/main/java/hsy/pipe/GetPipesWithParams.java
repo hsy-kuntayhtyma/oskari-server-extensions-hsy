@@ -1,28 +1,20 @@
 package hsy.pipe;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
+import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionHandler;
 import fi.nls.oskari.control.ActionParameters;
-import fi.nls.oskari.log.LogFactory;
-import fi.nls.oskari.log.Logger;
+import fi.nls.oskari.util.IOHelper;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("GetPipesWithParams")
 public class GetPipesWithParams extends ActionHandler {
-
-	private static final Logger LOGGER = LogFactory.getLogger(GetPipesWithParams.class);
 
     private static final int MAX_FEATURE_COUNT = 50;
 
@@ -37,43 +29,29 @@ public class GetPipesWithParams extends ActionHandler {
 
 	@Override
     public void handleAction(final ActionParameters params) throws ActionException {
-		
-        final JSONArray data = new JSONArray();
-       
 	    String wmsUrl = getGetFeatureInfoUrlForProxy(params.getHttpParam(PARAM_URL).toString(), params.getHttpParam(PARAM_SRS).toString(),
 	    		params.getHttpParam(PARAM_BBOX).toString(), params.getHttpParam(PARAM_WIDTH).toString(), params.getHttpParam(PARAM_HEIGHT).toString(),
 	    		params.getHttpParam(PARAM_X).toString(), params.getHttpParam(PARAM_Y).toString(), params.getHttpParam(PARAM_LAYERS).toString());
-	    
-		URL wms;
 		try {
-			wms = new URL(wmsUrl);
+		    URL wms = new URL(wmsUrl);
 			URLConnection wmsConn = wms.openConnection();
 			wmsConn.setRequestProperty("Accept-Charset", "UTF-8");
-			BufferedReader in = new BufferedReader( new InputStreamReader( wmsConn.getInputStream(), "UTF-8" ) );
-			
-			String inputLine;
-	        String html = "";
-			        
-	        while ((inputLine = in.readLine()) != null) {
-	        	html += inputLine;
-	        }
-	        in.close();
-	        
-            JSONObject jsoni = new JSONObject(html);
-			            
-	        ResponseHelper.writeResponse(params, jsoni);
-	        
-		} catch (JSONException e) {
-		    throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
-		} catch (MalformedURLException e) {
-			throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
+
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			try (InputStream in = wmsConn.getInputStream()) {
+			    IOHelper.copy(in, baos);
+			}
+	        ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, baos);
 		} catch (IOException e) {
-			throw new ActionException("Could not populate Response JSON: " + LOGGER.getAsString(data), e);
+			throw new ActionException("Could not populate Response", e);
 		}
 	}
 
    private static String getGetFeatureInfoUrlForProxy(String url, String projection, String bbox, String width, String height, String x, String y, String layerName) {
-        String wmsUrl = url+"?SERVICE=WMS&VERSION=1.1.1&REQUEST=GetFeatureInfo&SRS="+projection
+        String wmsUrl = url+"?SERVICE=WMS"
+            +"&VERSION=1.1.1&"
+            +"REQUEST=GetFeatureInfo"
+            +"&SRS="+projection
             +"&BBOX="+bbox
             +"&WIDTH="+width
             +"&HEIGHT="+height
