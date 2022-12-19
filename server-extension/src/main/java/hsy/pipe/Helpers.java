@@ -1,4 +1,4 @@
-package hsy.pipe.helpers;
+package hsy.pipe;
 
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;

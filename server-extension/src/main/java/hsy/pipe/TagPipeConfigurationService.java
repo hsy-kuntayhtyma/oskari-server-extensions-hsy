@@ -1,11 +1,9 @@
-package hsy.pipe.tagpipe;
+package hsy.pipe;
 
 import java.util.List;
 
-import hsy.pipe.domain.TagPipeConfiguration;
-import fi.nls.oskari.service.db.BaseService;
+public interface TagPipeConfigurationService {
 
-public interface TagPipeConfigurationService  extends BaseService<TagPipeConfiguration>{
     public List<TagPipeConfiguration> findTagPipes();
     public TagPipeConfiguration findTagPipeById(final int tagPipeId);
     public void delete(final int tagPipeId);

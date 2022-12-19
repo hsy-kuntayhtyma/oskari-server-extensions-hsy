@@ -1,7 +1,4 @@
-package hsy.pipe.helpers;
-
-import hsy.pipe.tagpipe.TagPipeConfigurationService;
-import hsy.pipe.tagpipe.TagPipeConfigurationServiceIbatisImpl;
+package hsy.pipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import hsy.pipe.domain.TagPipeConfiguration;
 import fi.nls.oskari.domain.User;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;

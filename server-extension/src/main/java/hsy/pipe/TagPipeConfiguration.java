@@ -1,4 +1,4 @@
-package hsy.pipe.domain;
+package hsy.pipe;
 
 import org.json.JSONObject;
 
