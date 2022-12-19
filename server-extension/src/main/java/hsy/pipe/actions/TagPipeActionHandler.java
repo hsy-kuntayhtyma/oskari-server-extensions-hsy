@@ -11,7 +11,6 @@ import fi.nls.oskari.control.ActionParamsException;
 import fi.nls.oskari.control.RestActionHandler;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.util.ConversionHelper;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("SearchTagPipe")
@@ -74,7 +73,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         params.requireAdminUser();
 
         try {
-            TagPipeConfiguration conf = paramsToTagConfiguration(params);
+            TagPipeConfiguration conf = new TagPipeConfiguration(params);
             // tag_type required on POST / INSERT -- can't be changed with PUT / UPDATE
             conf.setTagType(params.getRequiredParam(PARAM_TAG_TYPE));
             JSONObject response = TagPipeHelper.insert(conf);
@@ -91,7 +90,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         params.requireAdminUser();
 
         try {
-            TagPipeConfiguration conf = paramsToTagConfiguration(params);
+            TagPipeConfiguration conf = new TagPipeConfiguration(params);
             // tag_id (server created) is required on PUT / UPDATE -- can't be set on POST / INSERT
             conf.setTagId(params.getRequiredParamInt(PARAM_TAG_ID));
             JSONObject response = TagPipeHelper.update(conf);
@@ -100,27 +99,6 @@ public class TagPipeActionHandler extends RestActionHandler {
             log.error(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ex));
             throw new ActionParamsException("Couldn't update tagpipe");
         }
-    }
-
-    private TagPipeConfiguration paramsToTagConfiguration(ActionParameters params) throws Exception {
-        TagPipeConfiguration conf = new TagPipeConfiguration();
-        conf.setTagAddress(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_ADDRESS),""));
-        conf.setTagPipeSize(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_PIPE_SIZE), 0));
-        conf.setTagLowPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_LOW_PRESSURE_LEVEL), 0));
-        conf.setTagMaxPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MAX_PRESSURE_LEVEL), 0));
-        conf.setTagMaxWaterTake(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MAX_WATER_TAKE), 0));
-        conf.setTagMinPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MIN_PRESSURE_LEVEL), 0));
-        conf.setTagBottomHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_BOTTOM_HEIGHT), 0));
-        conf.setTagLowTagHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_LOW_TAG_HEIGHT), 0));
-        conf.setTagBarrageHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_BARRAGE_HEIGHT), 0));
-        conf.setTagGroundHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_GROUND_HEIGHT), 0));
-        conf.setTagOtherIssue(ConversionHelper.getString(params.getHttpParam(PARAM_TAG_OTHER_ISSUE),""));
-        conf.setTagGeoJson(new JSONObject(ConversionHelper.getString(params.getHttpParam(PARAM_TAG_GEOJSON),"")));
-        conf.setTagMunicipality(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_MUNICIPALITY),""));
-        conf.setTagNeighborhood(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_NEIGHBORHOOD),""));
-        conf.setTagBlock(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_BLOCK),""));
-        conf.setTagPlot(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_PLOT),""));
-        return conf;
     }
 
 }

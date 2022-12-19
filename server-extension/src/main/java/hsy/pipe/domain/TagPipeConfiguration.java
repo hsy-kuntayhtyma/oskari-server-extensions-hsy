@@ -2,13 +2,11 @@ package hsy.pipe.domain;
 
 import org.json.JSONObject;
 
-import fi.nls.oskari.log.LogFactory;
-import fi.nls.oskari.log.Logger;
+import fi.nls.oskari.control.ActionParameters;
+import fi.nls.oskari.util.ConversionHelper;
 import fi.nls.oskari.util.JSONHelper;
 
 public class TagPipeConfiguration {
-	
-	private static final Logger log = LogFactory.getLogger(TagPipeConfiguration.class);
 	
 	protected final static String PARAM_TAG_ID = "tag_id";
     protected final static String PARAM_TAG_TYPE = "tag_type";
@@ -49,7 +47,31 @@ public class TagPipeConfiguration {
 	private String tagBlock;
 	private String tagPlot;
 	
-	public JSONObject getAsJSONObject() {
+    /**
+     * Constructor from action parameters
+     * NOTE: Doesn't set tagType or tagId!
+     * This is because insert/update logic might differ
+     */
+    public TagPipeConfiguration(ActionParameters params) throws Exception {
+        setTagAddress(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_ADDRESS),""));
+        setTagPipeSize(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_PIPE_SIZE), 0));
+        setTagLowPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_LOW_PRESSURE_LEVEL), 0));
+        setTagMaxPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MAX_PRESSURE_LEVEL), 0));
+        setTagMaxWaterTake(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MAX_WATER_TAKE), 0));
+        setTagMinPressureLevel(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_MIN_PRESSURE_LEVEL), 0));
+        setTagBottomHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_BOTTOM_HEIGHT), 0));
+        setTagLowTagHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_LOW_TAG_HEIGHT), 0));
+        setTagBarrageHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_BARRAGE_HEIGHT), 0));
+        setTagGroundHeight(ConversionHelper.getDouble(params.getHttpParam(PARAM_TAG_GROUND_HEIGHT), 0));
+        setTagOtherIssue(ConversionHelper.getString(params.getHttpParam(PARAM_TAG_OTHER_ISSUE),""));
+        setTagGeoJson(new JSONObject(ConversionHelper.getString(params.getHttpParam(PARAM_TAG_GEOJSON),"")));
+        setTagMunicipality(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_MUNICIPALITY),""));
+        setTagNeighborhood(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_NEIGHBORHOOD),""));
+        setTagBlock(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_BLOCK),""));
+        setTagPlot(ConversionHelper.getString(params.getRequiredParam(PARAM_TAG_PLOT),""));
+    }
+
+    public JSONObject getAsJSONObject() {
 		final JSONObject root = new JSONObject();
 		JSONHelper.putValue(root, PARAM_TAG_ID, this.getTagId());
 		JSONHelper.putValue(root, PARAM_TAG_TYPE, this.getTagType());
