@@ -11,7 +11,6 @@ import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionParameters;
 import fi.nls.oskari.control.ActionParamsException;
 import fi.nls.oskari.control.RestActionHandler;
-import fi.nls.oskari.domain.User;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.service.OskariComponentManager;
@@ -27,7 +26,7 @@ public class TagPipeActionHandler extends RestActionHandler {
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
         try {
-            ResponseHelper.writeResponse(params, getTagPipes(params.getUser(), params.getLocale().getLanguage()));
+            ResponseHelper.writeResponse(params, getTagPipes());
         } catch (Exception ex){
             log.error(org.apache.commons.lang.exception.ExceptionUtils.getStackTrace(ex));
             throw new ActionParamsException("Couldn't get tagpipes");
@@ -87,7 +86,7 @@ public class TagPipeActionHandler extends RestActionHandler {
         }
     }
 
-    private JSONObject getTagPipes(User user, String lang) throws JSONException {
+    private JSONObject getTagPipes() throws JSONException {
         JSONObject job = new JSONObject();
         List<TagPipeConfiguration> tagpipes = tagpipeService.findTagPipes();
         JSONArray tagpipesJSONArray = new JSONArray();
