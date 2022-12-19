@@ -17,9 +17,9 @@ import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("SearchTagPipe")
-public class TagPipeActionHandler extends RestActionHandler {
+public class SearchTagPipeHandler extends RestActionHandler {
 
-    private static final Logger log = LogFactory.getLogger(TagPipeActionHandler.class);
+    private static final Logger log = LogFactory.getLogger(SearchTagPipeHandler.class);
 
     private final TagPipeConfigurationService tagpipeService = OskariComponentManager.getComponentOfType(TagPipeConfigurationService.class);
 

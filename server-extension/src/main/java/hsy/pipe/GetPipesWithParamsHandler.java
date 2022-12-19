@@ -14,7 +14,7 @@ import fi.nls.oskari.util.IOHelper;
 import fi.nls.oskari.util.ResponseHelper;
 
 @OskariActionRoute("GetPipesWithParams")
-public class GetPipesWithParams extends ActionHandler {
+public class GetPipesWithParamsHandler extends ActionHandler {
 
     private static final int MAX_FEATURE_COUNT = 50;
 
