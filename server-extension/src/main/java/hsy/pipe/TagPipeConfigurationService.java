@@ -2,11 +2,13 @@ package hsy.pipe;
 
 import java.util.List;
 
-public interface TagPipeConfigurationService {
+import fi.nls.oskari.service.OskariComponent;
 
-    public List<TagPipeConfiguration> findTagPipes();
-    public TagPipeConfiguration findTagPipeById(final int tagPipeId);
-    public void delete(final int tagPipeId);
-    public int insert(final TagPipeConfiguration tagpipe);
-    public void update(final TagPipeConfiguration tagpipe);
+public abstract class TagPipeConfigurationService extends OskariComponent {
+
+    public abstract List<TagPipeConfiguration> findTagPipes();
+    public abstract TagPipeConfiguration findTagPipeById(final int tagPipeId);
+    public abstract void delete(final int tagPipeId);
+    public abstract int insert(final TagPipeConfiguration tagpipe);
+    public abstract void update(final TagPipeConfiguration tagpipe);
 }
