@@ -13,6 +13,8 @@ import org.apache.ibatis.annotations.Update;
 import org.apache.ibatis.type.JdbcType;
 import org.json.JSONObject;
 
+import fi.nls.oskari.mybatis.JSONObjectMybatisTypeHandler;
+
 public interface TagPipeConfigurationMapper {
 
     @Results(id = "TagPipeResult", value = {
@@ -29,7 +31,7 @@ public interface TagPipeConfigurationMapper {
             @Result(property="tagBarrageHeight", column="tag_barrage_height"),
             @Result(property="tagGroundHeight", column="tag_ground_height"),
             @Result(property="tagOtherIssue", column="tag_other_issue"),
-            @Result(property="tagGeoJson", column="tag_geojson", jdbcType = JdbcType.VARCHAR, javaType = JSONObject.class),
+            @Result(property="tagGeoJson", column="tag_geojson", jdbcType = JdbcType.VARCHAR, javaType = JSONObject.class, typeHandler = JSONObjectMybatisTypeHandler.class),
             @Result(property="tagMunicipality", column="tag_municipality"),
             @Result(property="tagNeighborhood", column="tag_neighborhood"),
             @Result(property="tagBlock", column="tag_block"),
