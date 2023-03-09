@@ -27,7 +27,10 @@ public class DataTableHelper {
         columns.add(new SearchParams("Suunniteltu aikataulu (alku)"));
         columns.add(new SearchParams("Suunniteltu aikataulu (loppu)"));
         columns.add(new SearchParams("Massan määrä"));
-        columns.add(new SearchParams("Omistaja (massan)"));
+        columns.add(new SearchParams("Omistajan nimi (massan)"));
+        columns.add(new SearchParams("Omistajan sähköposti"));
+        columns.add(new SearchParams("Omistajan puhelinnumero"));
+        columns.add(new SearchParams("Omistajan organisaatio"));
         columns.add(new SearchParams("Kunta"));
         columns.add(new SearchParams("GeoJSON"));
     }

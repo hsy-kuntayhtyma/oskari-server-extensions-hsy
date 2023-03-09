@@ -303,7 +303,7 @@ public class SeutumaisaDBHelper {
         DataTableResult result = new DataTableResult();
 
         // TODO: can we get geom index another way than hard coded ?
-        result.setColumnDefs(DataTableHelper.getColumnDefs(10));
+        result.setColumnDefs(DataTableHelper.getColumnDefs(13));
         result.setColumns(DataTableHelper.getColumns());
 
         Connection conn = null;
@@ -319,7 +319,7 @@ public class SeutumaisaDBHelper {
             sb.append("SELECT mt.id , mt.maamassalaji, mt.maamassaryhma,");
             sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
-            sb.append("mt.amount_remaining, h.organisaatio,");
+            sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
             sb.append("k.namefin as kunta,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
@@ -419,6 +419,9 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getDate("planned_begin_date"));
                 row.put(rs.getDate("planned_end_date"));
                 row.put(rs.getLong("amount_remaining"));
+                row.put(rs.getString("nimi"));
+                row.put(rs.getString("email"));
+                row.put(rs.getString("puhelin"));
                 row.put(rs.getString("organisaatio"));
                 row.put(rs.getString("kunta"));
                 row.put(rs.getString("geojson"));
