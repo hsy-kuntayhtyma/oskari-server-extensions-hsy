@@ -64,7 +64,7 @@ public class V1_03_2__update_mapfull_projectiondefs_gk25_axisorder extends BaseJ
 
         projectionDefs.put("EPSG:3879", projDef + " +axis=neu");
         AppSetupHelper.updateAppBundle(c, appsetupId, mapfull);
-        LOG.info("Updated " + appsetupId + " mapfull config to: " + config.toString());
+        LOG.info("Updated " + appsetupId + " mapfull config to: " + mapfull.getConfig());
     }
 
 }
