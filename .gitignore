@@ -10,3 +10,6 @@ target/
 .project
 *pom.xml.versionsBackup
 runnable-jar/dist/
+
+# possible logging paths
+*/logs

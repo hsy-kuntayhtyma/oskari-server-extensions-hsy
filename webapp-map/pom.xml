@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>hsy-parent</artifactId>
         <groupId>fi.hsy.oskari</groupId>
@@ -15,6 +15,8 @@
 
     <properties>
         <appName>oskari-map</appName>
+        <log4j.version>2.20.0</log4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
     </properties>
 
     <dependencies>
@@ -43,10 +45,10 @@
             <artifactId>oskari-control-example</artifactId>
         </dependency>
 
-		<dependency>
-			<groupId>fi.nls.oskari.service</groupId>
-			<artifactId>oskari-control-admin</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>fi.nls.oskari.service</groupId>
+            <artifactId>oskari-control-admin</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.oskari</groupId>
@@ -69,11 +71,11 @@
             </exclusions>
         </dependency>
 
-		<dependency>
-			<groupId>fi.nls.oskari.extras</groupId>
-			<artifactId>oskari-search-nls</artifactId>
-			<version>2.1</version>
-		</dependency>
+        <dependency>
+            <groupId>fi.nls.oskari.extras</groupId>
+            <artifactId>oskari-search-nls</artifactId>
+            <version>2.1</version>
+        </dependency>
 
         <dependency>
             <groupId>fi.nls.oskari</groupId>
@@ -87,9 +89,25 @@
 
         <!-- /oskari -->
         <dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-slf4j-impl</artifactId>
-		</dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-dbcp2</artifactId>
