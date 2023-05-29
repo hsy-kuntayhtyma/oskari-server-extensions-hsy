@@ -17,8 +17,6 @@ public class GetSeutumaisaSearchFieldsHandler extends SeutumaisaRestActionHandle
 
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
-        requireSeutumaisaConfigured();
-
         try {
             JSONArray fields = SeutumaisaDBHelper.getSearchFields();
             ResponseHelper.writeResponse(params, fields);

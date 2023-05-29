@@ -16,8 +16,6 @@ public class SeutumaisaSearch extends SeutumaisaRestActionHandler {
 
     @Override
     public void handlePost(ActionParameters params) throws ActionException {
-        requireSeutumaisaConfigured();
-
         try {
             JSONObject result = SeutumaisaDBHelper.search(params);
             ResponseHelper.writeResponse(params, result);
