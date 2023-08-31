@@ -18,8 +18,6 @@ public class GetSeutumaisaHistorySearchFieldsHandler extends SeutumaisaRestActio
 
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
-        requireSeutumaisaConfigured();
-
         try {
             JSONArray fields = SeutumaisaHistoryDBHelper.getHistorySearchFields();
             ResponseHelper.writeResponse(params, fields);

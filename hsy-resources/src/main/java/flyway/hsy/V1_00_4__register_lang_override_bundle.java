@@ -1,23 +1,22 @@
 package flyway.hsy;
 
-import java.sql.Connection;
+import java.sql.SQLException;
 
-import org.flywaydb.core.api.migration.jdbc.JdbcMigration;
+import org.flywaydb.core.api.migration.BaseJavaMigration;
+import org.flywaydb.core.api.migration.Context;
+import org.oskari.helpers.BundleHelper;
 
-import fi.nls.oskari.db.BundleHelper;
 import fi.nls.oskari.domain.map.view.Bundle;
 
-public class V1_00_4__register_lang_override_bundle implements JdbcMigration{
-	private static final String NAMESPACE = "hsy";
-	private static final String LANG_OVERRIDES = "hsy-lang-overrides";
+public class V1_00_4__register_lang_override_bundle extends BaseJavaMigration {
 
-	public void migrate(Connection connection) {
-	// BundleHelper checks if these bundles are already registered
+    private static final String LANG_OVERRIDES = "hsy-lang-overrides";
+
+	public void migrate(Context context) throws SQLException {
 		Bundle linkPanel = new Bundle();
 		linkPanel.setConfig("{}");
 		linkPanel.setState("{}");
 		linkPanel.setName(LANG_OVERRIDES);
-		linkPanel.setStartup(BundleHelper.getDefaultBundleStartup(NAMESPACE, LANG_OVERRIDES, "Lang overrides"));
-		BundleHelper.registerBundle(linkPanel);
+		BundleHelper.registerBundle(context.getConnection(), linkPanel);
 	}
 }

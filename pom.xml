@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>fi.hsy.oskari</groupId>
   <artifactId>hsy-parent</artifactId>
-  <version>1.5.3</version>
+  <version>1.6.0</version>
   <packaging>pom</packaging>
   <name>HSY applications</name>
 
     <properties>
-        <oskari.version>1.56.0</oskari.version>
+        <oskari.version>2.9.0-1</oskari.version>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
@@ -39,8 +39,8 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>fi.nls.oskari</groupId>
-                <artifactId>oskari-parent</artifactId>
+                <groupId>org.oskari</groupId>
+                <artifactId>oskari-server</artifactId>
                 <version>${oskari.version}</version>
                 <scope>import</scope>
                 <type>pom</type>

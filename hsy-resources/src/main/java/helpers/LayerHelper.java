@@ -1,13 +1,12 @@
 package helpers;
 
-import fi.mml.map.mapwindow.service.db.OskariMapLayerGroupService;
 import fi.nls.oskari.control.ActionException;
 import fi.nls.oskari.control.ActionParamsException;
 import fi.nls.oskari.map.view.util.ViewHelper;
 import fi.nls.oskari.service.ServiceException;
-import fi.nls.oskari.service.capabilities.CapabilitiesCacheService;
+
+import org.oskari.capabilities.CapabilitiesService;
 import org.oskari.capabilities.CapabilitiesUpdateResult;
-import org.oskari.capabilities.CapabilitiesUpdateService;
 import org.oskari.permissions.PermissionService;
 import fi.nls.oskari.domain.Role;
 import fi.nls.oskari.domain.map.DataProvider;
@@ -17,7 +16,6 @@ import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.domain.map.view.View;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import org.oskari.permissions.model.OskariLayerResource;
 import fi.nls.oskari.map.layer.DataProviderService;
 import fi.nls.oskari.map.layer.OskariLayerService;
 import fi.nls.oskari.map.layer.OskariLayerServiceMybatisImpl;
@@ -25,12 +23,15 @@ import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLink;
 import fi.nls.oskari.map.layer.group.link.OskariLayerGroupLinkService;
 import fi.nls.oskari.map.view.ViewException;
 import fi.nls.oskari.map.view.ViewService;
+
+import org.oskari.permissions.model.OskariLayerResource;
 import org.oskari.permissions.model.Permission;
 import org.oskari.permissions.model.Resource;
 import fi.nls.oskari.user.MybatisRoleService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.oskari.service.maplayer.OskariMapLayerGroupService;
 import org.oskari.service.util.ServiceFactory;
 
 import java.sql.Connection;
@@ -74,9 +75,6 @@ public class LayerHelper {
     private static final String BACKGROUND_LAYER_SELECTION_PLUGIN = "Oskari.mapframework.bundle.mapmodule.plugin.BackgroundLayerSelectionPlugin";
 
     private static OskariLayerService LAYER_SERVICE = ServiceFactory.getMapLayerService();
-    private static CapabilitiesCacheService CAPABILITIES_CACHE_SERVICE = ServiceFactory.getCapabilitiesCacheService();
-    private static CapabilitiesUpdateService CAPABILITIES_SERVICE = new CapabilitiesUpdateService(
-            LAYER_SERVICE, CAPABILITIES_CACHE_SERVICE);
 
 
     /**
@@ -554,7 +552,7 @@ public class LayerHelper {
         Set<String> systemCRSs = getSystemCRSs();
 
         List<CapabilitiesUpdateResult> result =
-                CAPABILITIES_SERVICE.updateCapabilities(layers, systemCRSs);
+                CapabilitiesService.updateCapabilities(layers, systemCRSs);
         return layers.size() == result.size();
     }
 
