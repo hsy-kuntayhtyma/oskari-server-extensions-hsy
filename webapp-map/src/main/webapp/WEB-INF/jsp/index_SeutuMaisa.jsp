@@ -183,11 +183,6 @@
         src="/Oskari${path}/index.js">
 </script>
 
-<link
-        rel="stylesheet"
-        type="text/css"
-        href="/Oskari${path}/css/SeutuMaisa_overwritten.css"/>
-
 <!-- ############# /Javascript ################# -->
 <jsp:useBean id="props" class="fi.nls.oskari.util.PropertyUtil"/>
 <c:set var="ajaxLogin" scope="page" value="${props.getOptional('hsy.use.spring.login.fix')}"/>
