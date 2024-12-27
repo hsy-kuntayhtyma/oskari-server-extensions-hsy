@@ -10,8 +10,8 @@
   <name>HSY applications</name>
 
     <properties>
-        <oskari.version>2.12.0</oskari.version>
-
+        <!-- 2.12.0 with cherry-pick'ed 7e85fc93a2cadce95de685218d0c8b3fdd5582a0 -->
+        <oskari.version>2.12.0-1</oskari.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
     </properties>
