@@ -66,3 +66,11 @@ Now all are installed and you can test it when jetty starts (if not then try to 
 | `hsy`| common hsy module, use it for all servers |
 | `pipe` | pipe module, use only for servers: `hsyoskaritest3` and `hsyoskari3` |
 | `seutumaisa` | use only seutumaisa servers: `hsyoskaritest2` and `hsyoskari2` |
+
+## Configs
+
+oskari-ext.properties logo:
+
+```
+logo.path=/img/hsy-logo_50px.png
+```

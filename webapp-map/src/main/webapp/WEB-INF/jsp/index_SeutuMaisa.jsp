@@ -21,24 +21,6 @@
                 padding: 0;
             }
 
-            #mapdiv {
-                width: 100%;
-            }
-
-            #maptools {
-                background-color: #333438;
-                height: 100%;
-                position: absolute;
-                top: 0;
-                width: 153px;
-                z-index: 2;
-            }
-
-            #contentMap {
-                height: 100%;
-                margin-left: 170px;
-            }
-
             #login {
                 margin-left: 5px;
             }
@@ -167,17 +149,7 @@
     </div>
 </nav>
 
-<div id="contentMap" class="oskariui container-fluid">
-    <div id="menutoolbar" class="container-fluid"></div>
-    <div class="row-fluid oskariui-mode-content" style="height: 100%; background-color:white;">
-        <div class="oskariui-left"></div>
-        <div class="span12 oskariui-center" style="height: 100%; margin: 0;">
-            <div id="mapdiv"></div>
-        </div>
-        <div class="oskari-closed oskariui-right">
-            <div id="mapdivB"></div>
-        </div>
-    </div>
+<div id="contentMap">
 </div>
 
 
@@ -210,11 +182,6 @@
 <script type="text/javascript"
         src="/Oskari${path}/index.js">
 </script>
-
-<link
-        rel="stylesheet"
-        type="text/css"
-        href="/Oskari${path}/css/SeutuMaisa_overwritten.css"/>
 
 <!-- ############# /Javascript ################# -->
 <jsp:useBean id="props" class="fi.nls.oskari.util.PropertyUtil"/>
