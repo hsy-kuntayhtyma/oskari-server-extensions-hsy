@@ -4,21 +4,19 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 
 import fi.nls.oskari.annotation.Oskari;
 import fi.nls.oskari.db.DatasourceHelper;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
-import fi.nls.oskari.mybatis.JSONObjectMybatisTypeHandler;
+import fi.nls.oskari.mybatis.MyBatisHelper;
 import fi.nls.oskari.service.ServiceRuntimeException;
 import hsy.seutumaisa.domain.LandMassArea;
+import hsy.seutumaisa.domain.LandMassData;
 
 @Oskari
 public class LandMassAreaServiceMybatisImpl extends LandMassAreaService {
@@ -29,26 +27,19 @@ public class LandMassAreaServiceMybatisImpl extends LandMassAreaService {
 
     public LandMassAreaServiceMybatisImpl() {
         final DatasourceHelper helper = DatasourceHelper.getInstance();
-        DataSource dataSource = helper.getDataSource();
-        if (dataSource == null) {
-            dataSource = helper.createDataSource();
+        final DataSource dataSource = helper.getDataSource(helper.getOskariDataSourceName("seutumaisa"));
+        if(dataSource != null) {
+            factory = initializeMyBatis(dataSource);
         }
-        if (dataSource == null) {
-            LOG.error("Couldn't get datasource for LandMassArea service");
+        else {
+            LOG.error("Couldn't get datasource for maamassa");
         }
-        factory = initializeMyBatis(dataSource);
     }
 
     private SqlSessionFactory initializeMyBatis(final DataSource dataSource) {
-        final TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        final Environment environment = new Environment("development", transactionFactory, dataSource);
-
-        final Configuration configuration = new Configuration(environment);
-        configuration.getTypeAliasRegistry().registerAlias(LandMassAreaService.class);
-        configuration.setLazyLoadingEnabled(true);
-        configuration.getTypeHandlerRegistry().register(JSONObjectMybatisTypeHandler.class);
-        configuration.addMapper(LandMassAreaMapper.class);
-
+        final Configuration configuration = MyBatisHelper.getConfig(dataSource);
+        MyBatisHelper.addAliases(configuration, LandMassArea.class, LandMassData.class);
+        MyBatisHelper.addMappers(configuration, LandMassAreaMapper.class);
         return new SqlSessionFactoryBuilder().build(configuration);
     }
 
