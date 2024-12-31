@@ -28,8 +28,10 @@ public class LandMassAreaServiceMybatisImpl extends LandMassAreaService {
     public LandMassAreaServiceMybatisImpl() {
         final DatasourceHelper helper = DatasourceHelper.getInstance();
         final String name = helper.getOskariDataSourceName("seutumaisa");
+        LOG.info("Searching for data source for name " + name);
         DataSource dataSource = helper.getDataSource(name);
         if (dataSource == null) {
+            LOG.info("Could not find data source, creating one for name " + name);
             dataSource = helper.createDataSource(name);
         }
         if(dataSource != null) {
