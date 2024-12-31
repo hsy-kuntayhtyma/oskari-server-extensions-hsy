@@ -27,9 +27,10 @@ public class LandMassAreaServiceMybatisImpl extends LandMassAreaService {
 
     public LandMassAreaServiceMybatisImpl() {
         final DatasourceHelper helper = DatasourceHelper.getInstance();
-        DataSource dataSource = helper.getDataSource("seutumaisa");
+        final String name = helper.getOskariDataSourceName("seutumaisa");
+        DataSource dataSource = helper.getDataSource(name);
         if (dataSource == null) {
-            dataSource = helper.createDataSource("seutumaisa");
+            dataSource = helper.createDataSource(name);
         }
         if(dataSource != null) {
             factory = initializeMyBatis(dataSource);
