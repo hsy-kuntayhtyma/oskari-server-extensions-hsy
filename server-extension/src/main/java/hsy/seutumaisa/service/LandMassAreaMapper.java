@@ -32,8 +32,10 @@ public interface LandMassAreaMapper {
     })
     @Select("SELECT id, nimi, osoite, ST_AsEWKT(geom) AS geom, kohdetyyppi, vaihe, maamassatila, omistaja_id, alku_pvm, loppu_pvm, lisatieto, kunta, status "
             + "FROM maamassakohde "
-            + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10)")
-    List<LandMassArea> getByCoordinate(double lon, double lat);
+            + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
+            + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879)) "
+            + "LIMIT 1")
+    List<LandMassArea> getByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
     
     @Insert("INSERT INTO maamassakohde (nimi, osoite, geom, kohdetyyppi, vaihe, maamassatila, omistaja_id, alku_pvm, loppu_pvm, lisatieto, kunta, status) VALUES"
             + " (#{nimi}, #{osoite}, ST_GeomFromEWKT(#{geom}), #{kohdetyyppi}, #{vaihe}, #{maamassatila}, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{lisatieto}, #{kunta}, #{status})"
