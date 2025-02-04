@@ -2,32 +2,75 @@ package hsy.seutumaisa.domain;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LandMassData {
 
+    @JsonProperty("maamassatieto_id")
     private Long id;
+
+    @JsonProperty("maamassakohde_id")
     private Long maamassakohde_id;
+
+    @JsonProperty("maamassan_ryhma")
     private String maamassaryhma;
+
+    @JsonProperty("maamassan_laji")
     private String maamassalaji;
+
+    @JsonProperty("kelpoisuusluokkaryhma")
     private String kelpoisuusluokkaryhma;
+
+    @JsonProperty("kelpoisuusluokka")
     private String kelpoisuusluokka;
+
+    @JsonProperty("maamassan_tila")
     private String maamassatila;
-    private Long tiedontuottaja_id;
+
+    @JsonProperty("tiedontuottaja")
     private String tiedontuottaja;
+
+    @JsonProperty("planned_begin_date")
     private Date planned_begin_date;
+
+    @JsonProperty("planned_end_date")
     private Date planned_end_date;
+
+    @JsonProperty("amount_remaining")
     private Long amount_remaining;
+
+    @JsonProperty("lisatieto")
     private String lisatieto;
+
+    @JsonProperty("liitteet")
     private String liitteet;
+
+    @JsonProperty("varattu")
     private Boolean varattu;
+
+    @JsonProperty("muokattu")
     private Date muokattu;
+
+    @JsonProperty("luotu")
     private Date luotu;
+
+    @JsonProperty("realized_begin_date")
     private String realized_begin_date;
+
+    @JsonProperty("realized_end_date")
     private String realized_end_date;
+
+    @JsonProperty("pilaantuneisuus")
     private String pilaantuneisuus;
+
+    @JsonProperty("tiedon_luotettavuus")
     private String tiedon_luotettavuus;
+
+    @JsonProperty("amount_total")
     private String amount_total;
+
+    @JsonProperty("external_id")
     private String external_id;
-    private String alkupera_id;
 
     public Long getId() {
         return id;
@@ -83,14 +126,6 @@ public class LandMassData {
 
     public void setMaamassatila(String maamassatila) {
         this.maamassatila = maamassatila;
-    }
-
-    public Long getTiedontuottaja_id() {
-        return tiedontuottaja_id;
-    }
-
-    public void setTiedontuottaja_id(Long tiedontuottaja_id) {
-        this.tiedontuottaja_id = tiedontuottaja_id;
     }
 
     public String getTiedontuottaja() {
@@ -211,14 +246,6 @@ public class LandMassData {
 
     public void setExternal_id(String external_id) {
         this.external_id = external_id;
-    }
-
-    public String getAlkupera_id() {
-        return alkupera_id;
-    }
-
-    public void setAlkupera_id(String alkupera_id) {
-        this.alkupera_id = alkupera_id;
     }
 
 }
