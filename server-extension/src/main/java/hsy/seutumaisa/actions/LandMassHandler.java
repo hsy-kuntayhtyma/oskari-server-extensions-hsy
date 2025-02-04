@@ -35,7 +35,7 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         OM.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         OM.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OM.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
     private LandMassService service;
