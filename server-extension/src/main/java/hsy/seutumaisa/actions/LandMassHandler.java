@@ -1,5 +1,7 @@
 package hsy.seutumaisa.actions;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -54,19 +56,13 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         double lon = params.getRequiredParamDouble(PARAM_LON);
         double lat = params.getRequiredParamDouble(PARAM_LAT);
 
-        LandMassArea area = service.getAreasByCoordinate(lon, lat).stream()
+        List<LandMassArea> areas = service.getAreasByCoordinate(lon, lat).stream()
                 .filter(x -> canRead(params.getUser(), x))
-                .findFirst()
                 .map(this::includeOwnerAndData)
-                .orElse(null);
-
-        if (area == null) {
-            ResponseHelper.writeError(params, "Could not find any area", 404);
-            return;
-        }
+                .toList();
 
         try {
-            byte[] b = OM.writeValueAsBytes(area);
+            byte[] b = OM.writeValueAsBytes(areas);
             ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
         } catch (JsonProcessingException e) {
             throw new ActionException("Error occured when serializing to JSON", e);
