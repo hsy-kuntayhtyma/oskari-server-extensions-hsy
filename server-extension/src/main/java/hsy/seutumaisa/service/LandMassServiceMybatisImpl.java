@@ -63,7 +63,11 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
     @Override
     public Person getPersonById(long personId) {
-        return null;
+        try (final SqlSession session = factory.openSession()) {
+            return session.getMapper(LandMassMapper.class).getPersonById(personId);
+        } catch (Exception e) {
+            throw new ServiceRuntimeException("Failed to get LandMassArea by id", e);
+        }
     }
 
     @Override

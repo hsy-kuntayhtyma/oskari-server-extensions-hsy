@@ -14,6 +14,7 @@ import org.apache.ibatis.annotations.Update;
 
 import hsy.seutumaisa.domain.LandMassArea;
 import hsy.seutumaisa.domain.LandMassData;
+import hsy.seutumaisa.domain.Person;
 
 public interface LandMassMapper {
     
@@ -112,5 +113,15 @@ public interface LandMassMapper {
     @Delete("DELETE FROM maamassakohde WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     boolean delete(@Param("id") final long id);
+
+    @Results(id = "PersonResult", value = {
+            @Result(property="id", column="id", id=true),
+            @Result(property="nimi", column="nimi"),
+            @Result(property="email", column="email"),
+            @Result(property="puhelin", column="puhelin"),
+            @Result(property="organisaatio", column="organisaatio")
+    })
+    @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE id = #{id}")
+    Person getPersonById(long personId);
 
 }
