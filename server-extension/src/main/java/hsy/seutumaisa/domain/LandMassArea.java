@@ -1,9 +1,10 @@
 package hsy.seutumaisa.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class LandMassArea {
-    
+
     private Long id;
     private String nimi;
     private String osoite;
@@ -12,16 +13,21 @@ public class LandMassArea {
     private String vaihe;
     private String maamassatila;
     private Long omistaja_id;
+    private String henkilo_nimi;
+    private String henkilo_email;
+    private String henkilo_puhelin;
+    private String henkilo_organisaatio;
     private Date alku_pvm;
     private Date loppu_pvm;
     private String lisatieto;
     private String kunta;
     private Integer status;
-    
+    private List<LandMassData> data;
+
     public Long getId() {
         return id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -82,6 +88,38 @@ public class LandMassArea {
         this.omistaja_id = omistaja_id;
     }
 
+    public String getHenkilo_nimi() {
+        return henkilo_nimi;
+    }
+
+    public void setHenkilo_nimi(String henkilo_nimi) {
+        this.henkilo_nimi = henkilo_nimi;
+    }
+
+    public String getHenkilo_email() {
+        return henkilo_email;
+    }
+
+    public void setHenkilo_email(String henkilo_email) {
+        this.henkilo_email = henkilo_email;
+    }
+
+    public String getHenkilo_puhelin() {
+        return henkilo_puhelin;
+    }
+
+    public void setHenkilo_puhelin(String henkilo_puhelin) {
+        this.henkilo_puhelin = henkilo_puhelin;
+    }
+
+    public String getHenkilo_organisaatio() {
+        return henkilo_organisaatio;
+    }
+
+    public void setHenkilo_organisaatio(String henkilo_organisaatio) {
+        this.henkilo_organisaatio = henkilo_organisaatio;
+    }
+
     public Date getAlku_pvm() {
         return alku_pvm;
     }
@@ -120,6 +158,14 @@ public class LandMassArea {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<LandMassData> getData() {
+        return data;
+    }
+
+    public void setData(List<LandMassData> data) {
+        this.data = data;
     }
 
 }
