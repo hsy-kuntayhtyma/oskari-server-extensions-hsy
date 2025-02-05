@@ -205,7 +205,12 @@ public interface LandMassMapper {
             @Result(property="organisaatio", column="organisaatio")
     })
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE id = #{id}")
-    Person getPersonById(long personId);
+    Person getPersonById(@Param("id") long id);
+    
+
+    @ResultMap("PersonResult")
+    @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE email = #{email}")
+    Person getPersonByEmail(@Param("email") String email);
 
     @Insert("INSERT INTO henkilo (nimi, email, puhelin, organisaatio) VALUES"
             + " (#{nimi}, #{email}, #{puhelin}, #{organisaatio})"

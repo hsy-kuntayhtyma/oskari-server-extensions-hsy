@@ -76,7 +76,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
             long id = mapper.insertArea(area);
 
-            mapper.insertPerson(extractPerson(area));
+            upsertPerson(area, mapper);
 
             for (LandMassData data : area.getData()) {
                 mapper.insertData(data);
@@ -95,13 +95,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
 
             mapper.updateArea(area);
-
-            Person person = extractPerson(area);
-            if (person.getId() == null) {
-                mapper.insertPerson(extractPerson(area));
-            } else {
-                mapper.updatePerson(person);
-            }
+            upsertPerson(area, mapper);
 
             for (LandMassData data : area.getData()) {
                 if (data.getId() == null) {
@@ -116,7 +110,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
             throw new ServiceRuntimeException("Failed to save announcements", e);
         }
     }
-
+    
     @Override
     public void delete(long id) {
         try (final SqlSession session = factory.openSession(false)) {
@@ -143,14 +137,32 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         }
     }
 
-    private static Person extractPerson(LandMassArea area) {
+    private static void upsertPerson(LandMassArea area, LandMassMapper mapper) {
+        Long personId = findPersonId(area.getOmistaja_id(), area.getHenkilo_email(), mapper); 
+
         Person person = new Person();
-        person.setId(area.getOmistaja_id());
+        person.setId(personId);
         person.setNimi(area.getHenkilo_nimi());
         person.setEmail(area.getHenkilo_email());
         person.setPuhelin(area.getHenkilo_puhelin());
         person.setOrganisaatio(area.getHenkilo_organisaatio());
-        return person;
+        
+        if (personId == null) {
+            mapper.insertPerson(person);
+        } else {
+            mapper.updatePerson(person);
+        }
+    }
+
+    private static Long findPersonId(Long omistajaId, String email, LandMassMapper mapper) {
+        if (omistajaId != null) {
+            return omistajaId;
+        }
+        Person byEmail = mapper.getPersonByEmail(email);
+        if (byEmail != null) {
+            return byEmail.getId();
+        }
+        return null;
     }
 
 }
