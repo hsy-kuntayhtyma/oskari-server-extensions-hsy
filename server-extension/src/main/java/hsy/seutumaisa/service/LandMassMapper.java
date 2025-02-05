@@ -43,7 +43,7 @@ public interface LandMassMapper {
     List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
     @Insert("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
-            + " (ST_GeomFromEWKT(#{geom}), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}, #{vaihe}, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
+            + " (ST_GeomFromEWKT(#{geom}), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     long insertArea(final LandMassArea area);
@@ -53,8 +53,8 @@ public interface LandMassMapper {
             + "nimi = #{nimi},"
             + "osoite = #{osoite},"
             + "kunta = #{kunta},"
-            + "kohdetyyppi = #{kohdetyyppi},"
-            + "vaihe = #{vaihe},"
+            + "kohdetyyppi = #{kohdetyyppi}::kohdetyyppi,"
+            + "vaihe = #{vaihe}::vaihe,"
             + "omistaja_id = #{omistaja_id},"
             + "alku_pvm = #{alku_pvm},"
             + "loppu_pvm = #{loppu_pvm}"
