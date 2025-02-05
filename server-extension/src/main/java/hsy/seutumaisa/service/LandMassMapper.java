@@ -3,7 +3,6 @@ package hsy.seutumaisa.service;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -42,7 +41,7 @@ public interface LandMassMapper {
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
     List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
-    @Insert("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
+    @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
             + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
@@ -114,7 +113,7 @@ public interface LandMassMapper {
             + "WHERE maamassakohde_id = #{areaId}")
     List<LandMassData> getDataByAreaId(@Param("areaId") long areaId);
 
-    @Insert("INSERT INTO maamassatieto ("
+    @Select("INSERT INTO maamassatieto ("
             + "maamassakohde_id,"
             + "maamassaryhma,"
             + "maamassalaji,"
@@ -194,7 +193,7 @@ public interface LandMassMapper {
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE email = #{email}")
     Person getPersonByEmail(@Param("email") String email);
 
-    @Insert("INSERT INTO henkilo (nimi, email, puhelin, organisaatio) VALUES"
+    @Select("INSERT INTO henkilo (nimi, email, puhelin, organisaatio) VALUES"
             + " (#{nimi}, #{email}, #{puhelin}, #{organisaatio})"
             + " RETURNING id")
     long insertPerson(Person person);
