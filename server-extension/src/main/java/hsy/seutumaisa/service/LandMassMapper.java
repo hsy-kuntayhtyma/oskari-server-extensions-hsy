@@ -224,6 +224,6 @@ public interface LandMassMapper {
             + "organisaatio = #{organisaatio}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    Person updatePerson(Person person);
+    boolean updatePerson(Person person);
 
 }
