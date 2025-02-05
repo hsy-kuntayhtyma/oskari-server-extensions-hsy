@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class LandMassData {
+public class LandmassData {
 
     @JsonProperty("maamassatieto_id")
     private Long id;

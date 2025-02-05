@@ -11,11 +11,11 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import hsy.seutumaisa.domain.LandMassArea;
-import hsy.seutumaisa.domain.LandMassData;
+import hsy.seutumaisa.domain.LandmassArea;
+import hsy.seutumaisa.domain.LandmassData;
 import hsy.seutumaisa.domain.Person;
 
-public interface LandMassMapper {
+public interface LandmassMapper {
 
     @Results(id = "LandMassAreaResult", value = {
             @Result(property="id", column="id", id=true),
@@ -33,20 +33,20 @@ public interface LandMassMapper {
     @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
-    LandMassArea getAreaById(@Param("id") long id);
+    LandmassArea getAreaById(@Param("id") long id);
 
     @ResultMap("LandMassAreaResult")
     @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
             + "FROM maamassakohde "
             + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
-    List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
+    List<LandmassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
     @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id) VALUES"
             + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{hankealue_id})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insertArea(final LandMassArea area);
+    long insertArea(final LandmassArea area);
 
     @Update("UPDATE maamassakohde SET "
             + "geom = ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879),"
@@ -61,7 +61,7 @@ public interface LandMassMapper {
             + "hankealue_id = #{hankealue_id}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean updateArea(final LandMassArea area);
+    boolean updateArea(final LandmassArea area);
 
     @Delete("DELETE FROM maamassakohde WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
@@ -113,7 +113,7 @@ public interface LandMassMapper {
             + "amount_total "
             + "FROM maamassatieto "
             + "WHERE maamassakohde_id = #{areaId}")
-    List<LandMassData> getDataByAreaId(@Param("areaId") long areaId);
+    List<LandmassData> getDataByAreaId(@Param("areaId") long areaId);
 
     @Select("INSERT INTO maamassatieto ("
             + "maamassakohde_id,"
@@ -155,7 +155,7 @@ public interface LandMassMapper {
             + "#{tiedontuottaja}"
             + ") RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insertData(final LandMassData data);
+    long insertData(final LandmassData data);
 
     @Update("UPDATE maamassatieto SET "
             + "maamassakohde_id = #{maamassakohde_id},"
@@ -178,7 +178,7 @@ public interface LandMassMapper {
             + "tiedontuottaja = #{tiedontuottaja}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean updateData(final LandMassData data);
+    boolean updateData(final LandmassData data);
 
     @Results(id = "PersonResult", value = {
             @Result(property="id", column="id", id=true),

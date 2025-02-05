@@ -15,18 +15,18 @@ import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 import fi.nls.oskari.mybatis.MyBatisHelper;
 import fi.nls.oskari.service.ServiceRuntimeException;
-import hsy.seutumaisa.domain.LandMassArea;
-import hsy.seutumaisa.domain.LandMassData;
+import hsy.seutumaisa.domain.LandmassArea;
+import hsy.seutumaisa.domain.LandmassData;
 import hsy.seutumaisa.domain.Person;
 
 @Oskari
-public class LandMassServiceMybatisImpl extends LandMassService {
+public class LandmassServiceMybatisImpl extends LandmassService {
 
-    private static final Logger LOG = LogFactory.getLogger(LandMassServiceMybatisImpl.class);
+    private static final Logger LOG = LogFactory.getLogger(LandmassServiceMybatisImpl.class);
 
     private SqlSessionFactory factory = null;
 
-    public LandMassServiceMybatisImpl() {
+    public LandmassServiceMybatisImpl() {
         final DatasourceHelper helper = DatasourceHelper.getInstance();
         final DataSource dataSource = helper.createDataSource("seutumaisa");
         if (dataSource != null) {
@@ -38,17 +38,17 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
     private SqlSessionFactory initializeMyBatis(final DataSource dataSource) {
         final Configuration configuration = MyBatisHelper.getConfig(dataSource);
-        MyBatisHelper.addAliases(configuration, LandMassArea.class, LandMassData.class);
-        MyBatisHelper.addMappers(configuration, LandMassMapper.class);
+        MyBatisHelper.addAliases(configuration, LandmassArea.class, LandmassData.class);
+        MyBatisHelper.addMappers(configuration, LandmassMapper.class);
         return new SqlSessionFactoryBuilder().build(configuration);
     }
 
     @Override
-    public List<LandMassArea> getAreasByCoordinate(double lon, double lat) {
+    public List<LandmassArea> getAreasByCoordinate(double lon, double lat) {
         try (final SqlSession session = factory.openSession(false)) {
-            LandMassMapper mapper = session.getMapper(LandMassMapper.class);
-            List<LandMassArea> areas = mapper.getAreasByCoordinate(lon, lat);
-            for (LandMassArea area : areas) {
+            LandmassMapper mapper = session.getMapper(LandmassMapper.class);
+            List<LandmassArea> areas = mapper.getAreasByCoordinate(lon, lat);
+            for (LandmassArea area : areas) {
                 includeOwnerAndData(mapper, area);
             }
             return areas;
@@ -58,10 +58,10 @@ public class LandMassServiceMybatisImpl extends LandMassService {
     }
 
     @Override
-    public LandMassArea getAreaById(long id) {
+    public LandmassArea getAreaById(long id) {
         try (final SqlSession session = factory.openSession(false)) {
-            LandMassMapper mapper = session.getMapper(LandMassMapper.class);
-            LandMassArea area = mapper.getAreaById(id);
+            LandmassMapper mapper = session.getMapper(LandmassMapper.class);
+            LandmassArea area = mapper.getAreaById(id);
             includeOwnerAndData(mapper, area);
             return area;
         } catch (Exception e) {
@@ -70,16 +70,16 @@ public class LandMassServiceMybatisImpl extends LandMassService {
     }
 
     @Override
-    public void save(final LandMassArea area) {
+    public void save(final LandmassArea area) {
         try (final SqlSession session = factory.openSession(false)) {
-            final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
+            final LandmassMapper mapper = session.getMapper(LandmassMapper.class);
 
             upsertPerson(area, mapper);
 
             long areaId = mapper.insertArea(area);
             area.setId(areaId);
 
-            for (LandMassData data : area.getData()) {
+            for (LandmassData data : area.getData()) {
                 data.setMaamassakohde_id(areaId);
                 long dataId = mapper.insertData(data);
                 data.setId(dataId);
@@ -92,15 +92,15 @@ public class LandMassServiceMybatisImpl extends LandMassService {
     }
 
     @Override
-    public void update(final LandMassArea area) {
+    public void update(final LandmassArea area) {
         try (final SqlSession session = factory.openSession(false)) {
-            final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
+            final LandmassMapper mapper = session.getMapper(LandmassMapper.class);
 
             upsertPerson(area, mapper);
 
             mapper.updateArea(area);
 
-            for (LandMassData data : area.getData()) {
+            for (LandmassData data : area.getData()) {
                 data.setMaamassakohde_id(area.getId());
                 if (data.getId() == null) {
                     long dataId = mapper.insertData(data);
@@ -119,7 +119,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
     @Override
     public void delete(long id) {
         try (final SqlSession session = factory.openSession(false)) {
-            final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
+            final LandmassMapper mapper = session.getMapper(LandmassMapper.class);
             mapper.deleteArea(id);
             session.commit();
         } catch (Exception e) {
@@ -127,7 +127,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         }
     }
 
-    private static void includeOwnerAndData(LandMassMapper mapper, LandMassArea area) {
+    private static void includeOwnerAndData(LandmassMapper mapper, LandmassArea area) {
         if (area.getOmistaja_id() != null) {
             Person person = mapper.getPersonById(area.getOmistaja_id());
             if (person != null) {
@@ -142,7 +142,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         }
     }
 
-    private static void upsertPerson(LandMassArea area, LandMassMapper mapper) {
+    private static void upsertPerson(LandmassArea area, LandmassMapper mapper) {
         Long personId = findPersonId(area.getOmistaja_id(), area.getHenkilo_email(), mapper); 
 
         Person person = new Person();
@@ -160,7 +160,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         area.setOmistaja_id(personId);
     }
 
-    private static Long findPersonId(Long omistajaId, String email, LandMassMapper mapper) {
+    private static Long findPersonId(Long omistajaId, String email, LandmassMapper mapper) {
         if (omistajaId != null) {
             return omistajaId;
         }

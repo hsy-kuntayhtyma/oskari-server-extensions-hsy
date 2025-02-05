@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class LandMassArea {
+public class LandmassArea {
 
     private Long id;
 
@@ -25,7 +25,7 @@ public class LandMassArea {
     private Date alku_pvm;
     private Date loppu_pvm;
 
-    private List<LandMassData> data = new ArrayList<>();
+    private List<LandmassData> data = new ArrayList<>();
 
     private Long hankealue_id;
 
@@ -141,11 +141,11 @@ public class LandMassArea {
         this.loppu_pvm = loppu_pvm;
     }
 
-    public List<LandMassData> getData() {
+    public List<LandmassData> getData() {
         return data;
     }
 
-    public void setData(List<LandMassData> data) {
+    public void setData(List<LandmassData> data) {
         this.data = data;
     }
 
