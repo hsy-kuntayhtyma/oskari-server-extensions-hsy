@@ -27,6 +27,8 @@ public class LandMassArea {
 
     private List<LandMassData> data = new ArrayList<>();
 
+    private Long hankealue_id;
+
     public Long getId() {
         return id;
     }
@@ -145,6 +147,14 @@ public class LandMassArea {
 
     public void setData(List<LandMassData> data) {
         this.data = data;
+    }
+
+    public Long getHankealue_id() {
+        return hankealue_id;
+    }
+
+    public void setHankealue_id(Long hankealue_id) {
+        this.hankealue_id = hankealue_id;
     }
 
 }

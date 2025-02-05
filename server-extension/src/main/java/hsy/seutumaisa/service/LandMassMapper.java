@@ -27,22 +27,23 @@ public interface LandMassMapper {
             @Result(property="vaihe", column="vaihe"),
             @Result(property="omistaja_id", column="omistaja_id"),
             @Result(property="alku_pvm", column="alku_pvm"),
-            @Result(property="loppu_pvm", column="loppu_pvm")
+            @Result(property="loppu_pvm", column="loppu_pvm"),
+            @Result(property="hankealue_id", column="hankealue_id")
     })
-    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
     LandMassArea getAreaById(@Param("id") long id);
 
     @ResultMap("LandMassAreaResult")
-    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
             + "FROM maamassakohde "
             + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
     List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
-    @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
-            + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
+    @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id) VALUES"
+            + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{hankealue_id})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     long insertArea(final LandMassArea area);
@@ -56,7 +57,8 @@ public interface LandMassMapper {
             + "vaihe = #{vaihe}::vaihe,"
             + "omistaja_id = #{omistaja_id},"
             + "alku_pvm = #{alku_pvm},"
-            + "loppu_pvm = #{loppu_pvm}"
+            + "loppu_pvm = #{loppu_pvm},"
+            + "hankealue_id = #{hankealue_id}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     boolean updateArea(final LandMassArea area);

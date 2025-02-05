@@ -19,30 +19,28 @@ import fi.nls.oskari.domain.User;
 import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
-import hsy.seutumaisa.domain.LandMassArea;
-import hsy.seutumaisa.service.LandMassService;
+import hsy.seutumaisa.domain.LandmassProject;
+import hsy.seutumaisa.service.LandmassProjectService;
 
-@OskariActionRoute("Landmass")
-public class LandMassHandler extends SeutumaisaRestActionHandler {
+@OskariActionRoute("LandmassProject")
+public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     private static final String PARAM_ID = "id";
-    private static final String PARAM_LON = "lon";
-    private static final String PARAM_LAT = "lat";
+    private static final String PARAM_KUNTA = "kunta";
 
     private static final ObjectMapper OM = new ObjectMapper();
     static {
         OM.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        OM.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
-    private LandMassService service;
+    private LandmassProjectService service;
 
     @Override
     public void init() {
         super.init();
-        service = OskariComponentManager.getComponentOfType(LandMassService.class);
+        service = OskariComponentManager.getComponentOfType(LandmassProjectService.class);
     }
 
     @Override
@@ -53,66 +51,55 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
 
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
-        double lon = params.getRequiredParamDouble(PARAM_LON);
-        double lat = params.getRequiredParamDouble(PARAM_LAT);
-
-        List<LandMassArea> areas = service.getAreasByCoordinate(lon, lat).stream()
-                .filter(x -> canRead(params.getUser(), x))
-                .toList();
-
-        writeResponse(params, areas);
+        String kunta = params.getRequiredParam(PARAM_KUNTA);
+        // Check that user belongs to that kunta
+        List<LandmassProject> projects = service.getByKunta(kunta);
+        writeResponse(params, projects);
     }
 
     @Override
     public void handlePost(ActionParameters params) throws ActionException {
-        LandMassArea area = deserialize(params.getPayLoad());
-
-        if (!canWrite(params.getUser(), area)) {
-            throw new ActionDeniedException("No permission to write area");
+        LandmassProject project = deserialize(params.getPayLoad());
+        if (!canWrite(params.getUser(), project)) {
+            throw new ActionDeniedException("No permission to write project");
         }
-
-        service.save(area);
-
-        writeResponse(params, area);
+        service.save(project);
+        writeResponse(params, project);
     }
 
     @Override
     public void handlePut(ActionParameters params) throws ActionException {
-        LandMassArea area = deserialize(params.getPayLoad());
-
-        if (area.getId() == null || area.getId() <= 0L) {
+        LandmassProject project = deserialize(params.getPayLoad());
+        if (project.getId() == null || project.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid area id");
         }
-        long id = area.getId();
-
-        if (!canWrite(params.getUser(), area)) {
-            throw new ActionDeniedException("No permission to overwrite area");
+        long id = project.getId();
+        if (!canWrite(params.getUser(), project)) {
+            throw new ActionDeniedException("No permission to write project");
         }
-
-        LandMassArea dbArea = service.getAreaById(id);
-        if (dbArea == null) {
-            ResponseHelper.writeError(params, "Could not find any area", 404);
+        LandmassProject db = service.getById(id);
+        if (db == null) {
+            ResponseHelper.writeError(params, "Could not find the project to update", 404);
             return;
         }
-        if (!canEdit(params.getUser(), dbArea)) {
-            throw new ActionDeniedException("No permission to overwrite area");
+        if (!canWrite(params.getUser(), db)) {
+            throw new ActionDeniedException("No permission to overwrite project");
         }
 
-        service.update(area);
-        writeResponse(params, area);
+        service.update(project);
+        writeResponse(params, project);
     }
 
     @Override
     public void handleDelete(ActionParameters params) throws ActionException {
         long id = params.getRequiredParamLong(PARAM_ID);
 
-        LandMassArea dbArea = service.getAreaById(id);
-        if (dbArea == null) {
+        LandmassProject db = service.getById(id);
+        if (db == null) {
             ResponseHelper.writeError(params, "Could not find any area", 404);
             return;
         }
-
-        if (!canWrite(params.getUser(), dbArea)) {
+        if (!canWrite(params.getUser(), db)) {
             throw new ActionDeniedException("No permission to delete area");
         }
 
@@ -121,11 +108,11 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         ResponseHelper.writeResponse(params, response);
     }
 
-    private static LandMassArea deserialize(String json) throws ActionParamsException {
+    private static LandmassProject deserialize(String json) throws ActionParamsException {
         try {
-            return OM.readValue(json, LandMassArea.class);
+            return OM.readValue(json, LandmassProject.class);
         } catch (Exception ex) {
-            throw new ActionParamsException("Coudn't parse LandMassArea from: " + json, ex);
+            throw new ActionParamsException("Coudn't parse LandmassProject from: " + json, ex);
         }
     }
 
@@ -138,15 +125,7 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         }
     }
 
-    private static boolean canRead(User user, LandMassArea area) {
-        return true;
-    }
-
-    private static boolean canWrite(User user, LandMassArea area) {
-        return true;
-    }
-
-    private static boolean canEdit(User user, LandMassArea area) {
+    private static boolean canWrite(User user, LandmassProject project) {
         return true;
     }
 
