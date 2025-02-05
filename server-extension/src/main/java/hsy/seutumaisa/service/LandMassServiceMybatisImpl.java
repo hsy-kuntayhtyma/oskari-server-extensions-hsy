@@ -76,11 +76,13 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
             upsertPerson(area, mapper);
 
-            long id = mapper.insertArea(area);
-            area.setId(id);
+            long areaId = mapper.insertArea(area);
+            area.setId(areaId);
 
             for (LandMassData data : area.getData()) {
-                mapper.insertData(data);
+                data.setMaamassakohde_id(areaId);
+                long dataId = mapper.insertData(data);
+                data.setId(dataId);
             }
 
             session.commit();
@@ -99,8 +101,10 @@ public class LandMassServiceMybatisImpl extends LandMassService {
             mapper.updateArea(area);
 
             for (LandMassData data : area.getData()) {
+                data.setMaamassakohde_id(area.getId());
                 if (data.getId() == null) {
-                    mapper.insertData(data);
+                    long dataId = mapper.insertData(data);
+                    data.setId(dataId);
                 } else {
                     mapper.updateData(data);
                 }

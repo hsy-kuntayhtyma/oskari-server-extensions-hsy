@@ -85,20 +85,21 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         }
         long id = area.getId();
 
+        if (!canWrite(params.getUser(), area)) {
+            throw new ActionDeniedException("No permission to overwrite area");
+        }
+
         LandMassArea dbArea = service.getAreaById(id);
         if (dbArea == null) {
             ResponseHelper.writeError(params, "Could not find any area", 404);
             return;
         }
-
-        if (!canWrite(params.getUser(), dbArea)) {
+        if (!canEdit(params.getUser(), dbArea)) {
             throw new ActionDeniedException("No permission to overwrite area");
         }
 
         service.update(area);
-        LandMassArea saved = service.getAreaById(id);
-
-        writeResponse(params, saved);
+        writeResponse(params, area);
     }
 
     @Override
@@ -127,7 +128,7 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
             throw new ActionParamsException("Coudn't parse LandMassArea from: " + json, ex);
         }
     }
-    
+
     private static <T> void writeResponse(ActionParameters params, T response) throws ActionException {
         try {
             byte[] b = OM.writeValueAsBytes(response);
@@ -142,6 +143,10 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
     }
 
     private static boolean canWrite(User user, LandMassArea area) {
+        return true;
+    }
+
+    private static boolean canEdit(User user, LandMassArea area) {
         return true;
     }
 
