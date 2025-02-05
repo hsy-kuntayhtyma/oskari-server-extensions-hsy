@@ -60,12 +60,7 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
                 .filter(x -> canRead(params.getUser(), x))
                 .toList();
 
-        try {
-            byte[] b = OM.writeValueAsBytes(areas);
-            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
-        } catch (JsonProcessingException e) {
-            throw new ActionException("Error occured when serializing to JSON", e);
-        }
+        writeResponse(params, areas);
     }
 
     @Override
@@ -79,12 +74,7 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         long id = service.save(area);
         LandMassArea saved = service.getAreaById(id);
 
-        try {
-            byte[] b = OM.writeValueAsBytes(saved);
-            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
-        } catch (JsonProcessingException e) {
-            throw new ActionException("Error occured when serializing to JSON", e);
-        }
+        writeResponse(params, saved);
     }
 
     @Override
@@ -94,8 +84,9 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         if (area.getId() == null || area.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid area id");
         }
+        long id = area.getId();
 
-        LandMassArea dbArea = service.getAreaById(area.getId());
+        LandMassArea dbArea = service.getAreaById(id);
         if (dbArea == null) {
             ResponseHelper.writeError(params, "Could not find any area", 404);
             return;
@@ -106,8 +97,9 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         }
 
         service.update(area);
-        JSONObject response = JSONHelper.createJSONObject(PARAM_ID, area.getId());
-        ResponseHelper.writeResponse(params, response);
+        LandMassArea saved = service.getAreaById(id);
+
+        writeResponse(params, saved);
     }
 
     @Override
@@ -129,11 +121,20 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         ResponseHelper.writeResponse(params, response);
     }
 
-    private LandMassArea deserialize(String json) throws ActionParamsException {
+    private static LandMassArea deserialize(String json) throws ActionParamsException {
         try {
             return OM.readValue(json, LandMassArea.class);
         } catch (Exception ex) {
             throw new ActionParamsException("Coudn't parse LandMassArea from: " + json, ex);
+        }
+    }
+    
+    private static <T> void writeResponse(ActionParameters params, T response) throws ActionException {
+        try {
+            byte[] b = OM.writeValueAsBytes(response);
+            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
+        } catch (JsonProcessingException e) {
+            throw new ActionException("Error occured when serializing to JSON", e);
         }
     }
 
