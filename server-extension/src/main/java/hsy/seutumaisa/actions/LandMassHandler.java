@@ -68,13 +68,12 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         LandMassArea area = deserialize(params.getPayLoad());
 
         if (!canWrite(params.getUser(), area)) {
-            throw new ActionDeniedException("No permission to overwrite area");
+            throw new ActionDeniedException("No permission to write area");
         }
 
-        long id = service.save(area);
-        LandMassArea saved = service.getAreaById(id);
+        service.save(area);
 
-        writeResponse(params, saved);
+        writeResponse(params, area);
     }
 
     @Override

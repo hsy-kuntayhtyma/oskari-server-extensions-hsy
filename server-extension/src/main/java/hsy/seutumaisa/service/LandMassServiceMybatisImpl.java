@@ -70,20 +70,20 @@ public class LandMassServiceMybatisImpl extends LandMassService {
     }
 
     @Override
-    public long save(final LandMassArea area) {
+    public void save(final LandMassArea area) {
         try (final SqlSession session = factory.openSession(false)) {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
 
-            long id = mapper.insertArea(area);
-
             upsertPerson(area, mapper);
+
+            long id = mapper.insertArea(area);
+            area.setId(id);
 
             for (LandMassData data : area.getData()) {
                 mapper.insertData(data);
             }
 
             session.commit();
-            return id;
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to landmass area", e);
         }
@@ -94,8 +94,9 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         try (final SqlSession session = factory.openSession(false)) {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
 
-            mapper.updateArea(area);
             upsertPerson(area, mapper);
+
+            mapper.updateArea(area);
 
             for (LandMassData data : area.getData()) {
                 if (data.getId() == null) {
@@ -148,10 +149,11 @@ public class LandMassServiceMybatisImpl extends LandMassService {
         person.setOrganisaatio(area.getHenkilo_organisaatio());
         
         if (personId == null) {
-            mapper.insertPerson(person);
+            personId = mapper.insertPerson(person);
         } else {
             mapper.updatePerson(person);
         }
+        area.setOmistaja_id(personId);
     }
 
     private static Long findPersonId(Long omistajaId, String email, LandMassMapper mapper) {
