@@ -21,7 +21,7 @@ import hsy.seutumaisa.domain.Person;
 
 @Oskari
 public class LandMassServiceMybatisImpl extends LandMassService {
-    
+
     private static final Logger LOG = LogFactory.getLogger(LandMassServiceMybatisImpl.class);
 
     private SqlSessionFactory factory = null;
@@ -45,35 +45,25 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
     @Override
     public List<LandMassArea> getAreasByCoordinate(double lon, double lat) {
-        try (final SqlSession session = factory.openSession()) {
-            return session.getMapper(LandMassMapper.class).getAreasByCoordinate(lon, lat);
+        try (final SqlSession session = factory.openSession(false)) {
+            LandMassMapper mapper = session.getMapper(LandMassMapper.class);
+            List<LandMassArea> areas = mapper.getAreasByCoordinate(lon, lat);
+            for (LandMassArea area : areas) {
+                includeOwnerAndData(mapper, area);
+            }
+            return areas;
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to get LandMassAreas by coordinate", e);
-        }
-    }
-    
-    @Override
-    public List<LandMassData> getDataByAreaId(long areaId) {
-        try (final SqlSession session = factory.openSession()) {
-            return session.getMapper(LandMassMapper.class).getDataByAreaId(areaId);
-        } catch (Exception e) {
-            throw new ServiceRuntimeException("Failed to get LandMassData by areaId", e);
-        }
-    }
-
-    @Override
-    public Person getPersonById(long personId) {
-        try (final SqlSession session = factory.openSession()) {
-            return session.getMapper(LandMassMapper.class).getPersonById(personId);
-        } catch (Exception e) {
-            throw new ServiceRuntimeException("Failed to get LandMassArea by id", e);
         }
     }
 
     @Override
     public LandMassArea getAreaById(long id) {
-        try (final SqlSession session = factory.openSession()) {
-            return session.getMapper(LandMassMapper.class).getAreaById(id);
+        try (final SqlSession session = factory.openSession(false)) {
+            LandMassMapper mapper = session.getMapper(LandMassMapper.class);
+            LandMassArea area = mapper.getAreaById(id);
+            includeOwnerAndData(mapper, area);
+            return area;
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to get LandMassArea by id", e);
         }
@@ -81,21 +71,46 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
     @Override
     public long save(final LandMassArea area) {
-        try (final SqlSession session = factory.openSession()) {
+        try (final SqlSession session = factory.openSession(false)) {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
-            long id = mapper.insert(area);
+
+            long id = mapper.insertArea(area);
+
+            mapper.insertPerson(extractPerson(area));
+
+            for (LandMassData data : area.getData()) {
+                mapper.insertData(data);
+            }
+
             session.commit();
             return id;
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to save announcements", e);
         }
     }
-    
+
     @Override
     public void update(final LandMassArea area) {
-        try (final SqlSession session = factory.openSession()) {
+        try (final SqlSession session = factory.openSession(false)) {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
-            mapper.update(area);
+
+            mapper.updateArea(area);
+
+            Person person = extractPerson(area);
+            if (person.getId() == null) {
+                mapper.insertPerson(extractPerson(area));
+            } else {
+                mapper.updatePerson(person);
+            }
+
+            for (LandMassData data : area.getData()) {
+                if (data.getId() == null) {
+                    mapper.insertData(data);
+                } else {
+                    mapper.updateData(data);
+                }
+            }
+
             session.commit();
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to save announcements", e);
@@ -104,13 +119,38 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
     @Override
     public void delete(long id) {
-        try (final SqlSession session = factory.openSession()) {
+        try (final SqlSession session = factory.openSession(false)) {
             final LandMassMapper mapper = session.getMapper(LandMassMapper.class);
-            mapper.delete(id);
+            mapper.deleteArea(id);
             session.commit();
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to delete announcements", e);
         }
+    }
+
+    private static void includeOwnerAndData(LandMassMapper mapper, LandMassArea area) {
+        if (area.getOmistaja_id() != null) {
+            Person person = mapper.getPersonById(area.getOmistaja_id());
+            if (person != null) {
+                area.setHenkilo_nimi(person.getNimi());
+                area.setHenkilo_puhelin(person.getPuhelin());
+                area.setHenkilo_email(person.getEmail());
+                area.setHenkilo_organisaatio(person.getOrganisaatio());
+            }
+        }
+        if (area.getId() != null) {
+            area.setData(mapper.getDataByAreaId(area.getId()));
+        }
+    }
+
+    private static Person extractPerson(LandMassArea area) {
+        Person person = new Person();
+        person.setId(area.getOmistaja_id());
+        person.setNimi(area.getHenkilo_nimi());
+        person.setEmail(area.getHenkilo_email());
+        person.setPuhelin(area.getHenkilo_puhelin());
+        person.setOrganisaatio(area.getHenkilo_organisaatio());
+        return person;
     }
 
 }

@@ -20,7 +20,6 @@ import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
 import hsy.seutumaisa.domain.LandMassArea;
-import hsy.seutumaisa.domain.Person;
 import hsy.seutumaisa.service.LandMassService;
 
 @OskariActionRoute("LandMass")
@@ -59,7 +58,6 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
 
         List<LandMassArea> areas = service.getAreasByCoordinate(lon, lat).stream()
                 .filter(x -> canRead(params.getUser(), x))
-                .map(this::includeOwnerAndData)
                 .toList();
 
         try {
@@ -68,22 +66,6 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         } catch (JsonProcessingException e) {
             throw new ActionException("Error occured when serializing to JSON", e);
         }
-    }
-
-    private LandMassArea includeOwnerAndData(LandMassArea area) {
-        if (area.getOmistaja_id() != null) {
-            Person person = service.getPersonById(area.getOmistaja_id());
-            if (person != null) {
-                area.setHenkilo_nimi(person.getNimi());
-                area.setHenkilo_puhelin(person.getPuhelin());
-                area.setHenkilo_email(person.getEmail());
-                area.setHenkilo_organisaatio(person.getOrganisaatio());
-            }
-        }
-        if (area.getId() != null) {
-            area.setData(service.getDataByAreaId(area.getId()));
-        }
-        return area;
     }
 
     @Override
@@ -95,9 +77,14 @@ public class LandMassHandler extends SeutumaisaRestActionHandler {
         }
 
         long id = service.save(area);
+        LandMassArea saved = service.getAreaById(id);
 
-        JSONObject response = JSONHelper.createJSONObject(PARAM_ID, id);
-        ResponseHelper.writeResponse(params, response);
+        try {
+            byte[] b = OM.writeValueAsBytes(saved);
+            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
+        } catch (JsonProcessingException e) {
+            throw new ActionException("Error occured when serializing to JSON", e);
+        }
     }
 
     @Override

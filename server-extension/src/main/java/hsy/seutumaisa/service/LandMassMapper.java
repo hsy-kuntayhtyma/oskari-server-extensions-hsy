@@ -17,34 +17,55 @@ import hsy.seutumaisa.domain.LandMassData;
 import hsy.seutumaisa.domain.Person;
 
 public interface LandMassMapper {
-    
+
     @Results(id = "LandMassAreaResult", value = {
             @Result(property="id", column="id", id=true),
+            @Result(property="geom", column="geom"),
             @Result(property="nimi", column="nimi"),
             @Result(property="osoite", column="osoite"),
-            @Result(property="geom", column="geom"),
+            @Result(property="kunta", column="kunta"),
             @Result(property="kohdetyyppi", column="kohdetyyppi"),
             @Result(property="vaihe", column="vaihe"),
-            @Result(property="maamassatila", column="maamassatila"),
             @Result(property="omistaja_id", column="omistaja_id"),
             @Result(property="alku_pvm", column="alku_pvm"),
-            @Result(property="loppu_pvm", column="loppu_pvm"),
-            @Result(property="lisatieto", column="lisatieto"),
-            @Result(property="kunta", column="kunta"),
-            @Result(property="status", column="status")
+            @Result(property="loppu_pvm", column="loppu_pvm")
     })
-    @Select("SELECT id, nimi, osoite, ST_AsEWKT(geom) AS geom, kohdetyyppi, vaihe, maamassatila, omistaja_id, alku_pvm, loppu_pvm, lisatieto, kunta, status "
+    @Select("SELECT id, ST_AsEWKT(geom) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
     LandMassArea getAreaById(@Param("id") long id);
 
     @ResultMap("LandMassAreaResult")
-    @Select("SELECT id, nimi, osoite, ST_AsEWKT(geom) AS geom, kohdetyyppi, vaihe, maamassatila, omistaja_id, alku_pvm, loppu_pvm, lisatieto, kunta, status "
+    @Select("SELECT id, ST_AsEWKT(geom) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
             + "FROM maamassakohde "
             + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
     List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
-    
+
+    @Insert("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
+            + " (ST_GeomFromEWKT(#{geom}, #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}, #{vaihe}, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
+            + " RETURNING id")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
+    long insertArea(final LandMassArea area);
+
+    @Update("UPDATE maamassakohde SET "
+            + "geom = ST_GeomFromEWKT(#{geom}),"
+            + "nimi = #{nimi},"
+            + "osoite = #{osoite},"
+            + "kunta = #{kunta},"
+            + "kohdetyyppi = #{kohdetyyppi},"
+            + "vaihe = #{vaihe},"
+            + "omistaja_id = #{omistaja_id},"
+            + "alku_pvm = #{alku_pvm},"
+            + "loppu_pvm = #{loppu_pvm}"
+            + " WHERE id = #{id}")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
+    boolean updateArea(final LandMassArea area);
+
+    @Delete("DELETE FROM maamassakohde WHERE id = #{id}")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
+    boolean deleteArea(@Param("id") final long id);
+
     @Results(id = "LandMassDataResult", value = {
             @Result(property="id", column="id", id=true),
             @Result(property="maamassakohde_id", column="maamassakohde_id"),
@@ -71,48 +92,110 @@ public interface LandMassMapper {
             @Result(property="external_id", column="external_id"),
             @Result(property="alkupera_id", column="alkupera_id")
     })
-    @Select("SELECT id, maamassakohde_id, "
-            + "maamassaryhma, maamassalaji, "
-            + "kelpoisuusluokkaryhma, kelpoisuusluokka, "
-            + "maamassatila, tiedontuottaja_id, tiedontuottaja, "
-            + "planned_begin_date, planned_end_date, "
-            + "amount_remaining, "
-            + "lisatieto, liitteet, varattu, "
-            + "muokattu, luotu, "
-            + "realized_begin_date, realized_end_date, "
-            + "pilaantuneisuus, tiedon_luotettavuus, "
-            + "amount_total, "
-            + "external_id, alkupera_id "
+    @Select("SELECT id,"
+            + "maamassakohde_id,"
+            + "maamassaryhma,"
+            + "maamassalaji,"
+            + "kelpoisuusluokkaryhma,"
+            + "kelpoisuusluokka,"
+            + "maamassatila,"
+            + "tiedontuottaja_id,"
+            + "tiedontuottaja,"
+            + "planned_begin_date,"
+            + "planned_end_date,"
+            + "amount_remaining,"
+            + "lisatieto,"
+            + "liitteet,"
+            + "varattu,"
+            + "muokattu,"
+            + "luotu,"
+            + "realized_begin_date,"
+            + "realized_end_date,"
+            + "pilaantuneisuus,"
+            + "tiedon_luotettavuus,"
+            + "amount_total,"
+            + "external_id,"
+            + "alkupera_id "
             + "FROM maamassatieto "
             + "WHERE maamassakohde_id = #{areaId}")
     List<LandMassData> getDataByAreaId(@Param("areaId") long areaId);
-    
-    @Insert("INSERT INTO maamassakohde (nimi, osoite, geom, kohdetyyppi, vaihe, maamassatila, omistaja_id, alku_pvm, loppu_pvm, lisatieto, kunta, status) VALUES"
-            + " (#{nimi}, #{osoite}, ST_GeomFromEWKT(#{geom}), #{kohdetyyppi}, #{vaihe}, #{maamassatila}, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{lisatieto}, #{kunta}, #{status})"
-            + " RETURNING id")
-    @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insert(final LandMassArea area);
 
-    @Update("UPDATE maamassakohde SET "
-            + "nimi = #{nimi},"
-            + "osoite = #{osoite},"
-            + "geom = ST_GeomFromEWKT(#{geom}),"
-            + "kohdetyyppi = #{kohdetyyppi},"
-            + "vaihe = #{vaihe},"
+    @Insert("INSERT INTO maamassatieto ("
+            + "maamassakohde_id,"
+            + "maamassaryhma,"
+            + "maamassalaji,"
+            + "kelpoisuusluokkaryhma,"
+            + "kelpoisuusluokka,"
+            + "maamassatila,"
+            + "tiedontuottaja_id,"
+            + "tiedontuottaja"
+            + "planned_begin_date,"
+            + "planned_end_date,"
+            + "amount_remaining,"
+            + "lisatieto,"
+            + "liitteet,"
+            + "varattu,"
+            + "realized_begin_date,"
+            + "realized_end_date,"
+            + "pilaantuneisuus,"
+            + "tiedon_luotettavuus,"
+            + "amount_total,"
+            + "kunta,"
+            + "external_id,"
+            + "alkupera_id"
+            + ") VALUES ("
+            + "#{maamassakohde_id},"
+            + "#{maamassaryhma},"
+            + "#{maamassalaji},"
+            + "#{kelpoisuusluokkaryhma},"
+            + "#{kelpoisuusluokka},"
+            + "#{maamassatila},"
+            + "#{tiedontuottaja_id},"
+            + "#{tiedontuottaja},"
+            + "#{planned_begin_date},"
+            + "#{planned_end_date},"
+            + "#{amount_remaining},"
+            + "#{lisatieto},"
+            + "#{liitteet},"
+            + "#{varattu},"
+            + "#{realized_begin_date},"
+            + "#{realized_end_date},"
+            + "#{pilaantuneisuus},"
+            + "#{tiedon_luotettavuus},"
+            + "#{amount_total},"
+            + "#{kunta},"
+            + "#{external_id},"
+            + "#{alkupera_id}"
+            + ") RETURNING id")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
+    long insertData(final LandMassData data);
+
+    @Update("UPDATE maamassatieto SET "
+            + "maamassakohde_id = #{maamassakohde_id},"
+            + "maamassaryhma = #{maamassaryhma},"
+            + "maamassalaji = #{maamassalaji},"
+            + "kelpoisuusluokkaryhma = #{kelpoisuusluokkaryhma},"
+            + "kelpoisuusluokka = #{kelpoisuusluokka},"
             + "maamassatila = #{maamassatila},"
-            + "omistaja_id = #{omistaja_id},"
-            + "alku_pvm = #{alku_pvm},"
-            + "loppu_pvm = #{loppu_pvm},"
+            + "tiedontuottaja_id = #{tiedontuottaja_id},"
+            + "planned_begin_date = #{planned_begin_date},"
+            + "planned_end_date = #{planned_end_date},"
+            + "amount_remaining = #{amount_remaining},"
             + "lisatieto = #{lisatieto},"
+            + "liitteet = #{liitteet},"
+            + "varattu = #{varattu},"
+            + "realized_begin_date = #{realized_begin_date},"
+            + "realized_end_date = #{realized_end_date},"
+            + "pilaantuneisuus = #{pilaantuneisuus},"
+            + "tiedon_luotettavuus = #{tiedon_luotettavuus},"
+            + "amount_total = #{amount_total},"
             + "kunta = #{kunta},"
-            + "status = #{status}"
+            + "external_id = #{external_id},"
+            + "alkupera_id = #{alkupera_id},"
+            + "tiedontuottaja = #{tiedontuottaja}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean update(final LandMassArea area);
-    
-    @Delete("DELETE FROM maamassakohde WHERE id = #{id}")
-    @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean delete(@Param("id") final long id);
+    boolean updateData(final LandMassData data);
 
     @Results(id = "PersonResult", value = {
             @Result(property="id", column="id", id=true),
@@ -123,5 +206,19 @@ public interface LandMassMapper {
     })
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE id = #{id}")
     Person getPersonById(long personId);
+
+    @Insert("INSERT INTO henkilo (nimi, email, puhelin, organisaatio) VALUES"
+            + " (#{nimi}, #{email}, #{puhelin}, #{organisaatio})"
+            + " RETURNING id")
+    long insertPerson(Person person);
+
+    @Update("UPDATE henkilo SET "
+            + "nimi = #{nimi},"
+            + "email = #{email},"
+            + "puhelin = #{puhelin},"
+            + "organisaatio = #{organisaatio}"
+            + " WHERE id = #{id}")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
+    Person updatePerson(Person person);
 
 }

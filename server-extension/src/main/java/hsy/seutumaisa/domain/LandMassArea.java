@@ -1,28 +1,31 @@
 package hsy.seutumaisa.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class LandMassArea {
 
     private Long id;
+
+    private String geom;
+
     private String nimi;
     private String osoite;
-    private String geom;
+    private String kunta;
     private String kohdetyyppi;
     private String vaihe;
-    private String maamassatila;
+
     private Long omistaja_id;
     private String henkilo_nimi;
     private String henkilo_email;
     private String henkilo_puhelin;
     private String henkilo_organisaatio;
+
     private Date alku_pvm;
     private Date loppu_pvm;
-    private String lisatieto;
-    private String kunta;
-    private Integer status;
-    private List<LandMassData> data;
+
+    private List<LandMassData> data = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -30,6 +33,14 @@ public class LandMassArea {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getGeom() {
+        return geom;
+    }
+
+    public void setGeom(String geom) {
+        this.geom = geom;
     }
 
     public String getNimi() {
@@ -48,12 +59,12 @@ public class LandMassArea {
         this.osoite = osoite;
     }
 
-    public String getGeom() {
-        return geom;
+    public String getKunta() {
+        return kunta;
     }
 
-    public void setGeom(String geom) {
-        this.geom = geom;
+    public void setKunta(String kunta) {
+        this.kunta = kunta;
     }
 
     public String getKohdetyyppi() {
@@ -70,14 +81,6 @@ public class LandMassArea {
 
     public void setVaihe(String vaihe) {
         this.vaihe = vaihe;
-    }
-
-    public String getMaamassan_tila() {
-        return maamassatila;
-    }
-
-    public void setMaamassan_tila(String maamassatila) {
-        this.maamassatila = maamassatila;
     }
 
     public Long getOmistaja_id() {
@@ -134,30 +137,6 @@ public class LandMassArea {
 
     public void setLoppu_pvm(Date loppu_pvm) {
         this.loppu_pvm = loppu_pvm;
-    }
-
-    public String getLisatieto() {
-        return lisatieto;
-    }
-
-    public void setLisatieto(String lisatieto) {
-        this.lisatieto = lisatieto;
-    }
-
-    public String getKunta() {
-        return kunta;
-    }
-
-    public void setKunta(String kunta) {
-        this.kunta = kunta;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public List<LandMassData> getData() {
