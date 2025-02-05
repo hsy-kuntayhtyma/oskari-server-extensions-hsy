@@ -69,9 +69,6 @@ public class LandMassData {
     @JsonProperty("amount_total")
     private String amount_total;
 
-    @JsonProperty("external_id")
-    private String external_id;
-
     public Long getId() {
         return id;
     }
@@ -238,14 +235,6 @@ public class LandMassData {
 
     public void setAmount_total(String amount_total) {
         this.amount_total = amount_total;
-    }
-
-    public String getExternal_id() {
-        return external_id;
-    }
-
-    public void setExternal_id(String external_id) {
-        this.external_id = external_id;
     }
 
 }

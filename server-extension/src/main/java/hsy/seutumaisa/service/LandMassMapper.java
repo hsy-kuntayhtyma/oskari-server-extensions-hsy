@@ -74,7 +74,6 @@ public interface LandMassMapper {
             @Result(property="kelpoisuusluokkaryhma", column="kelpoisuusluokkaryhma"),
             @Result(property="kelpoisuusluokka", column="kelpoisuusluokka"),
             @Result(property="maamassatila", column="maamassatila"),
-            @Result(property="tiedontuottaja_id", column="tiedontuottaja_id"),
             @Result(property="tiedontuottaja", column="tiedontuottaja"),
             @Result(property="planned_begin_date", column="planned_begin_date"),
             @Result(property="planned_end_date", column="planned_end_date"),
@@ -88,9 +87,7 @@ public interface LandMassMapper {
             @Result(property="realized_end_date", column="realized_end_date"),
             @Result(property="pilaantuneisuus", column="pilaantuneisuus"),
             @Result(property="tiedon_luotettavuus", column="tiedon_luotettavuus"),
-            @Result(property="amount_total", column="amount_total"),
-            @Result(property="external_id", column="external_id"),
-            @Result(property="alkupera_id", column="alkupera_id")
+            @Result(property="amount_total", column="amount_total")
     })
     @Select("SELECT id,"
             + "maamassakohde_id,"
@@ -99,7 +96,6 @@ public interface LandMassMapper {
             + "kelpoisuusluokkaryhma,"
             + "kelpoisuusluokka,"
             + "maamassatila,"
-            + "tiedontuottaja_id,"
             + "tiedontuottaja,"
             + "planned_begin_date,"
             + "planned_end_date,"
@@ -113,9 +109,7 @@ public interface LandMassMapper {
             + "realized_end_date,"
             + "pilaantuneisuus,"
             + "tiedon_luotettavuus,"
-            + "amount_total,"
-            + "external_id,"
-            + "alkupera_id "
+            + "amount_total "
             + "FROM maamassatieto "
             + "WHERE maamassakohde_id = #{areaId}")
     List<LandMassData> getDataByAreaId(@Param("areaId") long areaId);
@@ -127,8 +121,6 @@ public interface LandMassMapper {
             + "kelpoisuusluokkaryhma,"
             + "kelpoisuusluokka,"
             + "maamassatila,"
-            + "tiedontuottaja_id,"
-            + "tiedontuottaja"
             + "planned_begin_date,"
             + "planned_end_date,"
             + "amount_remaining,"
@@ -140,9 +132,7 @@ public interface LandMassMapper {
             + "pilaantuneisuus,"
             + "tiedon_luotettavuus,"
             + "amount_total,"
-            + "kunta,"
-            + "external_id,"
-            + "alkupera_id"
+            + "tiedontuottaja"
             + ") VALUES ("
             + "#{maamassakohde_id},"
             + "#{maamassaryhma},"
@@ -150,8 +140,6 @@ public interface LandMassMapper {
             + "#{kelpoisuusluokkaryhma},"
             + "#{kelpoisuusluokka},"
             + "#{maamassatila},"
-            + "#{tiedontuottaja_id},"
-            + "#{tiedontuottaja},"
             + "#{planned_begin_date},"
             + "#{planned_end_date},"
             + "#{amount_remaining},"
@@ -163,9 +151,7 @@ public interface LandMassMapper {
             + "#{pilaantuneisuus},"
             + "#{tiedon_luotettavuus},"
             + "#{amount_total},"
-            + "#{kunta},"
-            + "#{external_id},"
-            + "#{alkupera_id}"
+            + "#{tiedontuottaja}"
             + ") RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     long insertData(final LandMassData data);
@@ -177,7 +163,6 @@ public interface LandMassMapper {
             + "kelpoisuusluokkaryhma = #{kelpoisuusluokkaryhma},"
             + "kelpoisuusluokka = #{kelpoisuusluokka},"
             + "maamassatila = #{maamassatila},"
-            + "tiedontuottaja_id = #{tiedontuottaja_id},"
             + "planned_begin_date = #{planned_begin_date},"
             + "planned_end_date = #{planned_end_date},"
             + "amount_remaining = #{amount_remaining},"
@@ -189,9 +174,6 @@ public interface LandMassMapper {
             + "pilaantuneisuus = #{pilaantuneisuus},"
             + "tiedon_luotettavuus = #{tiedon_luotettavuus},"
             + "amount_total = #{amount_total},"
-            + "kunta = #{kunta},"
-            + "external_id = #{external_id},"
-            + "alkupera_id = #{alkupera_id},"
             + "tiedontuottaja = #{tiedontuottaja}"
             + " WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)

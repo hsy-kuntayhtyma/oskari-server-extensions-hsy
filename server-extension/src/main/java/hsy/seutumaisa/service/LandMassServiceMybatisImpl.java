@@ -85,7 +85,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
             session.commit();
             return id;
         } catch (Exception e) {
-            throw new ServiceRuntimeException("Failed to save announcements", e);
+            throw new ServiceRuntimeException("Failed to landmass area", e);
         }
     }
 
@@ -107,7 +107,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
 
             session.commit();
         } catch (Exception e) {
-            throw new ServiceRuntimeException("Failed to save announcements", e);
+            throw new ServiceRuntimeException("Failed to update landmass area", e);
         }
     }
     
@@ -118,7 +118,7 @@ public class LandMassServiceMybatisImpl extends LandMassService {
             mapper.deleteArea(id);
             session.commit();
         } catch (Exception e) {
-            throw new ServiceRuntimeException("Failed to delete announcements", e);
+            throw new ServiceRuntimeException("Failed to delete landmass area", e);
         }
     }
 
