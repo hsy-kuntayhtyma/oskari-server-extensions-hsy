@@ -30,26 +30,26 @@ public interface LandMassMapper {
             @Result(property="alku_pvm", column="alku_pvm"),
             @Result(property="loppu_pvm", column="loppu_pvm")
     })
-    @Select("SELECT id, ST_AsEWKT(geom) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
     LandMassArea getAreaById(@Param("id") long id);
 
     @ResultMap("LandMassAreaResult")
-    @Select("SELECT id, ST_AsEWKT(geom) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm "
             + "FROM maamassakohde "
             + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
     List<LandMassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
     @Insert("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm) VALUES"
-            + " (ST_GeomFromEWKT(#{geom}), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
+            + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     long insertArea(final LandMassArea area);
 
     @Update("UPDATE maamassakohde SET "
-            + "geom = ST_GeomFromEWKT(#{geom}),"
+            + "geom = ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879),"
             + "nimi = #{nimi},"
             + "osoite = #{osoite},"
             + "kunta = #{kunta},"
