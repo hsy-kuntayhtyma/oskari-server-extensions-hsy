@@ -26,7 +26,6 @@ import hsy.seutumaisa.service.LandmassProjectService;
 public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     private static final String PARAM_ID = "id";
-    private static final String PARAM_KUNTA = "kunta";
 
     private static final ObjectMapper OM = new ObjectMapper();
     static {
@@ -51,9 +50,8 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
-        String kunta = params.getRequiredParam(PARAM_KUNTA);
-        // Check that user belongs to that kunta
-        List<LandmassProject> projects = service.getByKunta(kunta);
+        List<LandmassProject> projects = service.getAll();
+        // Filter out the ones user has no permission to view
         writeResponse(params, projects);
     }
 

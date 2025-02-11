@@ -24,8 +24,8 @@ public interface LandmassProjectMapper {
     LandmassProject getById(@Param("id") long id);
 
     @ResultMap("LandmassProjectResult")
-    @Select("SELECT id, nimi, kunta FROM hankealue WHERE kunta = #{kunta}")
-    List<LandmassProject> getByKunta(@Param("kunta") String kunta);
+    @Select("SELECT id, nimi, kunta FROM hankealue")
+    List<LandmassProject> getAll();
 
     @Select("INSERT INTO hankealue (nimi, kunta) VALUES (#{nimi}, #{kunta}) RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)

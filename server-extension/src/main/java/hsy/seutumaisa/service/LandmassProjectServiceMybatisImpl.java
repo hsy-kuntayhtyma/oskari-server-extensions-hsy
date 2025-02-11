@@ -51,9 +51,9 @@ public class LandmassProjectServiceMybatisImpl extends LandmassProjectService {
     }
 
     @Override
-    public List<LandmassProject> getByKunta(String kunta) {
+    public List<LandmassProject> getAll() {
         try (final SqlSession session = factory.openSession(false)) {
-            return session.getMapper(LandmassProjectMapper.class).getByKunta(kunta);
+            return session.getMapper(LandmassProjectMapper.class).getAll();
         } catch (Exception e) {
             throw new ServiceRuntimeException("Failed to get landmass projects by kunta", e);
         }
