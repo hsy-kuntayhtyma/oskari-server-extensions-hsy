@@ -67,7 +67,7 @@ public class LandmassData {
     private String tiedon_luotettavuus;
 
     @JsonProperty("amount_total")
-    private String amount_total;
+    private int amount_total;
 
     public Long getId() {
         return id;
@@ -229,11 +229,11 @@ public class LandmassData {
         this.tiedon_luotettavuus = tiedon_luotettavuus;
     }
 
-    public String getAmount_total() {
+    public int getAmount_total() {
         return amount_total;
     }
 
-    public void setAmount_total(String amount_total) {
+    public void setAmount_total(int amount_total) {
         this.amount_total = amount_total;
     }
 
