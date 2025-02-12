@@ -317,7 +317,7 @@ public class SeutumaisaDBHelper {
             sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
             sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
-            sb.append("k.namefin as kunta,");
+            sb.append("k.namefin as kunta_nimi_fin,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto mt ON mk.id = mt.maamassakohde_id ");
@@ -419,7 +419,7 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getString("email"));
                 row.put(rs.getString("puhelin"));
                 row.put(rs.getString("organisaatio"));
-                row.put(rs.getString("kunta"));
+                row.put(rs.getString("kunta_nimi_fin"));
                 row.put(rs.getString("geojson"));
                 results.put(row);
             }
