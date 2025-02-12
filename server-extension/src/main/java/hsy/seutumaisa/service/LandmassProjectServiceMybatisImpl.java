@@ -38,6 +38,7 @@ public class LandmassProjectServiceMybatisImpl extends LandmassProjectService {
         final Configuration configuration = MyBatisHelper.getConfig(dataSource);
         MyBatisHelper.addAliases(configuration, LandmassProject.class);
         MyBatisHelper.addMappers(configuration, LandmassProjectMapper.class);
+        configuration.getTypeHandlerRegistry().register(IntArrayTypeHandler.class);
         return new SqlSessionFactoryBuilder().build(configuration);
     }
 

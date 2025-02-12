@@ -18,20 +18,22 @@ public interface LandmassProjectMapper {
     @Results(id = "LandmassProjectResult", value = {
             @Result(property="id", column="id", id=true),
             @Result(property="nimi", column="nimi"),
-            @Result(property="kunta", column="kunta")
+            @Result(property="kunta", column="kunta"),
+            @Result(property="editors", column="editors", typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler.class),
+            @Result(property="managers", column="managers", typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler.class)
     })
-    @Select("SELECT id, nimi, kunta FROM hankealue WHERE id = #{id}")
+    @Select("SELECT id, nimi, kunta, editors, managers FROM hankealue WHERE id = #{id}")
     LandmassProject getById(@Param("id") long id);
 
     @ResultMap("LandmassProjectResult")
-    @Select("SELECT id, nimi, kunta FROM hankealue")
+    @Select("SELECT id, nimi, kunta, editors, managers FROM hankealue")
     List<LandmassProject> getAll();
 
-    @Select("INSERT INTO hankealue (nimi, kunta) VALUES (#{nimi}, #{kunta}) RETURNING id")
+    @Select("INSERT INTO hankealue (nimi, kunta, editors, managers) VALUES (#{nimi}, #{kunta}, #{editors, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}, #{managers, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}) RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     long insert(LandmassProject project);
 
-    @Update("UPDATE hankealue SET nimi = #{nimi}, kunta = #{kunta} WHERE id = #{id}")
+    @Update("UPDATE hankealue SET nimi = #{nimi}, kunta = #{kunta}, editors = #{editors, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}, managers = #{managers, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler} WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     boolean update(LandmassProject project);
 
