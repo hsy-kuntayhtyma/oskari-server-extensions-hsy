@@ -17,8 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -302,8 +300,7 @@ public class SeutumaisaDBHelper {
     public static JSONObject search(ActionParameters params) throws JSONException, ActionParamsException {
         DataTableResult result = new DataTableResult();
 
-        // TODO: can we get geom index another way than hard coded ?
-        result.setColumnDefs(DataTableHelper.getColumnDefs(13));
+        result.setColumnDefs(DataTableHelper.getColumnDefs());
         result.setColumns(DataTableHelper.getColumns());
 
         Connection conn = null;
@@ -316,7 +313,7 @@ public class SeutumaisaDBHelper {
             conn = getConnection();
 
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT mt.id , mt.maamassalaji, mt.maamassaryhma,");
+            sb.append("SELECT mk.id as kohde_id, mk.nimi as kohde_nimi, mt.maamassalaji, mt.maamassaryhma,");
             sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
             sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
@@ -324,17 +321,14 @@ public class SeutumaisaDBHelper {
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto mt ON mk.id = mt.maamassakohde_id ");
-            sb.append("LEFT JOIN maamassasiirto ms ON ms.lahtopaikka_massatieto = mk.id ");
             sb.append("LEFT JOIN henkilo h ON h.id = mk.omistaja_id ");
-            sb.append("LEFT JOIN kuntarajat k ON st_contains(k.geom, mk.geom) ");
+            sb.append("LEFT JOIN kuntarajat k ON mk.kunta = k.natcode ");
             List<SearchParams> searchParams = SeutumaisaSearchHelper.parseSearchParams(params);
             sb.append(SeutumaisaSearchHelper.getSearchWhere(searchParams));
 
             sql = sb.toString();
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
             int index = 1;
             for (int i=0; i<searchParams.size(); i++) {
@@ -411,6 +405,8 @@ public class SeutumaisaDBHelper {
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 JSONArray row = new JSONArray();
+                row.put(rs.getString("kohde_id"));
+                row.put(rs.getString("kohde_nimi"));
                 row.put(rs.getString("maamassalaji"));
                 row.put(rs.getString("maamassaryhma"));
                 row.put(rs.getString("kelpoisuusluokka"));

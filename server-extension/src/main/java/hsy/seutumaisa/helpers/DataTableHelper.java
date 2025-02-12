@@ -19,6 +19,8 @@ public class DataTableHelper {
      * DAtatable columns and their titles
      */
     static {
+        columns.add(new SearchParams("Kohteen id"));
+        columns.add(new SearchParams("Kohteen tunnus"));
         columns.add(new SearchParams("Massan laji"));
         columns.add(new SearchParams("Massan ryhmä"));
         columns.add(new SearchParams("Kelpoisuusluokka"));
@@ -52,14 +54,15 @@ public class DataTableHelper {
 
     /**
      * Gets columns definitions.
-     * @param geomIndex geometry column index to hide
      * @return
      * @throws JSONException
      */
-    public static JSONArray getColumnDefs(int geomIndex) throws JSONException {
+    public static JSONArray getColumnDefs() throws JSONException {
         JSONArray columnDefs = new JSONArray();
         JSONObject defs = new JSONObject();
         JSONArray targets = new JSONArray();
+        // geometry column index to hide
+        int geomIndex = columns.size() - 1;
         targets.put(geomIndex);
         defs.put("targets", targets);
         defs.put("visible", false);
