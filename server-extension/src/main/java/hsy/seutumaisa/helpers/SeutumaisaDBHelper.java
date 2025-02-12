@@ -9,6 +9,7 @@ import hsy.seutumaisa.domain.DataTableResult;
 import hsy.seutumaisa.domain.Range;
 import hsy.seutumaisa.domain.SearchParams;
 import hsy.seutumaisa.domain.form.DateRangeSelect;
+import hsy.seutumaisa.domain.form.IdSelect;
 import hsy.seutumaisa.domain.form.RangeSlider;
 import hsy.seutumaisa.domain.form.Select;
 import hsy.seutumaisa.domain.form.SelectValue;
@@ -50,6 +51,7 @@ public class SeutumaisaDBHelper {
      */
     public static JSONArray getSearchFields() throws JSONException {
         JSONArray searchFields = new JSONArray();
+        searchFields.put(getKohdeIdSelect().toJSON());
         searchFields.put(getMaamassaSelect().toJSON());
         searchFields.put(getMaamassaRyhmaSelect().toJSON());
         searchFields.put(getKelpoisuusluokkaSelect().toJSON());
@@ -62,6 +64,17 @@ public class SeutumaisaDBHelper {
         searchFields.put(getKuntaSelect().toJSON());
 
         return searchFields;
+    }
+
+    /**
+     * Gets suunnitteluaika data range select
+     * @return
+     */
+    private static IdSelect getKohdeIdSelect() {
+        IdSelect id = new IdSelect();
+        id.setId(SeutumaisaSearchHelper.KEY_ID);
+        id.setTitle("Kohteen id");
+        return id;
     }
 
     /**

@@ -14,6 +14,7 @@ import java.util.List;
  * Search helper
  */
 public class SeutumaisaSearchHelper {
+    public static final String KEY_ID = "id";
     public static final String KEY_KUNTA = "kunta";
     public static final String KEY_ORGANISAATIO = "organisaatio";
     public static final String KEY_SUUNNITTELUAIKATAULU = "planned_date";
@@ -43,6 +44,17 @@ public class SeutumaisaSearchHelper {
         JSONObject jsonParams =  params.getHttpParamAsJSON("params");
 
         List<SearchParams> searchParams = new ArrayList<>();
+
+        if (jsonParams.has(KEY_ID)) {
+            try {
+                long idValue = Long.parseLong(jsonParams.getString(KEY_ID));
+                SearchParams pKunta = new SearchParams("id", null, idValue);
+                pKunta.setColumnPrefix("mk.");
+                searchParams.add(pKunta);
+            } catch (NumberFormatException e) {
+                // Return 0 matches...
+            }
+        }
 
         if (jsonParams.has(KEY_KUNTA)) {
             SearchParams pKunta = new SearchParams("namefin", null, jsonParams.getString(KEY_KUNTA));
