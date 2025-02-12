@@ -22,6 +22,7 @@ public class SeutumaisaSearchHelper {
     public static final String KEY_MAAMASSATILA = "maamassatila";
     public static final String KEY_KOHDETYYPPI = "kohdetyyppi";
     public static final String KEY_KELPOISUUSLUOKKA = "kelpoisuusluokka";
+    public static final String KEY_PILAANTUNEISUUS = "pilaantuneisuus";
     public static final String KEY_MAAMASSARYHMA = "maamassaryhma";
     public static final String KEY_MAAMASSALAJI = "maamassalaji";
     public static final String KEY_MAARA = "amount_remaining";
@@ -30,7 +31,6 @@ public class SeutumaisaSearchHelper {
     //History search
     public static final String KEY_TOTEUTUNUT_ALKU = "realized_begin_date";
     public static final String KEY_TOTEUTUNUT_LOPPU = "realized_end_date";
-    public static final String KEY_PILAANTUNEISUUS = "pilaantuneisuus";
 
     /**
      * Parse search params from json
@@ -111,6 +111,13 @@ public class SeutumaisaSearchHelper {
             pKelpoisuusluokka.setColumnPrefix("mt.");
             pKelpoisuusluokka.setNeedCastVarchar(true);
             searchParams.add(pKelpoisuusluokka);
+        }
+
+        if (jsonParams.has(KEY_PILAANTUNEISUUS)) {
+            SearchParams pPilaantuneisuus = new SearchParams(KEY_PILAANTUNEISUUS, null, jsonParams.getString(KEY_PILAANTUNEISUUS));
+            pPilaantuneisuus.setColumnPrefix("mt.");
+            pPilaantuneisuus.setNeedCastVarchar(true);
+            searchParams.add(pPilaantuneisuus);
         }
 
         if (jsonParams.has(KEY_MAAMASSARYHMA)) {

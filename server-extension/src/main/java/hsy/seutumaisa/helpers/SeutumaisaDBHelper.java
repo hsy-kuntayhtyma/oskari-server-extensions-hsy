@@ -53,6 +53,7 @@ public class SeutumaisaDBHelper {
         searchFields.put(getMaamassaSelect().toJSON());
         searchFields.put(getMaamassaRyhmaSelect().toJSON());
         searchFields.put(getKelpoisuusluokkaSelect().toJSON());
+        searchFields.put(getPilaantuneisuusSelect().toJSON());
         searchFields.put(getKohdetyyppiSelect().toJSON());
         searchFields.put(getMaamassantilaSelect().toJSON());
         searchFields.put(getSuunnitteluAikatauluRange().toJSON());
@@ -126,6 +127,14 @@ public class SeutumaisaDBHelper {
      */
     private static Select getKelpoisuusluokkaSelect() {
         return getSelect("Kelpoisuusluokka", "SELECT kelpoisuusluokka FROM maamassatieto WHERE kelpoisuusluokka IS NOT NULL GROUP BY kelpoisuusluokka;", SeutumaisaSearchHelper.KEY_KELPOISUUSLUOKKA);
+    }
+
+    /**
+     * Gets pilaantuneisuus select
+     * @return
+     */
+    private static Select getPilaantuneisuusSelect() {
+        return getSelect("Pilaantuneisuus", "SELECT pilaantuneisuus FROM maamassatieto WHERE pilaantuneisuus IS NOT NULL GROUP BY pilaantuneisuus;", SeutumaisaSearchHelper.KEY_PILAANTUNEISUUS);
     }
 
     /**
@@ -314,7 +323,7 @@ public class SeutumaisaDBHelper {
 
             StringBuilder sb = new StringBuilder();
             sb.append("SELECT mk.id as kohde_id, mk.nimi as kohde_nimi, mt.maamassalaji, mt.maamassaryhma,");
-            sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
+            sb.append("mt.kelpoisuusluokka, mt.pilaantuneisuus, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
             sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
             sb.append("k.namefin as kunta_nimi_fin,");
@@ -410,6 +419,7 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getString("maamassalaji"));
                 row.put(rs.getString("maamassaryhma"));
                 row.put(rs.getString("kelpoisuusluokka"));
+                row.put(rs.getString("pilaantuneisuus"));
                 row.put(rs.getString("kohdetyyppi"));
                 row.put(rs.getString("maamassatila"));
                 row.put(rs.getDate("planned_begin_date"));

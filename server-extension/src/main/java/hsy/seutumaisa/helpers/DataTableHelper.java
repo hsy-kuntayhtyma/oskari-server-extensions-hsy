@@ -24,6 +24,7 @@ public class DataTableHelper {
         columns.add(new SearchParams("Massan laji"));
         columns.add(new SearchParams("Massan ryhmä"));
         columns.add(new SearchParams("Kelpoisuusluokka"));
+        columns.add(new SearchParams("Pilaantuneisuus"));
         columns.add(new SearchParams("Kohdetyyppi"));
         columns.add(new SearchParams("Maamassan tila"));
         columns.add(new SearchParams("Suunniteltu aikataulu (alku)"));
