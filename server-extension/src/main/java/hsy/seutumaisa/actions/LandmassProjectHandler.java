@@ -69,7 +69,7 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
     public void handlePut(ActionParameters params) throws ActionException {
         LandmassProject project = deserialize(params.getPayLoad());
         if (project.getId() == null || project.getId() <= 0L) {
-            throw new ActionParamsException("Update requires valid area id");
+            throw new ActionParamsException("Update requires valid project id");
         }
         long id = project.getId();
         if (!canWrite(params.getUser(), project)) {
@@ -94,11 +94,11 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
         LandmassProject db = service.getById(id);
         if (db == null) {
-            ResponseHelper.writeError(params, "Could not find any area", 404);
+            ResponseHelper.writeError(params, "Could not find project", 404);
             return;
         }
         if (!canWrite(params.getUser(), db)) {
-            throw new ActionDeniedException("No permission to delete area");
+            throw new ActionDeniedException("No permission to delete project");
         }
 
         service.delete(id);
