@@ -1,5 +1,7 @@
 package hsy.seutumaisa.domain;
 
+import java.util.stream.IntStream;
+
 public class LandmassProject {
 
     private Integer id;
@@ -46,6 +48,14 @@ public class LandmassProject {
 
     public void setManagers(int[] managers) {
         this.managers = managers;
+    }
+
+    public boolean isInEditors(int userId) {
+        return editors != null && IntStream.of(editors).anyMatch(x -> x == userId);
+    }
+
+    public boolean isInManagers(int userId) {
+        return managers != null && IntStream.of(managers).anyMatch(x -> x == userId);
     }
 
 }

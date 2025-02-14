@@ -19,6 +19,7 @@ import fi.nls.oskari.domain.User;
 import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
+import hsy.seutumaisa.domain.LandmassMunicipality;
 import hsy.seutumaisa.domain.LandmassProject;
 import hsy.seutumaisa.service.LandmassProjectService;
 
@@ -50,8 +51,9 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     @Override
     public void handleGet(ActionParameters params) throws ActionException {
-        List<LandmassProject> projects = service.getAll();
-        // Filter out the ones user has no permission to view
+        List<LandmassProject> projects = service.getAll().stream()
+                .filter(x -> canRead(params.getUser(), x))
+                .toList();
         writeResponse(params, projects);
     }
 
@@ -59,7 +61,7 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
     public void handlePost(ActionParameters params) throws ActionException {
         LandmassProject project = deserialize(params.getPayLoad());
         if (!canWrite(params.getUser(), project)) {
-            throw new ActionDeniedException("No permission to write project");
+            throw new ActionDeniedException("No permission to create project");
         }
         service.save(project);
         writeResponse(params, project);
@@ -71,17 +73,18 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
         if (project.getId() == null || project.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid project id");
         }
-        int id = project.getId();
         if (!canWrite(params.getUser(), project)) {
-            throw new ActionDeniedException("No permission to write project");
+            throw new ActionDeniedException("No permission to update project");
         }
+
+        int id = project.getId();
         LandmassProject db = service.getById(id);
         if (db == null) {
             ResponseHelper.writeError(params, "Could not find the project to update", 404);
             return;
         }
         if (!canWrite(params.getUser(), db)) {
-            throw new ActionDeniedException("No permission to overwrite project");
+            throw new ActionDeniedException("No permission to update project");
         }
 
         service.update(project);
@@ -123,8 +126,17 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
         }
     }
 
+    private static boolean canRead(User user, LandmassProject project) {
+        return LandmassMunicipality.byId(project.getKunta())
+                .map(m -> new String[] { m.getRoleName(), m.getAdminRoleName() })
+                .map(roleNames -> user.hasAnyRoleIn(roleNames))
+                .orElse(false);
+    }
+
     private static boolean canWrite(User user, LandmassProject project) {
-        return true;
+        return LandmassMunicipality.byId(project.getKunta())
+                .map(m -> user.hasRole(m.getAdminRoleName()))
+                .orElse(false);
     }
 
 }

@@ -20,7 +20,10 @@ import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
 import hsy.seutumaisa.domain.LandmassArea;
+import hsy.seutumaisa.domain.LandmassMunicipality;
+import hsy.seutumaisa.domain.LandmassProject;
 import hsy.seutumaisa.service.LandmassAreaService;
+import hsy.seutumaisa.service.LandmassProjectService;
 
 @OskariActionRoute("LandmassArea")
 public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
@@ -37,12 +40,14 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
-    private LandmassAreaService service;
+    private LandmassAreaService areaService;
+    private LandmassProjectService projectService;
 
     @Override
     public void init() {
         super.init();
-        service = OskariComponentManager.getComponentOfType(LandmassAreaService.class);
+        areaService = OskariComponentManager.getComponentOfType(LandmassAreaService.class);
+        projectService = OskariComponentManager.getComponentOfType(LandmassProjectService.class);
     }
 
     @Override
@@ -56,7 +61,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         double lon = params.getRequiredParamDouble(PARAM_LON);
         double lat = params.getRequiredParamDouble(PARAM_LAT);
 
-        List<LandmassArea> areas = service.getAreasByCoordinate(lon, lat).stream()
+        List<LandmassArea> areas = areaService.getAreasByCoordinate(lon, lat).stream()
                 .filter(x -> canRead(params.getUser(), x))
                 .toList();
 
@@ -67,11 +72,12 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     public void handlePost(ActionParameters params) throws ActionException {
         LandmassArea area = deserialize(params.getPayLoad());
 
-        if (!canWrite(params.getUser(), area)) {
-            throw new ActionDeniedException("No permission to write area");
+        if (!canCreate(params.getUser(), area)) {
+            throw new ActionDeniedException("No permission to create area");
         }
+        area.setCreatedByUserId((int) params.getUser().getId());
 
-        service.save(area);
+        areaService.save(area);
 
         writeResponse(params, area);
     }
@@ -83,22 +89,22 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         if (area.getId() == null || area.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid area id");
         }
-        int id = area.getId();
 
-        if (!canWrite(params.getUser(), area)) {
-            throw new ActionDeniedException("No permission to overwrite area");
+        if (!canCreate(params.getUser(), area)) {
+            throw new ActionDeniedException("No permission to update area");
         }
 
-        LandmassArea dbArea = service.getAreaById(id);
+        int id = area.getId();
+        LandmassArea dbArea = areaService.getAreaById(id);
         if (dbArea == null) {
             ResponseHelper.writeError(params, "Could not find any area", 404);
             return;
         }
         if (!canEdit(params.getUser(), dbArea)) {
-            throw new ActionDeniedException("No permission to overwrite area");
+            throw new ActionDeniedException("No permission to update area");
         }
 
-        service.update(area);
+        areaService.update(area);
         writeResponse(params, area);
     }
 
@@ -106,17 +112,17 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     public void handleDelete(ActionParameters params) throws ActionException {
         int id = params.getRequiredParamInt(PARAM_ID);
 
-        LandmassArea dbArea = service.getAreaById(id);
+        LandmassArea dbArea = areaService.getAreaById(id);
         if (dbArea == null) {
             ResponseHelper.writeError(params, "Could not find any area", 404);
             return;
         }
 
-        if (!canWrite(params.getUser(), dbArea)) {
+        if (!canEdit(params.getUser(), dbArea)) {
             throw new ActionDeniedException("No permission to delete area");
         }
 
-        service.delete(id);
+        areaService.delete(id);
         JSONObject response = JSONHelper.createJSONObject(PARAM_ID, id);
         ResponseHelper.writeResponse(params, response);
     }
@@ -139,15 +145,65 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     }
 
     private static boolean canRead(User user, LandmassArea area) {
-        return true;
+        return LandmassMunicipality.byId(area.getKunta())
+                .map(m -> new String[] { m.getRoleName(), m.getAdminRoleName() })
+                .map(roleNames -> user.hasAnyRoleIn(roleNames))
+                .orElse(false);
     }
 
-    private static boolean canWrite(User user, LandmassArea area) {
-        return true;
+    private boolean canCreate(User user, LandmassArea area) {
+        if (LandmassMunicipality.byId(area.getKunta()).isEmpty()) {
+            return false;
+        }
+
+        LandmassMunicipality m = LandmassMunicipality.byId(area.getKunta()).get();
+        if (!user.hasAnyRoleIn(new String[] { m.getRoleName(), m.getAdminRoleName() })) {
+            return false;
+        }
+
+        if (user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() == null) {
+            return true;
+        }
+
+        // Verify user is either editor or manager in hankealue
+        LandmassProject p = projectService.getById(area.getHankealue_id());
+        if (p == null) {
+            return false;
+        }
+        int userId = (int) user.getId();
+        return p.isInEditors(userId) || p.isInManagers(userId);
     }
 
-    private static boolean canEdit(User user, LandmassArea area) {
-        return true;
+    private boolean canEdit(User user, LandmassArea area) {
+        if (LandmassMunicipality.byId(area.getKunta()).isEmpty()) {
+            return false;
+        }
+
+        LandmassMunicipality m = LandmassMunicipality.byId(area.getKunta()).get();
+        if (!user.hasAnyRoleIn(new String[] { m.getRoleName(), m.getAdminRoleName() })) {
+            return false;
+        }
+
+        if (user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() != null) {
+            return true;
+        }
+
+        // Verify user is either manager in hankealue
+        LandmassProject p = projectService.getById(area.getHankealue_id());
+        if (p == null) {
+            return false;
+        }
+
+        int userId = (int) user.getId();
+        if (p.isInManagers(userId)) {
+            return true;
+        }
+        // or an editor (and editing area they created)
+        if (p.isInEditors(userId) && area.getCreatedByUserId() != null && area.getCreatedByUserId() == userId) {
+            return true;
+        }
+
+        return false;
     }
 
 }
