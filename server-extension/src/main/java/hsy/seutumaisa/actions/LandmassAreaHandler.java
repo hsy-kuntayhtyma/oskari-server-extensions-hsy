@@ -20,10 +20,10 @@ import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
 import hsy.seutumaisa.domain.LandmassArea;
-import hsy.seutumaisa.service.LandmassService;
+import hsy.seutumaisa.service.LandmassAreaService;
 
-@OskariActionRoute("Landmass")
-public class LandmassHandler extends SeutumaisaRestActionHandler {
+@OskariActionRoute("LandmassArea")
+public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
 
     private static final String PARAM_ID = "id";
     private static final String PARAM_LON = "lon";
@@ -37,12 +37,12 @@ public class LandmassHandler extends SeutumaisaRestActionHandler {
         OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
     }
 
-    private LandmassService service;
+    private LandmassAreaService service;
 
     @Override
     public void init() {
         super.init();
-        service = OskariComponentManager.getComponentOfType(LandmassService.class);
+        service = OskariComponentManager.getComponentOfType(LandmassAreaService.class);
     }
 
     @Override

@@ -15,7 +15,7 @@ import hsy.seutumaisa.domain.LandmassArea;
 import hsy.seutumaisa.domain.LandmassData;
 import hsy.seutumaisa.domain.Person;
 
-public interface LandmassMapper {
+public interface LandmassAreaMapper {
 
     @Results(id = "LandMassAreaResult", value = {
             @Result(property="id", column="id", id=true),
