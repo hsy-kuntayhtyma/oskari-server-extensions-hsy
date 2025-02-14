@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class LandmassArea {
 
     private Integer id;
@@ -28,6 +30,9 @@ public class LandmassArea {
     private List<LandmassData> data = new ArrayList<>();
 
     private Integer hankealue_id;
+
+    @JsonIgnore
+    private Integer createdByUserId;
 
     public Integer getId() {
         return id;
@@ -155,6 +160,14 @@ public class LandmassArea {
 
     public void setHankealue_id(Integer hankealue_id) {
         this.hankealue_id = hankealue_id;
+    }
+
+    public Integer getCreatedByUserId() {
+        return createdByUserId;
+    }
+
+    public void setCreatedByUserId(Integer createdByUserId) {
+        this.createdByUserId = createdByUserId;
     }
 
 }

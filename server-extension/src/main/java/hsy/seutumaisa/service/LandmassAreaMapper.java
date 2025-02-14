@@ -28,22 +28,23 @@ public interface LandmassAreaMapper {
             @Result(property="omistaja_id", column="omistaja_id"),
             @Result(property="alku_pvm", column="alku_pvm"),
             @Result(property="loppu_pvm", column="loppu_pvm"),
-            @Result(property="hankealue_id", column="hankealue_id")
+            @Result(property="hankealue_id", column="hankealue_id"),
+            @Result(property="createdByUserId", column="created_by_oskari_user_id")
     })
-    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id, created_by_oskari_user_id "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
     LandmassArea getAreaById(@Param("id") int id);
 
     @ResultMap("LandMassAreaResult")
-    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
+    @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id, created_by_oskari_user_id "
             + "FROM maamassakohde "
             + "WHERE ST_DWithin(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879), 10) "
             + "ORDER BY ST_Distance(geom, ST_SetSRID(ST_MakePoint(#{lon}, #{lat}), 3879))")
     List<LandmassArea> getAreasByCoordinate(@Param("lon") double lon, @Param("lat") double lat);
 
-    @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id) VALUES"
-            + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{hankealue_id})"
+    @Select("INSERT INTO maamassakohde (geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id, created_by_oskari_user_id) VALUES"
+            + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{hankealue_id}, #{createdByUserId})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     int insertArea(final LandmassArea area);
@@ -189,7 +190,7 @@ public interface LandmassAreaMapper {
     })
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE id = #{id}")
     Person getPersonById(@Param("id") int id);
-    
+
 
     @ResultMap("PersonResult")
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE email = #{email}")
