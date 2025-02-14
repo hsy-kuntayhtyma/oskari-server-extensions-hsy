@@ -8,9 +8,9 @@ import hsy.seutumaisa.domain.LandmassArea;
 public abstract class LandmassAreaService extends OskariComponent {
 
     public abstract List<LandmassArea> getAreasByCoordinate(double lon, double lat);
-    public abstract LandmassArea getAreaById(long id);
+    public abstract LandmassArea getAreaById(int id);
     public abstract void save(LandmassArea area);
     public abstract void update(LandmassArea area);
-    public abstract void delete(long id);
+    public abstract void delete(int id);
 
 }

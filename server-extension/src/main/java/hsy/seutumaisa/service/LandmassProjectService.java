@@ -7,10 +7,10 @@ import hsy.seutumaisa.domain.LandmassProject;
 
 public abstract class LandmassProjectService extends OskariComponent {
 
-    public abstract LandmassProject getById(long id);
+    public abstract LandmassProject getById(int id);
     public abstract List<LandmassProject> getAll();
     public abstract void save(LandmassProject project);
     public abstract void update(LandmassProject project);
-    public abstract void delete(long id);
+    public abstract void delete(int id);
 
 }

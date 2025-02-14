@@ -6,7 +6,7 @@ import java.util.List;
 
 public class LandmassArea {
 
-    private Long id;
+    private Integer id;
 
     private String geom;
 
@@ -16,7 +16,7 @@ public class LandmassArea {
     private String kohdetyyppi;
     private String vaihe;
 
-    private Long omistaja_id;
+    private Integer omistaja_id;
     private String henkilo_nimi;
     private String henkilo_email;
     private String henkilo_puhelin;
@@ -27,13 +27,13 @@ public class LandmassArea {
 
     private List<LandmassData> data = new ArrayList<>();
 
-    private Long hankealue_id;
+    private Integer hankealue_id;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -85,11 +85,11 @@ public class LandmassArea {
         this.vaihe = vaihe;
     }
 
-    public Long getOmistaja_id() {
+    public Integer getOmistaja_id() {
         return omistaja_id;
     }
 
-    public void setOmistaja_id(Long omistaja_id) {
+    public void setOmistaja_id(Integer omistaja_id) {
         this.omistaja_id = omistaja_id;
     }
 
@@ -149,11 +149,11 @@ public class LandmassArea {
         this.data = data;
     }
 
-    public Long getHankealue_id() {
+    public Integer getHankealue_id() {
         return hankealue_id;
     }
 
-    public void setHankealue_id(Long hankealue_id) {
+    public void setHankealue_id(Integer hankealue_id) {
         this.hankealue_id = hankealue_id;
     }
 

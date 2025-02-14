@@ -33,7 +33,7 @@ public interface LandmassAreaMapper {
     @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
             + "FROM maamassakohde "
             + "WHERE id = #{id}")
-    LandmassArea getAreaById(@Param("id") long id);
+    LandmassArea getAreaById(@Param("id") int id);
 
     @ResultMap("LandMassAreaResult")
     @Select("SELECT id, ST_AsGeoJSON(geom, 3, 0) AS geom, nimi, osoite, kunta, kohdetyyppi, vaihe, omistaja_id, alku_pvm, loppu_pvm, hankealue_id "
@@ -46,7 +46,7 @@ public interface LandmassAreaMapper {
             + " (ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879), #{nimi}, #{osoite}, #{kunta}, #{kohdetyyppi}::kohdetyyppi, #{vaihe}::vaihe, #{omistaja_id}, #{alku_pvm}, #{loppu_pvm}, #{hankealue_id})"
             + " RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insertArea(final LandmassArea area);
+    int insertArea(final LandmassArea area);
 
     @Update("UPDATE maamassakohde SET "
             + "geom = ST_SetSRID(ST_GeomFromGeoJSON(#{geom}), 3879),"
@@ -65,7 +65,7 @@ public interface LandmassAreaMapper {
 
     @Delete("DELETE FROM maamassakohde WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean deleteArea(@Param("id") final long id);
+    boolean deleteArea(@Param("id") final int id);
 
     @Results(id = "LandMassDataResult", value = {
             @Result(property="id", column="id", id=true),
@@ -113,7 +113,7 @@ public interface LandmassAreaMapper {
             + "amount_total "
             + "FROM maamassatieto "
             + "WHERE maamassakohde_id = #{areaId}")
-    List<LandmassData> getDataByAreaId(@Param("areaId") long areaId);
+    List<LandmassData> getDataByAreaId(@Param("areaId") int areaId);
 
     @Select("INSERT INTO maamassatieto ("
             + "maamassakohde_id,"
@@ -155,7 +155,7 @@ public interface LandmassAreaMapper {
             + "#{tiedontuottaja}"
             + ") RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insertData(final LandmassData data);
+    int insertData(final LandmassData data);
 
     @Update("UPDATE maamassatieto SET "
             + "maamassakohde_id = #{maamassakohde_id},"
@@ -188,7 +188,7 @@ public interface LandmassAreaMapper {
             @Result(property="organisaatio", column="organisaatio")
     })
     @Select("SELECT id, nimi, email, puhelin, organisaatio FROM henkilo WHERE id = #{id}")
-    Person getPersonById(@Param("id") long id);
+    Person getPersonById(@Param("id") int id);
     
 
     @ResultMap("PersonResult")
@@ -198,7 +198,7 @@ public interface LandmassAreaMapper {
     @Select("INSERT INTO henkilo (nimi, email, puhelin, organisaatio) VALUES"
             + " (#{nimi}, #{email}, #{puhelin}, #{organisaatio})"
             + " RETURNING id")
-    long insertPerson(Person person);
+    int insertPerson(Person person);
 
     @Update("UPDATE henkilo SET "
             + "nimi = #{nimi},"

@@ -71,7 +71,7 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
         if (project.getId() == null || project.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid project id");
         }
-        long id = project.getId();
+        int id = project.getId();
         if (!canWrite(params.getUser(), project)) {
             throw new ActionDeniedException("No permission to write project");
         }
@@ -90,7 +90,7 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     @Override
     public void handleDelete(ActionParameters params) throws ActionException {
-        long id = params.getRequiredParamLong(PARAM_ID);
+        int id = params.getRequiredParamInt(PARAM_ID);
 
         LandmassProject db = service.getById(id);
         if (db == null) {

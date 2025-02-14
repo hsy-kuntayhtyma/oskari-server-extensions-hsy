@@ -23,7 +23,7 @@ public interface LandmassProjectMapper {
             @Result(property="managers", column="managers", typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler.class)
     })
     @Select("SELECT id, nimi, kunta, editors, managers FROM hankealue WHERE id = #{id}")
-    LandmassProject getById(@Param("id") long id);
+    LandmassProject getById(@Param("id") int id);
 
     @ResultMap("LandmassProjectResult")
     @Select("SELECT id, nimi, kunta, editors, managers FROM hankealue")
@@ -31,7 +31,7 @@ public interface LandmassProjectMapper {
 
     @Select("INSERT INTO hankealue (nimi, kunta, editors, managers) VALUES (#{nimi}, #{kunta}, #{editors, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}, #{managers, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}) RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    long insert(LandmassProject project);
+    int insert(LandmassProject project);
 
     @Update("UPDATE hankealue SET nimi = #{nimi}, kunta = #{kunta}, editors = #{editors, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler}, managers = #{managers, typeHandler=hsy.seutumaisa.service.IntArrayTypeHandler} WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
@@ -39,6 +39,6 @@ public interface LandmassProjectMapper {
 
     @Delete("DELETE FROM hankealue WHERE id = #{id}")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
-    boolean delete(@Param("id") long id);
+    boolean delete(@Param("id") int id);
 
 }

@@ -58,7 +58,7 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
     }
 
     @Override
-    public LandmassArea getAreaById(long id) {
+    public LandmassArea getAreaById(int id) {
         try (final SqlSession session = factory.openSession(false)) {
             LandmassAreaMapper mapper = session.getMapper(LandmassAreaMapper.class);
             LandmassArea area = mapper.getAreaById(id);
@@ -76,12 +76,12 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
 
             upsertPerson(area, mapper);
 
-            long areaId = mapper.insertArea(area);
+            int areaId = mapper.insertArea(area);
             area.setId(areaId);
 
             for (LandmassData data : area.getData()) {
                 data.setMaamassakohde_id(areaId);
-                long dataId = mapper.insertData(data);
+                int dataId = mapper.insertData(data);
                 data.setId(dataId);
             }
 
@@ -103,7 +103,7 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
             for (LandmassData data : area.getData()) {
                 data.setMaamassakohde_id(area.getId());
                 if (data.getId() == null) {
-                    long dataId = mapper.insertData(data);
+                    int dataId = mapper.insertData(data);
                     data.setId(dataId);
                 } else {
                     mapper.updateData(data);
@@ -117,7 +117,7 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
     }
     
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         try (final SqlSession session = factory.openSession(false)) {
             final LandmassAreaMapper mapper = session.getMapper(LandmassAreaMapper.class);
             mapper.deleteArea(id);
@@ -143,7 +143,7 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
     }
 
     private static void upsertPerson(LandmassArea area, LandmassAreaMapper mapper) {
-        Long personId = findPersonId(area.getOmistaja_id(), area.getHenkilo_email(), mapper); 
+        Integer personId = findPersonId(area.getOmistaja_id(), area.getHenkilo_email(), mapper); 
 
         Person person = new Person();
         person.setId(personId);
@@ -160,7 +160,7 @@ public class LandmassAreaServiceMybatisImpl extends LandmassAreaService {
         area.setOmistaja_id(personId);
     }
 
-    private static Long findPersonId(Long omistajaId, String email, LandmassAreaMapper mapper) {
+    private static Integer findPersonId(Integer omistajaId, String email, LandmassAreaMapper mapper) {
         if (omistajaId != null) {
             return omistajaId;
         }

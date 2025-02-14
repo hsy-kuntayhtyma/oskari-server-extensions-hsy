@@ -43,7 +43,7 @@ public class LandmassProjectServiceMybatisImpl extends LandmassProjectService {
     }
 
     @Override
-    public LandmassProject getById(long id) {
+    public LandmassProject getById(int id) {
         try (final SqlSession session = factory.openSession(false)) {
             return session.getMapper(LandmassProjectMapper.class).getById(id);
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class LandmassProjectServiceMybatisImpl extends LandmassProjectService {
     @Override
     public void save(final LandmassProject project) {
         try (final SqlSession session = factory.openSession(false)) {
-            long id = session.getMapper(LandmassProjectMapper.class).insert(project);
+            int id = session.getMapper(LandmassProjectMapper.class).insert(project);
             session.commit();
             project.setId(id);
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class LandmassProjectServiceMybatisImpl extends LandmassProjectService {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(int id) {
         try (final SqlSession session = factory.openSession(false)) {
             session.getMapper(LandmassProjectMapper.class).delete(id);
             session.commit();

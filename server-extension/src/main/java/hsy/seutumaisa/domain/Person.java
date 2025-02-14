@@ -2,17 +2,17 @@ package hsy.seutumaisa.domain;
 
 public class Person {
 
-    private Long id;
+    private Integer id;
     private String nimi;
     private String email;
     private String puhelin;
     private String organisaatio;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

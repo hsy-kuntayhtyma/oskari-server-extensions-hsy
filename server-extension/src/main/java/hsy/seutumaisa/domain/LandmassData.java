@@ -7,10 +7,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class LandmassData {
 
     @JsonProperty("maamassatieto_id")
-    private Long id;
+    private Integer id;
 
     @JsonProperty("maamassakohde_id")
-    private Long maamassakohde_id;
+    private Integer maamassakohde_id;
 
     @JsonProperty("maamassan_ryhma")
     private String maamassaryhma;
@@ -37,7 +37,7 @@ public class LandmassData {
     private Date planned_end_date;
 
     @JsonProperty("amount_remaining")
-    private Long amount_remaining;
+    private Integer amount_remaining;
 
     @JsonProperty("lisatieto")
     private String lisatieto;
@@ -67,21 +67,21 @@ public class LandmassData {
     private String tiedon_luotettavuus;
 
     @JsonProperty("amount_total")
-    private int amount_total;
+    private Integer amount_total;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getMaamassakohde_id() {
+    public Integer getMaamassakohde_id() {
         return maamassakohde_id;
     }
 
-    public void setMaamassakohde_id(Long maamassakohde_id) {
+    public void setMaamassakohde_id(Integer maamassakohde_id) {
         this.maamassakohde_id = maamassakohde_id;
     }
 
@@ -149,11 +149,11 @@ public class LandmassData {
         this.planned_end_date = planned_end_date;
     }
 
-    public Long getAmount_remaining() {
+    public Integer getAmount_remaining() {
         return amount_remaining;
     }
 
-    public void setAmount_remaining(Long amount_remaining) {
+    public void setAmount_remaining(Integer amount_remaining) {
         this.amount_remaining = amount_remaining;
     }
 
@@ -229,11 +229,11 @@ public class LandmassData {
         this.tiedon_luotettavuus = tiedon_luotettavuus;
     }
 
-    public int getAmount_total() {
+    public Integer getAmount_total() {
         return amount_total;
     }
 
-    public void setAmount_total(int amount_total) {
+    public void setAmount_total(Integer amount_total) {
         this.amount_total = amount_total;
     }
 

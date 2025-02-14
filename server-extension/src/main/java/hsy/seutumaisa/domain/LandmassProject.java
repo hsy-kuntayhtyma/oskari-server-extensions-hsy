@@ -2,17 +2,17 @@ package hsy.seutumaisa.domain;
 
 public class LandmassProject {
 
-    private Long id;
+    private Integer id;
     private String nimi;
     private String kunta;
     private int[] editors;
     private int[] managers;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

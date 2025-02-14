@@ -83,7 +83,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         if (area.getId() == null || area.getId() <= 0L) {
             throw new ActionParamsException("Update requires valid area id");
         }
-        long id = area.getId();
+        int id = area.getId();
 
         if (!canWrite(params.getUser(), area)) {
             throw new ActionDeniedException("No permission to overwrite area");
@@ -104,7 +104,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
 
     @Override
     public void handleDelete(ActionParameters params) throws ActionException {
-        long id = params.getRequiredParamLong(PARAM_ID);
+        int id = params.getRequiredParamInt(PARAM_ID);
 
         LandmassArea dbArea = service.getAreaById(id);
         if (dbArea == null) {
