@@ -14,4 +14,9 @@ public final class LandmassHelper {
     static String getAdminRoleName(String municipality) {
         return getRoleName(municipality) + ROLE_ADMIN_SUFFIX;
     }
+
+    public static String getRoleNameSeutumassaAdmin() {
+        return "SeutuMassa_HSY";
+    }
+
 }

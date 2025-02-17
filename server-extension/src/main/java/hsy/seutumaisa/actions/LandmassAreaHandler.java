@@ -4,12 +4,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionDeniedException;
 import fi.nls.oskari.control.ActionException;
@@ -20,6 +14,7 @@ import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
 import hsy.seutumaisa.domain.LandmassArea;
+import hsy.seutumaisa.domain.LandmassHelper;
 import hsy.seutumaisa.domain.LandmassMunicipality;
 import hsy.seutumaisa.domain.LandmassProject;
 import hsy.seutumaisa.service.LandmassAreaService;
@@ -31,14 +26,6 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     private static final String PARAM_ID = "id";
     private static final String PARAM_LON = "lon";
     private static final String PARAM_LAT = "lat";
-
-    private static final ObjectMapper OM = new ObjectMapper();
-    static {
-        OM.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        OM.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
-    }
 
     private LandmassAreaService areaService;
     private LandmassProjectService projectService;
@@ -135,18 +122,9 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         }
     }
 
-    private static <T> void writeResponse(ActionParameters params, T response) throws ActionException {
-        try {
-            byte[] b = OM.writeValueAsBytes(response);
-            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
-        } catch (JsonProcessingException e) {
-            throw new ActionException("Error occured when serializing to JSON", e);
-        }
-    }
-
     private static boolean canRead(User user, LandmassArea area) {
         return LandmassMunicipality.byId(area.getKunta())
-                .map(m -> new String[] { m.getRoleName(), m.getAdminRoleName() })
+                .map(m -> new String[] { LandmassHelper.getRoleNameSeutumassaAdmin(), m.getRoleName(), m.getAdminRoleName() })
                 .map(roleNames -> user.hasAnyRoleIn(roleNames))
                 .orElse(false);
     }
@@ -157,11 +135,11 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         }
 
         LandmassMunicipality m = LandmassMunicipality.byId(area.getKunta()).get();
-        if (!user.hasAnyRoleIn(new String[] { m.getRoleName(), m.getAdminRoleName() })) {
+        if (!user.hasAnyRoleIn(new String[] { LandmassHelper.getRoleNameSeutumassaAdmin(), m.getRoleName(), m.getAdminRoleName() })) {
             return false;
         }
 
-        if (user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() == null) {
+        if (user.hasRole(LandmassHelper.getRoleNameSeutumassaAdmin()) || user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() == null) {
             return true;
         }
 
@@ -180,11 +158,11 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
         }
 
         LandmassMunicipality m = LandmassMunicipality.byId(area.getKunta()).get();
-        if (!user.hasAnyRoleIn(new String[] { m.getRoleName(), m.getAdminRoleName() })) {
+        if (!user.hasAnyRoleIn(new String[] { LandmassHelper.getRoleNameSeutumassaAdmin(), m.getRoleName(), m.getAdminRoleName() })) {
             return false;
         }
 
-        if (user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() != null) {
+        if (user.hasRole(LandmassHelper.getRoleNameSeutumassaAdmin()) || user.hasRole(m.getAdminRoleName()) || area.getHankealue_id() != null) {
             return true;
         }
 

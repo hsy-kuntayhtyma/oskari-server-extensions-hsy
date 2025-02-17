@@ -4,12 +4,6 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-
 import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionDeniedException;
 import fi.nls.oskari.control.ActionException;
@@ -27,13 +21,6 @@ import hsy.seutumaisa.service.LandmassProjectService;
 public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
 
     private static final String PARAM_ID = "id";
-
-    private static final ObjectMapper OM = new ObjectMapper();
-    static {
-        OM.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        OM.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        OM.setSerializationInclusion(JsonInclude.Include.ALWAYS);
-    }
 
     private LandmassProjectService service;
 
@@ -114,15 +101,6 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
             return OM.readValue(json, LandmassProject.class);
         } catch (Exception ex) {
             throw new ActionParamsException("Coudn't parse LandmassProject from: " + json, ex);
-        }
-    }
-
-    private static <T> void writeResponse(ActionParameters params, T response) throws ActionException {
-        try {
-            byte[] b = OM.writeValueAsBytes(response);
-            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
-        } catch (JsonProcessingException e) {
-            throw new ActionException("Error occured when serializing to JSON", e);
         }
     }
 
