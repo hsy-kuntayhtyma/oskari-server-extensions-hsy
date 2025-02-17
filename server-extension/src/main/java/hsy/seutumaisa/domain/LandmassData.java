@@ -39,6 +39,12 @@ public class LandmassData {
     @JsonProperty("amount_remaining")
     private Integer amount_remaining;
 
+    @JsonProperty("amount_unit")
+    private String amount_unit;
+
+    @JsonProperty("vertical_position")
+    private Integer vertical_position;
+
     @JsonProperty("lisatieto")
     private String lisatieto;
 
@@ -155,6 +161,22 @@ public class LandmassData {
 
     public void setAmount_remaining(Integer amount_remaining) {
         this.amount_remaining = amount_remaining;
+    }
+
+    public String getAmount_unit() {
+        return amount_unit;
+    }
+
+    public void setAmount_unit(String amount_unit) {
+        this.amount_unit = amount_unit;
+    }
+
+    public Integer getVertical_position() {
+        return vertical_position;
+    }
+
+    public void setVertical_position(Integer vertical_position) {
+        this.vertical_position = vertical_position;
     }
 
     public String getLisatieto() {

@@ -80,6 +80,8 @@ public interface LandmassAreaMapper {
             @Result(property="planned_begin_date", column="planned_begin_date"),
             @Result(property="planned_end_date", column="planned_end_date"),
             @Result(property="amount_remaining", column="amount_remaining"),
+            @Result(property="amount_unit", column="amount_unit"),
+            @Result(property="vertical_position", column="vertical_position"),
             @Result(property="lisatieto", column="lisatieto"),
             @Result(property="liitteet", column="liitteet"),
             @Result(property="varattu", column="varattu"),
@@ -102,6 +104,8 @@ public interface LandmassAreaMapper {
             + "planned_begin_date,"
             + "planned_end_date,"
             + "amount_remaining,"
+            + "amount_unit,"
+            + "vertical_position,"
             + "lisatieto,"
             + "liitteet,"
             + "varattu,"
@@ -126,6 +130,8 @@ public interface LandmassAreaMapper {
             + "planned_begin_date,"
             + "planned_end_date,"
             + "amount_remaining,"
+            + "amount_unit,"
+            + "vertical_position,"
             + "lisatieto,"
             + "liitteet,"
             + "varattu,"
@@ -145,6 +151,8 @@ public interface LandmassAreaMapper {
             + "#{planned_begin_date},"
             + "#{planned_end_date},"
             + "#{amount_remaining},"
+            + "#{amount_unit},"
+            + "#{vertical_position},"
             + "#{lisatieto},"
             + "#{liitteet},"
             + "#{varattu},"
@@ -168,6 +176,8 @@ public interface LandmassAreaMapper {
             + "planned_begin_date = #{planned_begin_date},"
             + "planned_end_date = #{planned_end_date},"
             + "amount_remaining = #{amount_remaining},"
+            + "amount_unit = #{amount_unit},"
+            + "vertical_position = #{vertical_position},"
             + "lisatieto = #{lisatieto},"
             + "liitteet = #{liitteet},"
             + "varattu = #{varattu},"
