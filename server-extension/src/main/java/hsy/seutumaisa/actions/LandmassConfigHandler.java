@@ -2,6 +2,7 @@ package hsy.seutumaisa.actions;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import fi.nls.oskari.annotation.OskariActionRoute;
 import fi.nls.oskari.control.ActionException;
@@ -41,7 +42,7 @@ public class LandmassConfigHandler extends SeutumaisaRestActionHandler {
 
         List<LandmassConfigMunicipality> municipalities = Arrays.stream(LandmassMunicipality.values())
                 .map(x -> LandmassConfigMunicipality.from(x, allRoles))
-                .toList();
+                .collect(Collectors.toList());
 
         LandmassConfig config = new LandmassConfig();
         config.setMunicipalities(municipalities);

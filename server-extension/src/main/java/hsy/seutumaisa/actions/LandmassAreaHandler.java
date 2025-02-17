@@ -1,6 +1,7 @@
 package hsy.seutumaisa.actions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 
@@ -50,7 +51,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
 
         List<LandmassArea> areas = areaService.getAreasByCoordinate(lon, lat).stream()
                 .filter(x -> canRead(params.getUser(), x))
-                .toList();
+                .collect(Collectors.toList());
 
         writeResponse(params, areas);
     }

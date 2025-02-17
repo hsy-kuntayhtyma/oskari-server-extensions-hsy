@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import fi.nls.oskari.domain.Role;
 
@@ -51,13 +52,17 @@ public class LandmassConfigMunicipality {
         roles.add(Role.getAdminRole().getId());
         roles.add(getRoleIdByName(allRoles, LandmassHelper.getRoleNameSeutumassaAdmin()));
         roles.add(getRoleIdByName(allRoles, municipality.getRoleName()));
-        roles = roles.stream().filter(Objects::nonNull).toList();
+        roles = roles.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         List<Long> adminRoles = new ArrayList<>();
         adminRoles.add(Role.getAdminRole().getId());
         adminRoles.add(getRoleIdByName(allRoles, LandmassHelper.getRoleNameSeutumassaAdmin()));
         adminRoles.add(getRoleIdByName(allRoles, municipality.getAdminRoleName()));
-        adminRoles = adminRoles.stream().filter(Objects::nonNull).toList();
+        adminRoles = adminRoles.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         LandmassConfigMunicipality a = new LandmassConfigMunicipality();
         a.setId(municipality.getId());

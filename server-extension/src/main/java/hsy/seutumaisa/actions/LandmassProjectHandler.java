@@ -1,6 +1,7 @@
 package hsy.seutumaisa.actions;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.json.JSONObject;
 
@@ -40,7 +41,7 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
     public void handleGet(ActionParameters params) throws ActionException {
         List<LandmassProject> projects = service.getAll().stream()
                 .filter(x -> canRead(params.getUser(), x))
-                .toList();
+                .collect(Collectors.toList());
         writeResponse(params, projects);
     }
 
