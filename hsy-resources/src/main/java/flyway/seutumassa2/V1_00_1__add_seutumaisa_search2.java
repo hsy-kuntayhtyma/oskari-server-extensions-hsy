@@ -56,33 +56,55 @@ public class V1_00_1__add_seutumaisa_search2 extends BaseJavaMigration {
             return;
         }
 
-        Long seqNo = getSeqNo(c, appsetupId, b.getBundleId());
-        if (seqNo == null) {
+        int seqNo = getSeqNo(c, appsetupId, b.getBundleId(), -1);
+        if (seqNo == -1) {
             LOG.debug("Bundle", bundleB, "not part of appsetup", appsetupId, "skipping...");
             return;
         }
-
+        
         incrementSeqNos(c, appsetupId, seqNo);
         addBundleToApp(c, appsetupId, bundleA, seqNo);
     }
 
-    private static Long getSeqNo(Connection c, long appsetupId, long bundleId) throws SQLException {
+    private static int getSeqNo(Connection c, long appsetupId, long bundleId, int fallback) throws SQLException {
         String sql = "SELECT seqno FROM oskari_appsetup_bundles WHERE appsetup_id = ? AND bundle_id = ?";
         try (PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setLong(1, appsetupId);
             ps.setLong(2, bundleId);
             try (ResultSet rs = ps.getResultSet()) {
-                return rs.next() ? rs.getLong("seqno") : null;
+                return rs.next() ? rs.getInt(1) : fallback;
             }
         }
     }
+    
+    private static void incrementSeqNos(Connection c, long appsetupId, int fromSeqNo) throws SQLException {
+        int max = getMaxSeqNo(c, appsetupId, -1);
+        if (max == -1) {
+            return;
+        }
 
-    private static int incrementSeqNos(Connection c, long appsetupId, long minSeqNo) throws SQLException {
-        String sql = "UPDATE oskari_appsetup_bundles SET seqno = seqno + 1 WHERE appsetup_id = ? AND seqno >= ?";
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 1) + " WHERE appsetup_id = ? AND seqno >= ?";
+        try (PreparedStatement ps = c.prepareStatement(incr)) {
             ps.setLong(1, appsetupId);
-            ps.setLong(2, minSeqNo);
-            return ps.executeUpdate();
+            ps.setInt(2, fromSeqNo);
+            ps.executeUpdate();
+        }
+        
+        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + max + " WHERE appsetup_id = ? AND seqno >= ?";
+        try (PreparedStatement ps = c.prepareStatement(decr)) {
+            ps.setLong(1, appsetupId);
+            ps.setInt(2, fromSeqNo); // could be fromSeqNo+max, but no need
+            ps.executeUpdate();
+        }
+    }
+    
+    private static int getMaxSeqNo(Connection c, long appsetupId, int fallback) throws SQLException {
+        String q = "SELECT MAX(seqno) FROM oskari_appsetup_bundles WHERE appsetup_id = ?";
+        try (PreparedStatement ps = c.prepareStatement(q)) {
+            ps.setLong(1, appsetupId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : fallback;
+            }
         }
     }
 

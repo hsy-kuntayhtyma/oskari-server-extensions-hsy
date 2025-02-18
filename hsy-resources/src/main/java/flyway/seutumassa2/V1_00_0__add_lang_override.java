@@ -2,6 +2,7 @@ package flyway.seutumassa2;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.flywaydb.core.api.migration.BaseJavaMigration;
@@ -20,16 +21,37 @@ public class V1_00_0__add_lang_override extends BaseJavaMigration {
             if (AppSetupHelper.appContainsBundle(c, appsetupId, LANG_OVERRIDES)) {
                 continue;
             }
-            incrementSeqNos(c, appsetupId);
+            incrementAllSeqNos(c, appsetupId);
             addBundleToApp(c, appsetupId, LANG_OVERRIDES, 0);
         }
     }
 
-    private static int incrementSeqNos(Connection c, long appsetupId) throws SQLException {
-        String sql = "UPDATE oskari_appsetup_bundles SET seqno = seqno + 1 WHERE appsetup_id = ?";
-        try (PreparedStatement ps = c.prepareStatement(sql)) {
+    private static void incrementAllSeqNos(Connection c, long appsetupId) throws SQLException {
+        int max = getMaxSeqNo(c, appsetupId, -1);
+        if (max == -1) {
+            return;
+        }
+
+        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 1) + " WHERE appsetup_id = ?";
+        try (PreparedStatement ps = c.prepareStatement(incr)) {
             ps.setLong(1, appsetupId);
-            return ps.executeUpdate();
+            ps.executeUpdate();
+        }
+        
+        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + max + " WHERE appsetup_id = ?";
+        try (PreparedStatement ps = c.prepareStatement(decr)) {
+            ps.setLong(1, appsetupId);
+            ps.executeUpdate();
+        }
+    }
+    
+    private static int getMaxSeqNo(Connection c, long appsetupId, int fallback) throws SQLException {
+        String q = "SELECT MAX(seqno) FROM oskari_appsetup_bundles WHERE appsetup_id = ?";
+        try (PreparedStatement ps = c.prepareStatement(q)) {
+            ps.setLong(1, appsetupId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next() ? rs.getInt(1) : fallback;
+            }
         }
     }
 
