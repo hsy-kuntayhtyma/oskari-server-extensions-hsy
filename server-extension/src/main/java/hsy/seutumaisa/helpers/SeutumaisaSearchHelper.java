@@ -16,6 +16,7 @@ import java.util.List;
 public class SeutumaisaSearchHelper {
     public static final String KEY_ID = "id";
     public static final String KEY_KUNTA = "kunta";
+    public static final String KEY_HANKEALUE = "hankealue";
     public static final String KEY_ORGANISAATIO = "organisaatio";
     public static final String KEY_SUUNNITTELUAIKATAULU = "planned_date";
     public static final String KEY_SUUNNITTELUAIKATAULU_ALKU = "planned_begin_date";
@@ -62,6 +63,11 @@ public class SeutumaisaSearchHelper {
             searchParams.add(pKunta);
         }
 
+        if (jsonParams.has(KEY_HANKEALUE)) {
+            SearchParams pHankealue = new SearchParams("id", null, jsonParams.getInt(KEY_HANKEALUE));
+            pHankealue.setColumnPrefix("ha.");
+            searchParams.add(pHankealue);
+        }
 
         if (jsonParams.has(KEY_ORGANISAATIO)) {
             SearchParams pOrganisaatio = new SearchParams("omistaja_id", null, jsonParams.getInt(KEY_ORGANISAATIO));

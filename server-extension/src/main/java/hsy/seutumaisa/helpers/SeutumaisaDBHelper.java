@@ -62,6 +62,7 @@ public class SeutumaisaDBHelper {
         searchFields.put(getMassanmaaraRange().toJSON());
         searchFields.put(getOmistajaSelect().toJSON());
         searchFields.put(getKuntaSelect().toJSON());
+        searchFields.put(getHankealueSelect().toJSON());
 
         return searchFields;
     }
@@ -83,6 +84,14 @@ public class SeutumaisaDBHelper {
      */
     private static Select getKuntaSelect() {
         return getSelect("Kunta", "SELECT namefin as kunta FROM kuntarajat;", SeutumaisaSearchHelper.KEY_KUNTA);
+    }
+
+    /**
+     * Gets kunta select
+     * @return
+     */
+    private static Select getHankealueSelect() {
+        return getSelect("Hankealue", "SELECT h.id, h.nimi || ' (' || k.namefin || ')' as hankealue FROM hankealue h JOIN kuntarajat k ON h.kunta = k.natcode ;", "hankealue", "id");
     }
 
     /**
@@ -340,11 +349,13 @@ public class SeutumaisaDBHelper {
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
             sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
             sb.append("k.namefin as kunta_nimi_fin,");
+            sb.append("ha.nimi as hankealue,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto mt ON mk.id = mt.maamassakohde_id ");
             sb.append("LEFT JOIN henkilo h ON h.id = mk.omistaja_id ");
             sb.append("LEFT JOIN kuntarajat k ON mk.kunta = k.natcode ");
+            sb.append("LEFT JOIN hankealue ha ON mk.hankealue_id = ha.id ");
             List<SearchParams> searchParams = SeutumaisaSearchHelper.parseSearchParams(params);
             sb.append(SeutumaisaSearchHelper.getSearchWhere(searchParams));
 
@@ -443,6 +454,7 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getString("puhelin"));
                 row.put(rs.getString("organisaatio"));
                 row.put(rs.getString("kunta_nimi_fin"));
+                row.put(rs.getString("hankealue"));
                 row.put(rs.getString("geojson"));
                 results.put(row);
             }

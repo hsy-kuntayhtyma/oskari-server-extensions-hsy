@@ -35,6 +35,7 @@ public class DataTableHelper {
         columns.add(new SearchParams("Omistajan puhelinnumero"));
         columns.add(new SearchParams("Omistajan organisaatio"));
         columns.add(new SearchParams("Kunta"));
+        columns.add(new SearchParams("Hankealue"));
         columns.add(new SearchParams("GeoJSON"));
     }
 
