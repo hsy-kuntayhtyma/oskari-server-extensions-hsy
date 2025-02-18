@@ -16,9 +16,9 @@ import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 
-public class V1_00_0__add_seutumaisa_search extends BaseJavaMigration {
+public class V1_00_1__add_seutumaisa_search2 extends BaseJavaMigration {
 
-    private static final Logger LOG = LogFactory.getLogger(V1_00_0__add_seutumaisa_search.class);
+    private static final Logger LOG = LogFactory.getLogger(V1_00_1__add_seutumaisa_search2.class);
 
     private static final String SEUTUMAISA_SEARCH = "seutumaisa-search";
     private static final String SEARCH = "search";

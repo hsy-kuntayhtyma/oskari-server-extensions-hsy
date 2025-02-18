@@ -32,12 +32,13 @@ public class SeutumaisaRestActionHandler extends RestActionHandler {
     }
 
     protected static <T> void writeResponse(ActionParameters params, T response) throws ActionException {
+        byte[] b;
         try {
-            byte[] b = OM.writeValueAsBytes(response);
-            ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
+            b = OM.writeValueAsBytes(response);
         } catch (JsonProcessingException e) {
             throw new ActionException("Error occured when serializing to JSON", e);
         }
+        ResponseHelper.writeResponse(params, 200, ResponseHelper.CONTENT_TYPE_JSON_UTF8, b);
     }
 
 }
