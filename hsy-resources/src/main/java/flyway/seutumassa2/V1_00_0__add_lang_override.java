@@ -32,13 +32,13 @@ public class V1_00_0__add_lang_override extends BaseJavaMigration {
             return;
         }
 
-        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 1) + " WHERE appsetup_id = ?";
+        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 2) + " WHERE appsetup_id = ?";
         try (PreparedStatement ps = c.prepareStatement(incr)) {
             ps.setLong(1, appsetupId);
             ps.executeUpdate();
         }
         
-        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + max + " WHERE appsetup_id = ?";
+        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + (max + 1) + " WHERE appsetup_id = ?";
         try (PreparedStatement ps = c.prepareStatement(decr)) {
             ps.setLong(1, appsetupId);
             ps.executeUpdate();

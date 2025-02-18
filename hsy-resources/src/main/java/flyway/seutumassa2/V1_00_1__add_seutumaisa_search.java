@@ -16,9 +16,9 @@ import fi.nls.oskari.domain.map.view.Bundle;
 import fi.nls.oskari.log.LogFactory;
 import fi.nls.oskari.log.Logger;
 
-public class V1_00_1__add_seutumaisa_search2 extends BaseJavaMigration {
+public class V1_00_1__add_seutumaisa_search extends BaseJavaMigration {
 
-    private static final Logger LOG = LogFactory.getLogger(V1_00_1__add_seutumaisa_search2.class);
+    private static final Logger LOG = LogFactory.getLogger(V1_00_1__add_seutumaisa_search.class);
 
     private static final String SEUTUMAISA_SEARCH = "seutumaisa-search";
     private static final String SEARCH = "search";
@@ -83,14 +83,14 @@ public class V1_00_1__add_seutumaisa_search2 extends BaseJavaMigration {
             return;
         }
 
-        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 1) + " WHERE appsetup_id = ? AND seqno >= ?";
+        String incr = "UPDATE oskari_appsetup_bundles SET seqno = seqno + " + (max + 2) + " WHERE appsetup_id = ? AND seqno >= ?";
         try (PreparedStatement ps = c.prepareStatement(incr)) {
             ps.setLong(1, appsetupId);
             ps.setInt(2, fromSeqNo);
             ps.executeUpdate();
         }
         
-        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + max + " WHERE appsetup_id = ? AND seqno >= ?";
+        String decr = "UPDATE oskari_appsetup_bundles SET seqno = seqno - " + (max + 1) + " WHERE appsetup_id = ? AND seqno >= ?";
         try (PreparedStatement ps = c.prepareStatement(decr)) {
             ps.setLong(1, appsetupId);
             ps.setInt(2, fromSeqNo); // could be fromSeqNo+max, but no need
