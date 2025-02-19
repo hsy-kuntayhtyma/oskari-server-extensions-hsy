@@ -435,6 +435,8 @@ public class SeutumaisaDBHelper {
             }
 
             sqlWithParams = pstmt.toString();
+            LOG.debug(sqlWithParams);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 JSONArray row = new JSONArray();
