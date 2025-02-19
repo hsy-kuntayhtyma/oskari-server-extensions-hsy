@@ -107,12 +107,13 @@ public class SeutumaisaDBHelper {
      * @return
      */
     private static RangeSlider getMassanmaaraRange() {
+        int[] minMax = getMinAndMaxMaara();
+
         RangeSlider range = new RangeSlider();
         range.setId(SeutumaisaSearchHelper.KEY_MAARA);
         range.setTitle("Massan määrä");
-        range.setMin(100);
-        range.setMax(getMaxMaara());
-
+        range.setMin(minMax[0]);
+        range.setMax(minMax[1]);
         return range;
     }
 
@@ -206,38 +207,24 @@ public class SeutumaisaDBHelper {
         return select;
     }
 
-    /**
-     * Gets max maara value
-     * @return
-     */
-    private static int getMaxMaara() {
-        int maara = 0;
-
-        Connection conn = null;
-
-        try  {
-            conn = getConnection();
-
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT min(" + SeutumaisaSearchHelper.KEY_MAARA +
-                    "), max(" + SeutumaisaSearchHelper.KEY_MAARA + ") FROM maamassatieto WHERE " + SeutumaisaSearchHelper.KEY_MAARA +" IS NOT NULL;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                maara = resultSet.getInt("max");
-            }
-
-        } catch (SQLException e) {
-            LOG.error(e, "Cannot create SQL query");
-        } finally {
-            if(conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    LOG.error(e);
+    private static int[] getMinAndMaxMaara() {
+        try (Connection c = getConnection()) {
+            String sql = String.format(
+                    "SELECT min(%s), max(%s) FROM maamassatieto WHERE %s IS NOT NULL",
+                    SeutumaisaSearchHelper.KEY_MAARA, SeutumaisaSearchHelper.KEY_MAARA, SeutumaisaSearchHelper.KEY_MAARA);
+            try (PreparedStatement ps = c.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int min = rs.getInt(1);
+                    int max = rs.getInt(2);
+                    int[] ret = {min, max};
+                    return ret;
                 }
             }
+        } catch (SQLException e) {
+            LOG.error(e, "Cannot create SQL query");
         }
-
-        return maara;
+        return null;
     }
 
     /**
