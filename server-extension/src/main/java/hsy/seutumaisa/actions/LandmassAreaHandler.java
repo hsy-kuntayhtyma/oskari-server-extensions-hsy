@@ -131,7 +131,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     }
 
     private boolean canCreate(User user, LandmassArea area) {
-        if (LandmassMunicipality.byId(area.getKunta()).isEmpty()) {
+        if (!LandmassMunicipality.byId(area.getKunta()).isPresent()) {
             return false;
         }
 
@@ -154,7 +154,7 @@ public class LandmassAreaHandler extends SeutumaisaRestActionHandler {
     }
 
     private boolean canEdit(User user, LandmassArea area) {
-        if (LandmassMunicipality.byId(area.getKunta()).isEmpty()) {
+        if (!LandmassMunicipality.byId(area.getKunta()).isPresent()) {
             return false;
         }
 
