@@ -60,7 +60,7 @@ public class SeutumaisaDBHelper {
         searchFields.put(getMaamassantilaSelect().toJSON());
         searchFields.put(getSuunnitteluAikatauluRange().toJSON());
         searchFields.put(getMassanmaaraRange().toJSON());
-        searchFields.put(getOmistajaSelect().toJSON());
+        searchFields.put(getOrganisaatioSelect().toJSON());
         searchFields.put(getKuntaSelect().toJSON());
         searchFields.put(getHankealueSelect().toJSON());
 
@@ -95,11 +95,11 @@ public class SeutumaisaDBHelper {
     }
 
     /**
-     * Gets omistaja select
+     * Gets organisaatio select
      * @return
      */
-    private static Select getOmistajaSelect() {
-        return getSelect("Omistaja (massan)", "SELECT h.organisaatio, h.id FROM maamassakohde mk LEFT JOIN henkilo h ON h.id = mk.omistaja_id WHERE organisaatio IS NOT NULL GROUP BY organisaatio, h.id;", SeutumaisaSearchHelper.KEY_ORGANISAATIO, "id");
+    private static Select getOrganisaatioSelect() {
+        return getSelect("Organisaatio", "SELECT organisaatio FROM henkilo JOIN maamassakohde ON maamassakohde.omistaja_id = henkilo.id WHERE organisaatio IS NOT NULL AND organisaatio <> '' GROUP BY organisaatio", SeutumaisaSearchHelper.KEY_ORGANISAATIO);
     }
 
     /**

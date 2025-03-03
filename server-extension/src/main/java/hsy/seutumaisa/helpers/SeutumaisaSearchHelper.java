@@ -71,8 +71,8 @@ public class SeutumaisaSearchHelper {
         }
 
         if (jsonParams.has(KEY_ORGANISAATIO)) {
-            SearchParams pOrganisaatio = new SearchParams("omistaja_id", null, jsonParams.getInt(KEY_ORGANISAATIO));
-            pOrganisaatio.setColumnPrefix("mk.");
+            SearchParams pOrganisaatio = new SearchParams("organisaatio", null, jsonParams.getString(KEY_ORGANISAATIO));
+            pOrganisaatio.setColumnPrefix("h.");
             searchParams.add(pOrganisaatio);
         }
 
