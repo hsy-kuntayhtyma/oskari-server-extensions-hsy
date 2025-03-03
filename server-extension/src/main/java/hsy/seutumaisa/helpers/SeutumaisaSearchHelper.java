@@ -58,8 +58,7 @@ public class SeutumaisaSearchHelper {
         }
 
         if (jsonParams.has(KEY_KUNTA)) {
-            String kunta = jsonParams.get(KEY_KUNTA).toString();
-            SearchParams pKunta = new SearchParams("namefin", null, kunta);
+            SearchParams pKunta = new SearchParams("namefin", null, jsonParams.getString(KEY_KUNTA));
             pKunta.setColumnPrefix("k.");
             pKunta.setNeedCastVarchar(true);
             searchParams.add(pKunta);
