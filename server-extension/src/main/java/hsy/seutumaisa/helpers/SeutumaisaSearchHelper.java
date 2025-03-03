@@ -49,9 +49,9 @@ public class SeutumaisaSearchHelper {
         if (jsonParams.has(KEY_ID)) {
             try {
                 long idValue = Long.parseLong(jsonParams.getString(KEY_ID));
-                SearchParams pKunta = new SearchParams("id", null, idValue);
-                pKunta.setColumnPrefix("mk.");
-                searchParams.add(pKunta);
+                SearchParams pId = new SearchParams("id", null, idValue);
+                pId.setColumnPrefix("mk.");
+                searchParams.add(pId);
             } catch (NumberFormatException e) {
                 // Return 0 matches...
             }
@@ -60,6 +60,7 @@ public class SeutumaisaSearchHelper {
         if (jsonParams.has(KEY_KUNTA)) {
             SearchParams pKunta = new SearchParams("namefin", null, jsonParams.getString(KEY_KUNTA));
             pKunta.setColumnPrefix("k.");
+            pKunta.setNeedCastVarchar(true);
             searchParams.add(pKunta);
         }
 

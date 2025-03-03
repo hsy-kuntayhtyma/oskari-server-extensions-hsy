@@ -19,6 +19,7 @@ import fi.nls.oskari.service.ServiceRuntimeException;
 import fi.nls.oskari.service.UserService;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
+import hsy.seutumaisa.domain.LandmassHelper;
 import hsy.seutumaisa.domain.LandmassMunicipality;
 
 @OskariActionRoute("LandmassUsers")
@@ -42,11 +43,14 @@ public class LandmassUsersHandler extends SeutumaisaRestActionHandler {
     public void handleGet(ActionParameters params) throws ActionException {
         params.requireLoggedInUser();
 
-        LandmassMunicipality[] municipalities = Arrays.stream(LandmassMunicipality.values())
+        LandmassMunicipality[] municipalities = LandmassMunicipality.values();
+        if (!params.getUser().hasRole(LandmassHelper.getRoleNameSeutumassaAdmin())) {
+            municipalities = Arrays.stream(municipalities)
                 .filter(m -> params.getUser().hasRole(m.getAdminRoleName()))
                 .toArray(n -> new LandmassMunicipality[n]);
-        if (municipalities.length == 0) {
-            throw new ActionDeniedException("User is not admin or workspace admin");
+            if (municipalities.length == 0) {
+                throw new ActionDeniedException("User is not admin or workspace admin");
+            }
         }
 
         // Fetch these only once

@@ -20,7 +20,7 @@ public class DataTableHelper {
      */
     static {
         columns.add(new SearchParams("Kohteen id"));
-        columns.add(new SearchParams("Kohteen tunnus"));
+        columns.add(new SearchParams("Kohteen nimi"));
         columns.add(new SearchParams("Massan laji"));
         columns.add(new SearchParams("Massan ryhmä"));
         columns.add(new SearchParams("Kelpoisuusluokka"));
@@ -30,6 +30,7 @@ public class DataTableHelper {
         columns.add(new SearchParams("Suunniteltu aikataulu (alku)"));
         columns.add(new SearchParams("Suunniteltu aikataulu (loppu)"));
         columns.add(new SearchParams("Massan määrä"));
+        columns.add(new SearchParams("Massan yksikkö"));
         columns.add(new SearchParams("Omistajan nimi (massan)"));
         columns.add(new SearchParams("Omistajan sähköposti"));
         columns.add(new SearchParams("Omistajan puhelinnumero"));

@@ -334,7 +334,8 @@ public class SeutumaisaDBHelper {
             sb.append("SELECT mk.id as kohde_id, mk.nimi as kohde_nimi, mt.maamassalaji, mt.maamassaryhma,");
             sb.append("mt.kelpoisuusluokka, mt.pilaantuneisuus, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
-            sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
+            sb.append("mt.amount_remaining, mt.amount_unit,");
+            sb.append("h.nimi, h.email, h.puhelin, h.organisaatio,");
             sb.append("k.namefin as kunta_nimi_fin,");
             sb.append("ha.nimi as hankealue,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
@@ -438,6 +439,7 @@ public class SeutumaisaDBHelper {
                 row.put(rs.getDate("planned_begin_date"));
                 row.put(rs.getDate("planned_end_date"));
                 row.put(rs.getLong("amount_remaining"));
+                row.put(rs.getString("amount_unit"));
                 row.put(rs.getString("nimi"));
                 row.put(rs.getString("email"));
                 row.put(rs.getString("puhelin"));
