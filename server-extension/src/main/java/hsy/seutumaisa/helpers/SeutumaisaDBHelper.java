@@ -91,7 +91,12 @@ public class SeutumaisaDBHelper {
      * @return
      */
     private static Select getHankealueSelect() {
-        return getSelect("Hankealue", "SELECT h.id, h.nimi || ' (' || k.namefin || ')' as hankealue FROM hankealue h JOIN kuntarajat k ON h.kunta = k.natcode ;", "hankealue", "id");
+        Select s = getSelect("Hankealue", "SELECT h.id, h.nimi || ' (' || k.namefin || ')' as hankealue FROM hankealue h JOIN kuntarajat k ON h.kunta = k.natcode;", "hankealue", "id");
+        SelectValue nullValue = new SelectValue();
+        nullValue.setId(null);
+        nullValue.setTitle("Ei hankealuetta");
+        s.addValue(nullValue);
+        return s;
     }
 
     /**
