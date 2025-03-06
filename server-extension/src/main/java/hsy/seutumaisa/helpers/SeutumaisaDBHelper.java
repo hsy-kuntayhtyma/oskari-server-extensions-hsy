@@ -93,7 +93,7 @@ public class SeutumaisaDBHelper {
     private static Select getHankealueSelect() {
         Select s = getSelect("Hankealue", "SELECT h.id, h.nimi || ' (' || k.namefin || ')' as hankealue FROM hankealue h JOIN kuntarajat k ON h.kunta = k.natcode;", "hankealue", "id");
         SelectValue nullValue = new SelectValue();
-        nullValue.setId(null);
+        nullValue.setId(Integer.toString(SeutumaisaSearchHelper.HANKEALUE_NULL));
         nullValue.setTitle("Ei hankealuetta");
         s.addValue(nullValue);
         return s;
@@ -359,7 +359,9 @@ public class SeutumaisaDBHelper {
             int index = 1;
             for (int i=0; i<searchParams.size(); i++) {
                 SearchParams searchParam = searchParams.get(i);
-                if (searchParam.getValue() instanceof Integer) {
+                if (searchParam.getValue() == null) {
+                    continue;
+                } else if (searchParam.getValue() instanceof Integer) {
                     pstmt.setInt(index, (int)searchParam.getValue());
                     index++;
                 } else if (searchParam.getValue() instanceof Long) {

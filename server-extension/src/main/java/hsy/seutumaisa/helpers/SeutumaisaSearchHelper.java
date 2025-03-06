@@ -1,14 +1,15 @@
 package hsy.seutumaisa.helpers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import fi.nls.oskari.control.ActionParameters;
 import fi.nls.oskari.control.ActionParamsException;
 import hsy.seutumaisa.domain.Range;
 import hsy.seutumaisa.domain.SearchParams;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Search helper
@@ -33,6 +34,8 @@ public class SeutumaisaSearchHelper {
     //History search
     public static final String KEY_TOTEUTUNUT_ALKU = "realized_begin_date";
     public static final String KEY_TOTEUTUNUT_LOPPU = "realized_end_date";
+
+    public static final int HANKEALUE_NULL = -1;
 
     /**
      * Parse search params from json
@@ -65,8 +68,15 @@ public class SeutumaisaSearchHelper {
         }
 
         if (jsonParams.has(KEY_HANKEALUE)) {
-            SearchParams pHankealue = new SearchParams("id", null, jsonParams.getInt(KEY_HANKEALUE));
-            pHankealue.setColumnPrefix("ha.");
+            int hankeAlueId = jsonParams.getInt(KEY_HANKEALUE);
+            SearchParams pHankealue;
+            if (hankeAlueId == HANKEALUE_NULL) {
+                pHankealue = new SearchParams("hankealue_id", null, null);
+                pHankealue.setColumnPrefix("mk.");
+            } else {
+                pHankealue = new SearchParams("id", null, hankeAlueId);
+                pHankealue.setColumnPrefix("ha.");
+            }
             searchParams.add(pHankealue);
         }
 
@@ -170,7 +180,9 @@ public class SeutumaisaSearchHelper {
 
         sb.append("WHERE ");
         for (SearchParams searchParam : searchParams) {
-            if (searchParam.getValue() instanceof Integer) {
+            if (searchParam.getValue() == null) {
+                sb.append(searchParam.getColumnPrefix() + searchParam.getId() + " IS NULL AND ");
+            } else if (searchParam.getValue() instanceof Integer) {
                 sb.append(searchParam.getColumnPrefix() + searchParam.getId() + "=? AND ");
             } else if (searchParam.getValue() instanceof Long) {
                 sb.append(searchParam.getColumnPrefix() + searchParam.getId() + "=? AND ");
