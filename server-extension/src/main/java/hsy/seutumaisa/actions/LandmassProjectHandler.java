@@ -14,6 +14,7 @@ import fi.nls.oskari.domain.User;
 import fi.nls.oskari.service.OskariComponentManager;
 import fi.nls.oskari.util.JSONHelper;
 import fi.nls.oskari.util.ResponseHelper;
+import hsy.seutumaisa.domain.LandmassHelper;
 import hsy.seutumaisa.domain.LandmassMunicipality;
 import hsy.seutumaisa.domain.LandmassProject;
 import hsy.seutumaisa.service.LandmassProjectService;
@@ -106,16 +107,19 @@ public class LandmassProjectHandler extends SeutumaisaRestActionHandler {
     }
 
     private static boolean canRead(User user, LandmassProject project) {
-        return LandmassMunicipality.byId(project.getKunta())
+        return user.hasRole(LandmassHelper.getRoleNameSeutumassaAdmin()) ||
+                LandmassMunicipality.byId(project.getKunta())
                 .map(m -> new String[] { m.getRoleName(), m.getAdminRoleName() })
                 .map(roleNames -> user.hasAnyRoleIn(roleNames))
                 .orElse(false);
     }
 
     private static boolean canWrite(User user, LandmassProject project) {
-        return LandmassMunicipality.byId(project.getKunta())
-                .map(m -> user.hasRole(m.getAdminRoleName()))
-                .orElse(false);
+        return user.hasRole(LandmassHelper.getRoleNameSeutumassaAdmin()) ||
+                LandmassMunicipality.byId(project.getKunta())
+                    .map(m -> m.getAdminRoleName())
+                    .map(r -> user.hasRole(r))
+                    .orElse(false);
     }
 
 }
