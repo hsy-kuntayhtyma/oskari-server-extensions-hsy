@@ -9,6 +9,7 @@ import hsy.seutumaisa.domain.DataTableResult;
 import hsy.seutumaisa.domain.Range;
 import hsy.seutumaisa.domain.SearchParams;
 import hsy.seutumaisa.domain.form.DateRangeSelect;
+import hsy.seutumaisa.domain.form.IdSelect;
 import hsy.seutumaisa.domain.form.RangeSlider;
 import hsy.seutumaisa.domain.form.Select;
 import hsy.seutumaisa.domain.form.SelectValue;
@@ -17,8 +18,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,17 +51,31 @@ public class SeutumaisaDBHelper {
      */
     public static JSONArray getSearchFields() throws JSONException {
         JSONArray searchFields = new JSONArray();
+        searchFields.put(getKohdeIdSelect().toJSON());
         searchFields.put(getMaamassaSelect().toJSON());
         searchFields.put(getMaamassaRyhmaSelect().toJSON());
         searchFields.put(getKelpoisuusluokkaSelect().toJSON());
+        searchFields.put(getPilaantuneisuusSelect().toJSON());
         searchFields.put(getKohdetyyppiSelect().toJSON());
         searchFields.put(getMaamassantilaSelect().toJSON());
         searchFields.put(getSuunnitteluAikatauluRange().toJSON());
         searchFields.put(getMassanmaaraRange().toJSON());
-        searchFields.put(getOmistajaSelect().toJSON());
+        searchFields.put(getOrganisaatioSelect().toJSON());
         searchFields.put(getKuntaSelect().toJSON());
+        searchFields.put(getHankealueSelect().toJSON());
 
         return searchFields;
+    }
+
+    /**
+     * Gets suunnitteluaika data range select
+     * @return
+     */
+    private static IdSelect getKohdeIdSelect() {
+        IdSelect id = new IdSelect();
+        id.setId(SeutumaisaSearchHelper.KEY_ID);
+        id.setTitle("Kohteen id");
+        return id;
     }
 
     /**
@@ -74,11 +87,24 @@ public class SeutumaisaDBHelper {
     }
 
     /**
-     * Gets omistaja select
+     * Gets kunta select
      * @return
      */
-    private static Select getOmistajaSelect() {
-        return getSelect("Omistaja (massan)", "SELECT h.organisaatio, h.id FROM maamassakohde mk LEFT JOIN henkilo h ON h.id = mk.omistaja_id WHERE organisaatio IS NOT NULL GROUP BY organisaatio, h.id;", SeutumaisaSearchHelper.KEY_ORGANISAATIO, "id");
+    private static Select getHankealueSelect() {
+        Select s = getSelect("Hankealue", "SELECT h.id, h.nimi || ' (' || k.namefin || ')' as hankealue FROM hankealue h JOIN kuntarajat k ON h.kunta = k.natcode;", "hankealue", "id");
+        SelectValue nullValue = new SelectValue();
+        nullValue.setId(Integer.toString(SeutumaisaSearchHelper.HANKEALUE_NULL));
+        nullValue.setTitle("Ei hankealuetta");
+        s.addValue(nullValue);
+        return s;
+    }
+
+    /**
+     * Gets organisaatio select
+     * @return
+     */
+    private static Select getOrganisaatioSelect() {
+        return getSelect("Organisaatio", "SELECT organisaatio FROM henkilo JOIN maamassakohde ON maamassakohde.omistaja_id = henkilo.id WHERE organisaatio IS NOT NULL AND organisaatio <> '' GROUP BY organisaatio", SeutumaisaSearchHelper.KEY_ORGANISAATIO);
     }
 
     /**
@@ -86,12 +112,13 @@ public class SeutumaisaDBHelper {
      * @return
      */
     private static RangeSlider getMassanmaaraRange() {
+        int[] minMax = getMinAndMaxMaara();
+
         RangeSlider range = new RangeSlider();
         range.setId(SeutumaisaSearchHelper.KEY_MAARA);
         range.setTitle("Massan määrä");
-        range.setMin(100);
-        range.setMax(getMaxMaara());
-
+        range.setMin(minMax[0]);
+        range.setMax(minMax[1]);
         return range;
     }
 
@@ -128,6 +155,14 @@ public class SeutumaisaDBHelper {
      */
     private static Select getKelpoisuusluokkaSelect() {
         return getSelect("Kelpoisuusluokka", "SELECT kelpoisuusluokka FROM maamassatieto WHERE kelpoisuusluokka IS NOT NULL GROUP BY kelpoisuusluokka;", SeutumaisaSearchHelper.KEY_KELPOISUUSLUOKKA);
+    }
+
+    /**
+     * Gets pilaantuneisuus select
+     * @return
+     */
+    private static Select getPilaantuneisuusSelect() {
+        return getSelect("Pilaantuneisuus", "SELECT pilaantuneisuus FROM maamassatieto WHERE pilaantuneisuus IS NOT NULL GROUP BY pilaantuneisuus;", SeutumaisaSearchHelper.KEY_PILAANTUNEISUUS);
     }
 
     /**
@@ -177,38 +212,24 @@ public class SeutumaisaDBHelper {
         return select;
     }
 
-    /**
-     * Gets max maara value
-     * @return
-     */
-    private static int getMaxMaara() {
-        int maara = 0;
-
-        Connection conn = null;
-
-        try  {
-            conn = getConnection();
-
-            PreparedStatement preparedStatement = conn.prepareStatement("SELECT min(" + SeutumaisaSearchHelper.KEY_MAARA +
-                    "), max(" + SeutumaisaSearchHelper.KEY_MAARA + ") FROM maamassatieto WHERE " + SeutumaisaSearchHelper.KEY_MAARA +" IS NOT NULL;");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                maara = resultSet.getInt("max");
-            }
-
-        } catch (SQLException e) {
-            LOG.error(e, "Cannot create SQL query");
-        } finally {
-            if(conn != null) {
-                try {
-                    conn.close();
-                } catch (Exception e) {
-                    LOG.error(e);
+    private static int[] getMinAndMaxMaara() {
+        try (Connection c = getConnection()) {
+            String sql = String.format(
+                    "SELECT min(%s), max(%s) FROM maamassatieto WHERE %s IS NOT NULL",
+                    SeutumaisaSearchHelper.KEY_MAARA, SeutumaisaSearchHelper.KEY_MAARA, SeutumaisaSearchHelper.KEY_MAARA);
+            try (PreparedStatement ps = c.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int min = rs.getInt(1);
+                    int max = rs.getInt(2);
+                    int[] ret = {min, max};
+                    return ret;
                 }
             }
+        } catch (SQLException e) {
+            LOG.error(e, "Cannot create SQL query");
         }
-
-        return maara;
+        return null;
     }
 
     /**
@@ -302,8 +323,7 @@ public class SeutumaisaDBHelper {
     public static JSONObject search(ActionParameters params) throws JSONException, ActionParamsException {
         DataTableResult result = new DataTableResult();
 
-        // TODO: can we get geom index another way than hard coded ?
-        result.setColumnDefs(DataTableHelper.getColumnDefs(13));
+        result.setColumnDefs(DataTableHelper.getColumnDefs());
         result.setColumns(DataTableHelper.getColumns());
 
         Connection conn = null;
@@ -316,17 +336,19 @@ public class SeutumaisaDBHelper {
             conn = getConnection();
 
             StringBuilder sb = new StringBuilder();
-            sb.append("SELECT mt.id , mt.maamassalaji, mt.maamassaryhma,");
-            sb.append("mt.kelpoisuusluokka, mk.kohdetyyppi,");
+            sb.append("SELECT mk.id as kohde_id, mk.nimi as kohde_nimi, mt.maamassalaji, mt.maamassaryhma,");
+            sb.append("mt.kelpoisuusluokka, mt.pilaantuneisuus, mk.kohdetyyppi,");
             sb.append("mt.maamassatila, mt.planned_begin_date, mt.planned_end_date,");
-            sb.append("mt.amount_remaining, h.nimi, h.email, h.puhelin, h.organisaatio,");
-            sb.append("k.namefin as kunta,");
+            sb.append("mt.amount_remaining, mt.amount_unit,");
+            sb.append("h.nimi, h.email, h.puhelin, h.organisaatio,");
+            sb.append("k.namefin as kunta_nimi_fin,");
+            sb.append("ha.nimi as hankealue,");
             sb.append("ST_AsGeoJSON(mk.geom) geojson, mk.omistaja_id as organisaatio_id ");
             sb.append("FROM maamassakohde mk ");
             sb.append("LEFT JOIN maamassatieto mt ON mk.id = mt.maamassakohde_id ");
-            sb.append("LEFT JOIN maamassasiirto ms ON ms.lahtopaikka_massatieto = mk.id ");
             sb.append("LEFT JOIN henkilo h ON h.id = mk.omistaja_id ");
-            sb.append("LEFT JOIN kuntarajat k ON st_contains(k.geom, mk.geom) ");
+            sb.append("LEFT JOIN kuntarajat k ON mk.kunta = k.natcode ");
+            sb.append("LEFT JOIN hankealue ha ON mk.hankealue_id = ha.id ");
             List<SearchParams> searchParams = SeutumaisaSearchHelper.parseSearchParams(params);
             sb.append(SeutumaisaSearchHelper.getSearchWhere(searchParams));
 
@@ -334,12 +356,12 @@ public class SeutumaisaDBHelper {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-
             int index = 1;
             for (int i=0; i<searchParams.size(); i++) {
                 SearchParams searchParam = searchParams.get(i);
-                if (searchParam.getValue() instanceof Integer) {
+                if (searchParam.getValue() == null) {
+                    continue;
+                } else if (searchParam.getValue() instanceof Integer) {
                     pstmt.setInt(index, (int)searchParam.getValue());
                     index++;
                 } else if (searchParam.getValue() instanceof Long) {
@@ -408,22 +430,29 @@ public class SeutumaisaDBHelper {
             }
 
             sqlWithParams = pstmt.toString();
+            LOG.debug(sqlWithParams);
+
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 JSONArray row = new JSONArray();
+                row.put(rs.getString("kohde_id"));
+                row.put(rs.getString("kohde_nimi"));
                 row.put(rs.getString("maamassalaji"));
                 row.put(rs.getString("maamassaryhma"));
                 row.put(rs.getString("kelpoisuusluokka"));
+                row.put(rs.getString("pilaantuneisuus"));
                 row.put(rs.getString("kohdetyyppi"));
                 row.put(rs.getString("maamassatila"));
                 row.put(rs.getDate("planned_begin_date"));
                 row.put(rs.getDate("planned_end_date"));
                 row.put(rs.getLong("amount_remaining"));
+                row.put(rs.getString("amount_unit"));
                 row.put(rs.getString("nimi"));
                 row.put(rs.getString("email"));
                 row.put(rs.getString("puhelin"));
                 row.put(rs.getString("organisaatio"));
-                row.put(rs.getString("kunta"));
+                row.put(rs.getString("kunta_nimi_fin"));
+                row.put(rs.getString("hankealue"));
                 row.put(rs.getString("geojson"));
                 results.put(row);
             }
